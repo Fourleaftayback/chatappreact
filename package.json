@@ -1,0 +1,43 @@
+{
+  "name": "react_chat_app",
+  "version": "1.0.0",
+  "description": "React Chat App",
+  "main": "server.js",
+  "scripts": {
+    "client-install": "npm install --prefix client",
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+  },
+  "keywords": [
+    "Chat",
+    "App",
+    "MERN",
+    "React",
+    "Node.js",
+    "MongoDB",
+    "socket.io"
+  ],
+  "author": "Jay Shong",
+  "license": "MIT",
+  "dependencies": {
+    "@sendgrid/mail": "^6.4.0",
+    "aws-sdk": "^2.478.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "busboy": "^0.3.1",
+    "busboy-body-parser": "^0.3.2",
+    "connect-busboy": "0.0.2",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.5.15",
+    "mongoose-hidden": "^1.6.1",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "uniqid": "^5.0.3",
+    "validator": "^11.0.0"
+  }
+}
