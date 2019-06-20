@@ -14,6 +14,7 @@ const app = express();
 
 const authApi = require("./routes/auth");
 const resetApi = require("./routes/reset");
+const userListApi = require("./routes/userList");
 
 require("./config/passportUser")(passport);
 
@@ -30,6 +31,7 @@ app.use(busboyBodyParser());
 
 app.use("/user", authApi);
 app.use("/reset", resetApi);
+app.use("/list", userListApi)
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build", {
