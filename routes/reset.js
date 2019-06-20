@@ -114,6 +114,7 @@ router.post("/newpassword", (req, res) => {
           if (err) throw err;
           user.password = hash;
           user.resetPasswordToken = undefined;
+          user.resetPasswordExp = undefined;
           user
             .save()
             .then(user => res.status(200).json({

@@ -35,6 +35,10 @@ const UserSchema = new Schema({
   }
 });
 
-UserSchema.plugin(mongooseHidden)
+UserSchema.plugin(mongooseHidden, {
+  hidden: {
+    _id: false
+  }
+})
 
 module.exports = User = mongoose.model("users", UserSchema);

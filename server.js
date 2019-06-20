@@ -1,9 +1,11 @@
 const express = require("express");
+const http = require('http');
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const passport = require("passport");
 const busboy = require("connect-busboy");
 const busboyBodyParser = require("busboy-body-parser");
+const socketIO = require('socket.io');
 
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
@@ -11,6 +13,8 @@ if (process.env.NODE_ENV !== "production") {
 const port = process.env.PORT;
 const db = process.env.MLAB || "mongodb://localhost/test";
 const app = express();
+const server = http.createServer(app);
+const io = socketIO(server);
 
 const authApi = require("./routes/auth");
 const resetApi = require("./routes/reset");
@@ -22,12 +26,21 @@ mongoose.connect(db, {
   useNewUrlParser: true
 });
 
+io.on("connection", socket => {
+  console.log("user connected");
+  socket.on("disconnected", () => {
+    console.log('user disconnected')
+  });
+})
+
 app.use(bodyParser.urlencoded({
   extended: false
 }));
 app.use(bodyParser.json());
 app.use(busboy());
 app.use(busboyBodyParser());
+
+
 
 app.use("/user", authApi);
 app.use("/reset", resetApi);

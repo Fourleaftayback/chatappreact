@@ -39,7 +39,6 @@ router.get("/search", passport.authenticate("userPass", {
       "$options": "i"
     }
   }).sort("user_name").select("-resetPasswordExp -resetPasswordToken").then(users => {
-    console.log(users);
     return res.status(200).json(users);
   }).catch(err => res.status(400).json({
     error: "something went wrong"
