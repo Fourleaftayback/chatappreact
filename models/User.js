@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const mongooseHidden = require('mongoose-hidden')()
+const mongooseHidden = require("mongoose-hidden")();
 
 const UserSchema = new Schema({
   email: {
@@ -39,6 +39,6 @@ UserSchema.plugin(mongooseHidden, {
   hidden: {
     _id: false
   }
-})
+});
 
 module.exports = User = mongoose.model("users", UserSchema);

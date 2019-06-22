@@ -16,27 +16,28 @@ const uploadToS3 = require("../aws/s3bucket");
 // @desc    user registration
 // @access  Public
 router.post("/register", (req, res) => {
-  const {
-    errors,
-    isValid
-  } = validateRegisterInput(req.body);
+  const { errors, isValid } = validateRegisterInput(req.body);
   if (!isValid) return res.status(400).json(errors);
   User.findOne({
-    $or: [{
-      email: req.body.email
-    }, {
-      user_name: req.body.user_name
-    }]
+    $or: [
+      {
+        email: req.body.email
+      },
+      {
+        user_name: req.body.user_name
+      }
+    ]
   }).exec((err, user) => {
     if (user) {
       if (user.user_name == req.body.user_name) {
-        errors.user_name = "User Name already exists. Please choose another User Name"
+        errors.user_name =
+          "User Name already exists. Please choose another User Name";
         return res.status(400).json(errors);
       }
 
-      errors.email = "Email already exists. Please request to have your password reset."
+      errors.email =
+        "Email already exists. Please request to have your password reset.";
       return res.status(400).json(errors);
-
     }
     let newUser = new User({
       email: req.body.email,
@@ -55,7 +56,6 @@ router.post("/register", (req, res) => {
             errors.email = "something went wrong";
             res.status(400).json(errors);
           });
-
       });
     });
   });
@@ -65,17 +65,11 @@ router.post("/register", (req, res) => {
 // @desc    Login User / Returning JWT Token
 // @access  Public
 router.post("/login", (req, res) => {
-  const {
-    errors,
-    isValid
-  } = validateLoginInput(req.body);
+  const { errors, isValid } = validateLoginInput(req.body);
 
   if (!isValid) return res.status(400).json(errors);
 
-  let {
-    email,
-    password
-  } = req.body;
+  let { email, password } = req.body;
 
   User.findOne({
     email
@@ -91,14 +85,19 @@ router.post("/login", (req, res) => {
           user_name: user.user_name,
           profile_image_url: user.image_url
         };
-        jwt.sign(payload, keys, {
-          expiresIn: 7200
-        }, (err, token) => {
-          res.json({
-            success: true,
-            token: "Bearer " + token
-          });
-        });
+        jwt.sign(
+          payload,
+          keys,
+          {
+            expiresIn: 7200
+          },
+          (err, token) => {
+            res.json({
+              success: true,
+              token: "Bearer " + token
+            });
+          }
+        );
       } else {
         errors.password = "Password incorrect";
         return res.status(400).json(errors);
@@ -110,64 +109,79 @@ router.post("/login", (req, res) => {
 // @route   PUT /user/profileimage
 // @desc    upload profile photo
 // @access  Private
-router.put("/profileimage", passport.authenticate("userPass", {
-  session: false
-}), (req, res) => {
+router.put(
+  "/profileimage",
+  passport.authenticate("userPass", {
+    session: false
+  }),
+  (req, res) => {
+    const mimes = ["image/png", "image/jpeg", "image/jpg"];
+    const busboy = new Busboy({
+      headers: req.headers
+    });
 
-  const mimes = ["image/png", "image/jpeg", "image/jpg"];
-  const busboy = new Busboy({
-    headers: req.headers
-  });
-
-  if (req.files.image === undefined)
-    return res.status(413).json({
-      image: "Image is required"
-    })
-
-  busboy.on("finish", () => {
-    const image = req.files.image;
-    if (image.size > 3000000) return res.status(413).json({
-      image: "Image can not be larger than 3mbs"
-    })
-
-    if (!mimes.includes(image.mimetype))
-      return res.status(422).json({
-        image: "This image format is not supported"
+    if (req.files.image === undefined)
+      return res.status(413).json({
+        image: "Image is required"
       });
 
-    let aws = uploadToS3(image);
-    aws.then(data => {
-      let imageUrl = data.Location;
-      User.findOneAndUpdate({
-        _id: req.user.id
-      }, {
-        profile_image_url: imageUrl
-      }, {
-        new: true
-      }).then(user => {
-        if (!user) return res.status(400).json({
-          image: "Sorry something went wrong"
-        })
-        const payload = {
-          id: user.id,
-          user_name: user.user_name,
-          profile_image_url: user.profile_image_url
-        }
-        jwt.sign(payload, keys, {
-          expiresIn: 7200
-        }, (err, token) => {
-          res.json({
-            success: true,
-            token: "Bearer " + token
-          });
+    busboy.on("finish", () => {
+      const image = req.files.image;
+      if (image.size > 3000000)
+        return res.status(413).json({
+          image: "Image can not be larger than 3mbs"
         });
-      }).catch(err => {
-        console.log(err)
-      })
-    })
-  })
-  req.pipe(busboy);
-});
 
+      if (!mimes.includes(image.mimetype))
+        return res.status(422).json({
+          image: "This image format is not supported"
+        });
+
+      let aws = uploadToS3(image);
+      aws.then(data => {
+        let imageUrl = data.Location;
+        User.findOneAndUpdate(
+          {
+            _id: req.user.id
+          },
+          {
+            profile_image_url: imageUrl
+          },
+          {
+            new: true
+          }
+        )
+          .then(user => {
+            if (!user)
+              return res.status(400).json({
+                image: "Sorry something went wrong"
+              });
+            const payload = {
+              id: user.id,
+              user_name: user.user_name,
+              profile_image_url: user.profile_image_url
+            };
+            jwt.sign(
+              payload,
+              keys,
+              {
+                expiresIn: 7200
+              },
+              (err, token) => {
+                res.json({
+                  success: true,
+                  token: "Bearer " + token
+                });
+              }
+            );
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      });
+    });
+    req.pipe(busboy);
+  }
+);
 
 module.exports = router;
