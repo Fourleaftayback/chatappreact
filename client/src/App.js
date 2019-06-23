@@ -1,7 +1,11 @@
 import React from "react";
 //import io from "socket.io-client";
+import { Container } from "reactstrap";
 
-import "./App.scss";
+import NavBar from "./components/navbar/NavBar";
+import Landing from "./components/layouts/Landing";
+
+import "./sass/App.scss";
 
 /*
 constructor() {
@@ -16,9 +20,10 @@ constructor() {
 */
 const App = () => {
   return (
-    <div>
-      <p>test</p>
-    </div>
+    <Container fluid={true} className="App">
+      <NavBar />
+      <Landing />
+    </Container>
   );
 };
 
