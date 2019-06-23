@@ -1,6 +1,6 @@
 const express = require("express");
 const http = require("http");
-const cors = require("cors");
+//const cors = require("cors");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const passport = require("passport");
@@ -15,6 +15,7 @@ const port = process.env.PORT;
 const db = process.env.MLAB || "mongodb://localhost/test";
 
 const app = express();
+
 const server = http.createServer(app);
 const io = socketIo(server);
 
@@ -28,7 +29,7 @@ mongoose.connect(db, {
   useNewUrlParser: true
 });
 
-app.use(cors);
+//app.use(cors);
 
 app.use(
   bodyParser.urlencoded({

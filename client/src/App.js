@@ -1,8 +1,10 @@
-import React, { Component } from "react";
-import io from "socket.io-client";
+import React from "react";
+//import io from "socket.io-client";
 
-class App extends Component {
-  constructor() {
+import "./App.scss";
+
+/*
+constructor() {
     super();
     this.state = {
       ///
@@ -11,18 +13,13 @@ class App extends Component {
       const socket = io("localhost:5000");
     }
   }
+*/
+const App = () => {
+  return (
+    <div>
+      <p>test</p>
+    </div>
+  );
+};
 
-  render() {
-    // testing for socket connections
-
-    return (
-      <div
-        style={{
-          textAlign: "center"
-        }}>
-        test
-      </div>
-    );
-  }
-}
 export default App;
