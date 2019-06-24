@@ -1,4 +1,6 @@
 import React from "react";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 //import io from "socket.io-client";
 import { Container } from "reactstrap";
 
@@ -20,10 +22,12 @@ constructor() {
 */
 const App = () => {
   return (
-    <Container fluid={true} className="App">
-      <NavBar />
-      <Landing />
-    </Container>
+    <Provider store={store}>
+      <Container fluid={true} className="App">
+        <NavBar />
+        <Landing />
+      </Container>
+    </Provider>
   );
 };
 
