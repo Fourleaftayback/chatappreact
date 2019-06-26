@@ -13,7 +13,6 @@ const UserSchema = new Schema({
   },
   password: {
     type: String,
-    required: true,
     hide: true
   },
   profile_image_url: {
@@ -32,6 +31,15 @@ const UserSchema = new Schema({
   resetPasswordExp: {
     type: Date,
     default: undefined
+  },
+  auth_type: {
+    type: String,
+    required: true,
+    default: "local"
+  },
+  facebook_id: {
+    type: String,
+    required: false
   }
 });
 

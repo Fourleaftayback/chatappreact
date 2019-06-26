@@ -7,3 +7,4 @@ package-lock.json
 /client/.gitignore
 /client/package-lock.json
 /.vscode
+/client/src/.env

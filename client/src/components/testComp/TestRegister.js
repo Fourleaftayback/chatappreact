@@ -7,6 +7,7 @@ import { registerUser } from "../../redux/actions/authActions";
 //import history from "../../history/History";
 
 import FormItem from "../form/FormItem";
+import FaceBook from "./FaceBook";
 
 const TestRegister = ({ errors, registerUser, isAuthenticated }) => {
   const [email, setEmail] = useState("");
@@ -69,6 +70,8 @@ const TestRegister = ({ errors, registerUser, isAuthenticated }) => {
               Register
             </Button>
           </Form>
+          <br />
+          <FaceBook />
         </Col>
       </Row>
     </React.Fragment>

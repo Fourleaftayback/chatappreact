@@ -184,4 +184,64 @@ router.put(
   }
 );
 
+// @route   POST /user/fbauth
+// @desc    fbAuth
+// @access  Public
+router.post("/fbauth", (req, res) => {
+  let { facebook_id, user_name, email, profile_image_url } = req.body;
+
+  User.findOne({
+    facebook_id
+  }).then(user => {
+    if (user) {
+      const payload = {
+        id: user.id,
+        user_name: user.user_name,
+        profile_image_url: user.profile_image_url
+      };
+      jwt.sign(
+        payload,
+        keys,
+        {
+          expiresIn: 72000
+        },
+        (err, token) => {
+          res.json({
+            success: true,
+            token: "Bearer " + token
+          });
+        }
+      );
+    } else {
+      let newUser = new User({
+        facebook_id: facebook_id,
+        email: email,
+        user_name: user_name,
+        profile_image_url: profile_image_url,
+        auth_type: "facebook"
+      });
+      newUser.save().then(user => {
+        const payload = {
+          id: user.id,
+          user_name: user.user_name,
+          profile_image_url: user.profile_image_url
+        };
+        jwt.sign(
+          payload,
+          keys,
+          {
+            expiresIn: 72000
+          },
+          (err, token) => {
+            res.json({
+              success: true,
+              token: "Bearer " + token
+            });
+          }
+        );
+      });
+    }
+  });
+});
+
 module.exports = router;
