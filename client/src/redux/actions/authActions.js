@@ -23,6 +23,10 @@ export const registerUser = userData => dispatch => {
     );
 };
 
+export const login = userData => dispatch => {
+  console.log(userData);
+};
+
 // Set logged in user
 export const setCurrentUser = decoded => {
   return {
