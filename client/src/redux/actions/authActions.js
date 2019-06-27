@@ -51,7 +51,7 @@ export const login = userData => dispatch => {
     .then(() => dispatch(toggle("login")))
     .then(() => {
       dispatch(toggle("navbar"));
-      history.push("/messages");
+      history.push("/hub");
     })
     .catch(err =>
       dispatch({
@@ -74,7 +74,7 @@ export const facebookLogin = userData => dispatch => {
     .then(() => dispatch(toggle("login")))
     .then(() => {
       dispatch(toggle("navbar"));
-      history.push("/messages");
+      history.push("/hub");
     })
     .catch(err =>
       dispatch({
