@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import FacebookLogin from "react-facebook-login";
 
-const FaceBookLogin = ({ isAuth }) => {
+const FaceBookLogin = ({ facebookLogin, buttonText }) => {
   //const [userId, setUserId] = useState("");
   //const [name, setName] = useState("");
   //const [email, setEmail] = useState("");
@@ -19,25 +20,25 @@ const FaceBookLogin = ({ isAuth }) => {
       profile_image_url: response.picture.data.url
     };
     console.log(user);
-    //set up redux function to confirm with server
-    //then provide token
+    facebookLogin(user);
   };
 
-  let fbContent;
-
-  isAuth
-    ? (fbContent = null)
-    : (fbContent = (
-        <FacebookLogin
-          appId="323616998587440"
-          autoLoad={false}
-          fields="name,email,picture"
-          //onClick={this.componentClicked}
-          callback={responseFacebook}
-        />
-      ));
-
-  return <React.Fragment>{fbContent}</React.Fragment>;
+  return (
+    <React.Fragment>
+      <FacebookLogin
+        appId="323616998587440"
+        autoLoad={false}
+        fields="name,email,picture"
+        onClick={() => console.log("inital")}
+        textButton={buttonText}
+        callback={responseFacebook}
+      />
+    </React.Fragment>
+  );
+};
+FaceBookLogin.propTypes = {
+  facebookLogin: PropTypes.func.isRequired,
+  buttonText: PropTypes.string.isRequired
 };
 
 export default FaceBookLogin;

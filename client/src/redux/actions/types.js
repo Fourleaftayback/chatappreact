@@ -9,3 +9,7 @@ export const NAVBAR_CLOSE = "NAVBAR_CLOSE";
 export const LOGIN_TOGGLE = "LOGIN_TOGGLE";
 export const LOGIN_OPEN = "LOGIN_OPEN";
 export const LOGIN_CLOSE = "LOGIN_CLOSE";
+
+export const REGISTER_TOGGLE = "REGISTER_TOGGLE";
+export const REGISTER_OPEN = "REGISTER_OPEN";
+export const REGISTER_CLOSE = "REGISTER_CLOSE";

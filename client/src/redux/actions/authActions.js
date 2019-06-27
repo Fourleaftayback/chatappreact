@@ -1,9 +1,11 @@
 import axios from "axios";
-//import setAuthToken from "../../utils/setAuthToken";
-//import jwt_decode from "jwt-decode";
+import setAuthToken from "../../utils/setAuthToken";
+import jwt_decode from "jwt-decode";
 import history from "../../history/History";
 
 import { GET_ERRORS, CLEAR_ERRORS, SET_CURRENT_USER } from "./types";
+
+import { toggle } from "./viewsActions";
 
 // Register User
 export const registerUser = userData => dispatch => {
@@ -15,6 +17,13 @@ export const registerUser = userData => dispatch => {
         type: CLEAR_ERRORS
       });
     })
+    .then(() => dispatch(toggle("register")))
+    .then(() => dispatch(toggle("navbar")))
+    .then(() =>
+      setTimeout(() => {
+        dispatch(toggle("login"));
+      }, 400)
+    )
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
@@ -23,8 +32,56 @@ export const registerUser = userData => dispatch => {
     );
 };
 
+// Login - Get User Token
 export const login = userData => dispatch => {
-  console.log(userData);
+  axios
+    .post("/user/login", userData)
+    .then(res => {
+      const { token } = res.data;
+      localStorage.setItem("jwtToken", token);
+      setAuthToken(token);
+      const decoded = jwt_decode(token);
+      dispatch(setCurrentUser(decoded));
+    })
+    .then(() => {
+      dispatch({
+        type: CLEAR_ERRORS
+      });
+    })
+    .then(() => dispatch(toggle("login")))
+    .then(() => {
+      dispatch(toggle("navbar"));
+      history.push("/messages");
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+export const facebookLogin = userData => dispatch => {
+  axios
+    .post("/user/fbauth", userData)
+    .then(res => {
+      const { token } = res.data;
+      localStorage.setItem("jwtToken", token);
+      setAuthToken(token);
+      const decoded = jwt_decode(token);
+      dispatch(setCurrentUser(decoded));
+    })
+    .then(() => dispatch(toggle("login")))
+    .then(() => {
+      dispatch(toggle("navbar"));
+      history.push("/messages");
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
 };
 
 // Set logged in user

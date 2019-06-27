@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { NavItem } from "reactstrap";
 
 import LoginModal from "../auth/LoginModal";
+import RegisterModal from "../auth/RegisterModal";
 const AuthLinks = () => {
   return (
     <React.Fragment>
@@ -12,8 +13,7 @@ const AuthLinks = () => {
         <LoginModal />
       </NavItem>
       <NavItem>
-        Sign Up
-        {/*Place sign up modal here*/}
+        <RegisterModal />
       </NavItem>
     </React.Fragment>
   );

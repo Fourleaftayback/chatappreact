@@ -14,40 +14,43 @@ import {
 import FormItem from "../form/FormItem";
 import FaceBookLogin from "./FaceBookLogin";
 
+import { facebookLogin, registerUser } from "../../redux/actions/authActions";
 import { toggle } from "../../redux/actions/viewsActions";
-import { login, facebookLogin } from "../../redux/actions/authActions";
 
-const LoginModal = ({
-  login,
+const RegisterModal = ({
   errors,
+  facebookLogin,
+  registerModalIsOpen,
   toggle,
-  loginModalIsOpen,
-  facebookLogin
+  registerUser
 }) => {
   const [email, setEmail] = useState("");
+  const [user_name, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [password2, setPassword2] = useState("");
 
   const onSubmit = e => {
     e.preventDefault();
     const userData = {
       email: email,
-      password: password
+      user_name: user_name,
+      password: password,
+      password2: password2
     };
-
-    login(userData);
+    registerUser(userData);
   };
 
   const toggleModal = () => {
-    toggle("login");
+    toggle("register");
   };
 
   return (
     <React.Fragment>
       <NavLink className="p-0" onClick={toggleModal}>
-        Login
+        Register
       </NavLink>
-      <Modal isOpen={loginModalIsOpen} toggle={toggleModal}>
-        <ModalHeader toggle={toggleModal}> Login</ModalHeader>
+      <Modal isOpen={registerModalIsOpen} toggle={toggleModal}>
+        <ModalHeader toggle={toggleModal}>Register</ModalHeader>
         <ModalBody className="mt-3">
           <Form>
             <FormItem
@@ -59,6 +62,14 @@ const LoginModal = ({
               onChange={e => setEmail(e.target.value)}
             />
             <FormItem
+              type="text"
+              name="user_name"
+              placeholder="User Name"
+              value={user_name}
+              error={errors.user_name}
+              onChange={e => setUserName(e.target.value)}
+            />
+            <FormItem
               type="password"
               name="password"
               placeholder="Password"
@@ -66,14 +77,22 @@ const LoginModal = ({
               error={errors.password}
               onChange={e => setPassword(e.target.value)}
             />
+            <FormItem
+              type="password"
+              name="password2"
+              placeholder="Password"
+              value={password2}
+              error={errors.password2}
+              onChange={e => setPassword2(e.target.value)}
+            />
             <Button color="info" block={true} onClick={onSubmit}>
-              Login
+              Register
             </Button>
           </Form>
           <br />
           <FaceBookLogin
             facebookLogin={facebookLogin}
-            buttonText="FaceBook Login"
+            buttonText="FaceBook Register"
           />
           <NavLink
             className="text-primary text-center mt-3 p
@@ -87,27 +106,27 @@ const LoginModal = ({
   );
 };
 
-LoginModal.propTypes = {
+RegisterModal.propTypes = {
   errors: PropTypes.object.isRequired,
-  loginModalIsOpen: PropTypes.bool.isRequired,
+  facebookLogin: PropTypes.func.isRequired,
+  registerModalIsOpen: PropTypes.bool.isRequired,
   toggle: PropTypes.func.isRequired,
-  login: PropTypes.func.isRequired,
-  facebookLogin: PropTypes.func.isRequired
+  registerUser: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   auth: state.auth,
   errors: state.errors,
-  loginModalIsOpen: state.views.loginModalIsOpen
+  registerModalIsOpen: state.views.registerModalIsOpen
 });
 
 const mapDispatchToProps = {
+  facebookLogin: facebookLogin,
   toggle: toggle,
-  login: login,
-  facebookLogin: facebookLogin
+  registerUser: registerUser
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(LoginModal);
+)(RegisterModal);

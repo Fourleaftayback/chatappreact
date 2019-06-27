@@ -10,7 +10,7 @@ const SignOut = ({ onClick }) => {
           outline
           size="sm"
           className="cus-text-light cus-btn-transparent nav-btn">
-          Sign Out onClick={onClick}
+          Sign Out
         </Button>
       </NavItem>
     </React.Fragment>

@@ -3,19 +3,19 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav } from "reactstrap";
 
-import { navBarToggle } from "../../redux/actions/viewsActions";
+import { toggle } from "../../redux/actions/viewsActions";
 
 import AuthLinks from "./AuthLinks";
 import SignOut from "./SignOut";
 
-const NavBar = ({ navBarIsOpen, navBarToggle, isLoggedIn }) => {
+const NavBar = ({ navBarIsOpen, toggle, isLoggedIn }) => {
   return (
     <Navbar color="dark" dark expand="md">
       <NavbarBrand className="cus-text-light mx-2" href="/">
         <i className="fas fa-comment fa-lg" />
         <span className="ml-2">Chat</span>
       </NavbarBrand>
-      <NavbarToggler onClick={navBarToggle} />
+      <NavbarToggler onClick={() => toggle("navbar")} />
 
       <Collapse isOpen={navBarIsOpen} navbar>
         <Nav className="navbar-nav mt-2 mt-lg-0 ml-auto">
@@ -31,7 +31,7 @@ const NavBar = ({ navBarIsOpen, navBarToggle, isLoggedIn }) => {
 };
 
 NavBar.propTypes = {
-  navBarToggle: PropTypes.func.isRequired,
+  toggle: PropTypes.func.isRequired,
   navBarIsOpen: PropTypes.bool.isRequired
 };
 
@@ -41,7 +41,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  navBarToggle: navBarToggle
+  toggle: toggle
 };
 
 export default connect(
