@@ -5,10 +5,15 @@ import { Router, Route, Switch } from "react-router-dom";
 //import io from "socket.io-client";
 import { Container } from "reactstrap";
 import history from "./history/History";
+import jwt_decode from "jwt-decode";
+import setAuthToken from "./utils/setAuthToken";
+
+import { setCurrentUser, logOutUser } from "./redux/actions/authActions";
 
 import NavBar from "./components/navbar/NavBar";
 import Landing from "./components/layouts/Landing";
-import TestRegister from "./components/testComp/TestRegister";
+import PrivateRoute from "./components/common/PrivateRoute";
+import Hub from "./components/layouts/Hub";
 
 import "./sass/App.scss";
 
@@ -23,6 +28,19 @@ constructor() {
     }
   }
 */
+
+if (localStorage.jwtToken) {
+  setAuthToken(localStorage.jwtToken);
+  const decoded = jwt_decode(localStorage.jwtToken);
+  store.dispatch(setCurrentUser(decoded));
+
+  const currentTime = Date.now() / 1000;
+  if (decoded.exp < currentTime) {
+    store.dispatch(logOutUser());
+    window.location.href = "/";
+  }
+}
+
 const App = () => {
   return (
     <Provider store={store}>
@@ -31,11 +49,7 @@ const App = () => {
           <NavBar />
           <Switch>
             <Route exact path="/" component={Landing} />
-            <Route
-              exact
-              path="/register"
-              component={() => <TestRegister isAuthenticated={false} />}
-            />
+            <PrivateRoute exact path="/hub" component={Hub} />
           </Switch>
         </Container>
       </Router>

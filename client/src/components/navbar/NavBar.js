@@ -4,11 +4,12 @@ import PropTypes from "prop-types";
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav } from "reactstrap";
 
 import { toggle } from "../../redux/actions/viewsActions";
+import { logOutUser } from "../../redux/actions/authActions";
 
 import AuthLinks from "./AuthLinks";
-import SignOut from "./SignOut";
+import SignOut from "../auth/SignOut";
 
-const NavBar = ({ navBarIsOpen, toggle, isLoggedIn }) => {
+const NavBar = ({ navBarIsOpen, toggle, isLoggedIn, logOutUser }) => {
   return (
     <Navbar color="dark" dark expand="md">
       <NavbarBrand className="cus-text-light mx-2" href="/">
@@ -19,11 +20,7 @@ const NavBar = ({ navBarIsOpen, toggle, isLoggedIn }) => {
 
       <Collapse isOpen={navBarIsOpen} navbar>
         <Nav className="navbar-nav mt-2 mt-lg-0 ml-auto">
-          {isLoggedIn ? (
-            <SignOut onClick={() => console.log("sign out clicked")} />
-          ) : (
-            <AuthLinks />
-          )}
+          {isLoggedIn ? <SignOut onClick={logOutUser} /> : <AuthLinks />}
         </Nav>
       </Collapse>
     </Navbar>
@@ -32,7 +29,8 @@ const NavBar = ({ navBarIsOpen, toggle, isLoggedIn }) => {
 
 NavBar.propTypes = {
   toggle: PropTypes.func.isRequired,
-  navBarIsOpen: PropTypes.bool.isRequired
+  navBarIsOpen: PropTypes.bool.isRequired,
+  logOutUser: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -41,7 +39,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  toggle: toggle
+  toggle: toggle,
+  logOutUser: logOutUser
 };
 
 export default connect(

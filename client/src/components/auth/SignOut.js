@@ -9,6 +9,7 @@ const SignOut = ({ onClick }) => {
         <Button
           outline
           size="sm"
+          onClick={onClick}
           className="cus-text-light cus-btn-transparent nav-btn">
           Sign Out
         </Button>
