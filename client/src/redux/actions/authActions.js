@@ -3,7 +3,12 @@ import setAuthToken from "../../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 import history from "../../history/History";
 
-import { GET_ERRORS, CLEAR_ERRORS, SET_CURRENT_USER } from "./types";
+import {
+  GET_ERRORS,
+  CLEAR_ERRORS,
+  SET_CURRENT_USER,
+  SHOULD_LAUNCH_MODAL
+} from "./types";
 
 import { toggle } from "./viewsActions";
 
@@ -42,8 +47,6 @@ export const login = userData => dispatch => {
       setAuthToken(token);
       const decoded = jwt_decode(token);
       dispatch(setCurrentUser(decoded));
-    })
-    .then(() => {
       dispatch({
         type: CLEAR_ERRORS
       });
@@ -52,6 +55,13 @@ export const login = userData => dispatch => {
     .then(() => {
       dispatch(toggle("navbar"));
       history.push("/hub");
+    })
+    .then(() => {
+      setTimeout(() => {
+        dispatch({
+          type: SHOULD_LAUNCH_MODAL
+        });
+      }, 400);
     })
     .catch(err =>
       dispatch({

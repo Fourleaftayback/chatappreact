@@ -7,7 +7,9 @@ import {
   LOGIN_CLOSE,
   REGISTER_TOGGLE,
   REGISTER_OPEN,
-  REGISTER_CLOSE
+  REGISTER_CLOSE,
+  PROFILEIMAGE_OPEN,
+  SHOULD_LAUNCH_MODAL
 } from "../actions/types";
 
 export const viewsToggle = store => next => action => {
@@ -26,6 +28,13 @@ export const viewsToggle = store => next => action => {
     current.views.registerModalIsOpen
       ? (action.type = REGISTER_CLOSE)
       : (action.type = REGISTER_OPEN);
+  }
+  if (action.type === SHOULD_LAUNCH_MODAL) {
+    if (
+      current.auth.user.profile_image_url === "" ||
+      current.auth.user.profile_image_url === undefined
+    )
+      action.type = PROFILEIMAGE_OPEN;
   }
   next(action);
 };

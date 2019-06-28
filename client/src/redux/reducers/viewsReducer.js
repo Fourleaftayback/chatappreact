@@ -4,13 +4,16 @@ import {
   LOGIN_OPEN,
   LOGIN_CLOSE,
   REGISTER_OPEN,
-  REGISTER_CLOSE
+  REGISTER_CLOSE,
+  PROFILEIMAGE_OPEN,
+  PROFILEIMAGE_CLOSE
 } from "../actions/types";
 
 const initialState = {
   navBarIsOpen: false,
   loginModalIsOpen: false,
-  registerModalIsOpen: false
+  registerModalIsOpen: false,
+  profileImageModalIsOpen: false
 };
 
 export default function(state = initialState, action) {
@@ -38,6 +41,14 @@ export default function(state = initialState, action) {
     case REGISTER_CLOSE:
       return Object.assign({}, state, {
         registerModalIsOpen: false
+      });
+    case PROFILEIMAGE_OPEN:
+      return Object.assign({}, state, {
+        profileImageModalIsOpen: true
+      });
+    case PROFILEIMAGE_CLOSE:
+      return Object.assign({}, state, {
+        profileImageModalIsOpen: false
       });
     default:
       return state;

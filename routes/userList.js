@@ -4,7 +4,7 @@ const passport = require("passport");
 
 const User = require("../models/User");
 
-// @route   GET /list/alluser
+// @route   GET /list/allusers
 // @desc    gives list of all users except the current user in alphabetical order
 // @access  Private
 
@@ -19,7 +19,7 @@ router.get(
         $ne: req.user.id
       }
     })
-      .select("-resetPasswordExp -resetPasswordToken")
+      .select("-resetPasswordExp -resetPasswordToken -auth_type")
       .sort("user_name")
       .then(users => {
         return res.status(200).json(users);

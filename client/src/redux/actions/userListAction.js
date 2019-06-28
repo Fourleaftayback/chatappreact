@@ -1,16 +1,20 @@
 import axios from "axios";
 
-import { GET_ALL_USERS } from "./types";
+import { GET_ALL_USERS, GET_ERRORS } from "./types";
 
 export const getAllUsers = () => dispatch => {
   axios
-    .get("http://localhost:5000/list/allusers")
+    .get("/list/allusers")
     .then(res => {
-      console.log("running");
       dispatch({
         type: GET_ALL_USERS,
         payload: res.data
       });
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
 };
