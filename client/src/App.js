@@ -14,6 +14,7 @@ import NavBar from "./components/navbar/NavBar";
 import Landing from "./components/layouts/Landing";
 import PrivateRoute from "./components/common/PrivateRoute";
 import Hub from "./components/layouts/Hub";
+import NewChat from "./components/layouts/NewChat.js";
 
 import "./sass/App.scss";
 
@@ -50,6 +51,7 @@ const App = () => {
           <Switch>
             <Route exact path="/" component={Landing} />
             <PrivateRoute exact path="/hub" component={Hub} />
+            <PrivateRoute exact path="/chat" component={NewChat} />
           </Switch>
         </Container>
       </Router>

@@ -13,3 +13,5 @@ export const LOGIN_CLOSE = "LOGIN_CLOSE";
 export const REGISTER_TOGGLE = "REGISTER_TOGGLE";
 export const REGISTER_OPEN = "REGISTER_OPEN";
 export const REGISTER_CLOSE = "REGISTER_CLOSE";
+
+export const GET_ALL_USERS = "GET_ALL_USERS";

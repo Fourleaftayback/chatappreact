@@ -15,7 +15,6 @@ const FaceBookLogin = ({ facebookLogin, buttonText }) => {
     facebookLogin(user);
   };
 
-  //console.log(fbAppId);
   return (
     <React.Fragment>
       <FacebookLogin
