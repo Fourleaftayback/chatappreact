@@ -94,6 +94,30 @@ export const facebookLogin = userData => dispatch => {
     );
 };
 
+export const uploadProfileImage = image => dispatch => {
+  axios
+    .put("/user/profileimage", image)
+    .then(res => {
+      const { token } = res.data;
+      localStorage.setItem("jwtToken", token);
+      setAuthToken(token);
+      const decoded = jwt_decode(token);
+      dispatch(setCurrentUser(decoded));
+      dispatch({
+        type: CLEAR_ERRORS
+      });
+    })
+    .then(() => {
+      dispatch(toggle("profileimage"));
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
+};
+
 // Set logged in user
 export const setCurrentUser = decoded => {
   return {

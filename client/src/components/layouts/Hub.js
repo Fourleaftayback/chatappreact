@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 //import PropTypes from "prop-types";
 import { Container, Row, Col } from "reactstrap";
 import NewChatButton from "../buttons/NewChatButton";
+import ProfileImageModal from "../auth/ProfileImageModal";
 
 const Hub = () => {
   return (
@@ -13,6 +14,7 @@ const Hub = () => {
         </Col>
       </Row>
       <Row>list of active chats here</Row>
+      <ProfileImageModal />
     </Container>
   );
 };

@@ -8,7 +8,9 @@ import {
   REGISTER_TOGGLE,
   REGISTER_OPEN,
   REGISTER_CLOSE,
+  PROFILEIMAGE_TOGGLE,
   PROFILEIMAGE_OPEN,
+  PROFILEIMAGE_CLOSE,
   SHOULD_LAUNCH_MODAL
 } from "../actions/types";
 
@@ -28,6 +30,11 @@ export const viewsToggle = store => next => action => {
     current.views.registerModalIsOpen
       ? (action.type = REGISTER_CLOSE)
       : (action.type = REGISTER_OPEN);
+  }
+  if (action.type === PROFILEIMAGE_TOGGLE) {
+    current.views.profileImageModalIsOpen
+      ? (action.type = PROFILEIMAGE_CLOSE)
+      : (action.type = PROFILEIMAGE_OPEN);
   }
   if (action.type === SHOULD_LAUNCH_MODAL) {
     if (
