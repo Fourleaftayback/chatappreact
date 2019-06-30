@@ -4,9 +4,10 @@ import PropTypes from "prop-types";
 import { Container, Row, Col } from "reactstrap";
 
 import { getAllUsers } from "../../redux/actions/userListAction";
+import { toggle } from "../../redux/actions/viewsActions";
 
 import FormItem from "../form/FormItem";
-import GroupChatButton from "../buttons/GroupChatButton";
+import GroupChatButtonModal from "../buttons/GroupChatButtonModal";
 import UserList from "../../components/users/UserList";
 
 class NewChat extends Component {
@@ -59,9 +60,12 @@ class NewChat extends Component {
                 error={this.state.error}
                 onChange={this.onChange}
               />
-            </Col>{" "}
+            </Col>
             <Col>
-              <GroupChatButton />
+              <GroupChatButtonModal
+                toggle={this.props.toggle}
+                isOpen={this.props.groupChatModalIsOpen}
+              />
             </Col>
           </Row>
           <Row>
@@ -77,15 +81,18 @@ class NewChat extends Component {
 
 NewChat.propTypes = {
   getAllUsers: PropTypes.func.isRequired,
-  userList: PropTypes.array.isRequired
+  userList: PropTypes.array.isRequired,
+  toggle: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  userList: state.users.userList
+  userList: state.users.userList,
+  groupChatModalIsOpen: state.views.groupChatModalIsOpen
 });
 
 const mapDispatchToProps = {
-  getAllUsers: getAllUsers
+  getAllUsers: getAllUsers,
+  toggle: toggle
 };
 
 export default connect(

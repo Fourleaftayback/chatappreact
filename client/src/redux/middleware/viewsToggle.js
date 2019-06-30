@@ -11,6 +11,9 @@ import {
   PROFILEIMAGE_TOGGLE,
   PROFILEIMAGE_OPEN,
   PROFILEIMAGE_CLOSE,
+  GROUPCHATCREATOR_TOGGLE,
+  GROUPCHATCREATOR_OPEN,
+  GROUPCHATCREATOR_CLOSE,
   SHOULD_LAUNCH_MODAL
 } from "../actions/types";
 
@@ -35,6 +38,11 @@ export const viewsToggle = store => next => action => {
     current.views.profileImageModalIsOpen
       ? (action.type = PROFILEIMAGE_CLOSE)
       : (action.type = PROFILEIMAGE_OPEN);
+  }
+  if (action.type === GROUPCHATCREATOR_TOGGLE) {
+    current.views.groupChatModalIsOpen
+      ? (action.type = GROUPCHATCREATOR_CLOSE)
+      : (action.type = GROUPCHATCREATOR_OPEN);
   }
   if (action.type === SHOULD_LAUNCH_MODAL) {
     if (

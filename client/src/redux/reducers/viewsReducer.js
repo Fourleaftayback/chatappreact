@@ -6,14 +6,17 @@ import {
   REGISTER_OPEN,
   REGISTER_CLOSE,
   PROFILEIMAGE_OPEN,
-  PROFILEIMAGE_CLOSE
+  PROFILEIMAGE_CLOSE,
+  GROUPCHATCREATOR_OPEN,
+  GROUPCHATCREATOR_CLOSE
 } from "../actions/types";
 
 const initialState = {
   navBarIsOpen: false,
   loginModalIsOpen: false,
   registerModalIsOpen: false,
-  profileImageModalIsOpen: false
+  profileImageModalIsOpen: false,
+  groupChatModalIsOpen: false
 };
 
 export default function(state = initialState, action) {
@@ -49,6 +52,14 @@ export default function(state = initialState, action) {
     case PROFILEIMAGE_CLOSE:
       return Object.assign({}, state, {
         profileImageModalIsOpen: false
+      });
+    case GROUPCHATCREATOR_OPEN:
+      return Object.assign({}, state, {
+        groupChatModalIsOpen: true
+      });
+    case GROUPCHATCREATOR_CLOSE:
+      return Object.assign({}, state, {
+        groupChatModalIsOpen: false
       });
     default:
       return state;
