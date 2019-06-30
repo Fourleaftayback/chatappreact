@@ -9,5 +9,5 @@ export default combineReducers({
   auth: authReducer,
   errors: errorsReducer,
   views: viewsReducer,
-  userList: userListReducer
+  users: userListReducer
 });

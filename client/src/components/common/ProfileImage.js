@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { NavLink } from "reactstrap";
 
-const ProfileImage = ({ onClick, imageUrl, size, cusClass }) => {
+const ProfileImage = ({ imageUrl, size, cusClass }) => {
   const ImageSize = {
     height: size,
     width: size
@@ -10,20 +9,17 @@ const ProfileImage = ({ onClick, imageUrl, size, cusClass }) => {
 
   return (
     <React.Fragment>
-      <NavLink onClick={onClick} className={cusClass}>
-        <img
-          src={imageUrl}
-          className="rounded-circle"
-          alt="Profile"
-          style={ImageSize}
-        />
-      </NavLink>
+      <img
+        src={imageUrl}
+        className={`rounded-circle ${cusClass}`}
+        alt="Profile"
+        style={ImageSize}
+      />
     </React.Fragment>
   );
 };
 
 ProfileImage.propTypes = {
-  onClick: PropTypes.func,
   imageUrl: PropTypes.string.isRequired,
   size: PropTypes.string.isRequired,
   cusClass: PropTypes.string

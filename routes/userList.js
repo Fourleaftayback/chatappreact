@@ -19,7 +19,7 @@ router.get(
         $ne: req.user.id
       }
     })
-      .select("-resetPasswordExp -resetPasswordToken -auth_type")
+      .select("_id user_name profile_image_url")
       .sort("user_name")
       .then(users => {
         return res.status(200).json(users);
