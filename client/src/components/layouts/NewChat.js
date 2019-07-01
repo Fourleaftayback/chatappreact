@@ -15,18 +15,8 @@ class NewChat extends Component {
     this.state = {
       userList: [],
       search: "",
-      error: "",
-      chatUserIds: []
+      errors: ""
     };
-  }
-  componentDidMount() {
-    this.props.getAllUsers();
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.userList) {
-      this.setState({ userList: nextProps.userList });
-    }
   }
 
   onChange = e => {
@@ -46,15 +36,39 @@ class NewChat extends Component {
     }
   };
 
-  addChatUser = id => {
-    if (!this.state.chatUserIds.includes(id)) {
-      let newArr = this.state.chatUserIds.concat(id);
-      this.setState({ chatUserIds: newArr });
-    } else {
-      let newArr = this.state.chatUserIds.filter(item => item !== id);
-      this.setState({ chatUserIds: newArr });
-    }
+  selectUser = id => {
+    let indx = this.state.userList.findIndex(item => item._id === id);
+    let newArr = [...this.state.userList];
+    newArr[indx].isSelected = !newArr[indx].isSelected;
+    this.setState({ userList: newArr });
   };
+
+  groupChat = () => {
+    let users = this.state.userList.filter(item => item.isSelected === true);
+    console.log(users);
+  };
+
+  chat = () => {
+    const selectedCount = this.state.userList.reduce((acc, item) => {
+      if (item.isSelected) return acc + 1;
+      return acc;
+    }, 0);
+    if (selectedCount > 1) {
+      this.setState({ errors: "Please use Group Chat Instead" });
+    }
+    //trigger single user chat
+  };
+
+  componentDidMount() {
+    this.props.getAllUsers();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.userList) {
+      nextProps.userList.map(item => (item.isSelected = false));
+      this.setState({ userList: nextProps.userList });
+    }
+  }
 
   render() {
     return (
@@ -67,20 +81,16 @@ class NewChat extends Component {
                 name="search"
                 placeholder="minimum of 3 character"
                 value={this.state.search}
-                error={this.state.error}
                 onChange={this.onChange}
               />
             </Col>
             <Col xs="2">
-              <Button outline color="primary">
+              <Button outline color="primary" onClick={this.chat}>
                 <i className="fas fa-user-friends fa-lg" />
               </Button>
             </Col>
             <Col xs="2">
-              <Button
-                outline
-                color="primary"
-                onClick={() => console.log(this.state.chatUserIds)}>
+              <Button outline color="primary" onClick={this.groupChat}>
                 <i className="fas fa-users fa-lg" />
               </Button>
             </Col>
@@ -89,7 +99,7 @@ class NewChat extends Component {
             <Col sm={{ size: 6, order: 2, offset: 3 }}>
               <UserList
                 userList={this.state.userList}
-                addChatUser={this.addChatUser}
+                selectUser={this.selectUser}
               />{" "}
             </Col>
           </Row>
