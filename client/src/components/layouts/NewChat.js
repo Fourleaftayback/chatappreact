@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { Container, Row, Col } from "reactstrap";
+import { Container, Row, Col, Button } from "reactstrap";
 
 import { getAllUsers } from "../../redux/actions/userListAction";
 import { toggle } from "../../redux/actions/viewsActions";
 
 import FormItem from "../form/FormItem";
-import GroupChatButtonModal from "../buttons/GroupChatButtonModal";
 import UserList from "../../components/users/UserList";
 
 class NewChat extends Component {
@@ -16,7 +15,8 @@ class NewChat extends Component {
     this.state = {
       userList: [],
       search: "",
-      error: ""
+      error: "",
+      chatUserIds: []
     };
   }
   componentDidMount() {
@@ -46,12 +46,22 @@ class NewChat extends Component {
     }
   };
 
+  addChatUser = id => {
+    if (!this.state.chatUserIds.includes(id)) {
+      let newArr = this.state.chatUserIds.concat(id);
+      this.setState({ chatUserIds: newArr });
+    } else {
+      let newArr = this.state.chatUserIds.filter(item => item !== id);
+      this.setState({ chatUserIds: newArr });
+    }
+  };
+
   render() {
     return (
       <React.Fragment>
         <Container>
-          <Row>
-            <Col>
+          <Row className="mt-2">
+            <Col xs="8">
               <FormItem
                 type="text"
                 name="search"
@@ -61,16 +71,26 @@ class NewChat extends Component {
                 onChange={this.onChange}
               />
             </Col>
-            <Col>
-              <GroupChatButtonModal
-                toggle={this.props.toggle}
-                isOpen={this.props.groupChatModalIsOpen}
-              />
+            <Col xs="2">
+              <Button outline color="primary">
+                <i className="fas fa-user-friends fa-lg" />
+              </Button>
+            </Col>
+            <Col xs="2">
+              <Button
+                outline
+                color="primary"
+                onClick={() => console.log(this.state.chatUserIds)}>
+                <i className="fas fa-users fa-lg" />
+              </Button>
             </Col>
           </Row>
           <Row>
             <Col sm={{ size: 6, order: 2, offset: 3 }}>
-              <UserList userList={this.state.userList} />{" "}
+              <UserList
+                userList={this.state.userList}
+                addChatUser={this.addChatUser}
+              />{" "}
             </Col>
           </Row>
         </Container>
