@@ -8,6 +8,7 @@ import { toggle } from "../../redux/actions/viewsActions";
 
 import FormItem from "../form/FormItem";
 import UserList from "../../components/users/UserList";
+import AlertMessage from "../../components/common/AlertMessage";
 
 class NewChat extends Component {
   constructor(props) {
@@ -15,7 +16,8 @@ class NewChat extends Component {
     this.state = {
       userList: [],
       search: "",
-      errors: ""
+      errors: "",
+      errorIsOpen: false
     };
   }
 
@@ -54,7 +56,10 @@ class NewChat extends Component {
       return acc;
     }, 0);
     if (selectedCount > 1) {
-      this.setState({ errors: "Please use Group Chat Instead" });
+      this.setState({
+        errors: "Please use Group Chat Instead",
+        errorIsOpen: true
+      });
     }
     //trigger single user chat
   };
@@ -93,6 +98,15 @@ class NewChat extends Component {
               <Button outline color="primary" onClick={this.groupChat}>
                 <i className="fas fa-users fa-lg" />
               </Button>
+            </Col>
+          </Row>
+          <Row>
+            <Col sm={{ size: 6, order: 2, offset: 3 }}>
+              <AlertMessage
+                color="danger"
+                isOpen={this.state.errorIsOpen}
+                message={this.state.errors}
+              />
             </Col>
           </Row>
           <Row>
