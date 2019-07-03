@@ -1,55 +1,82 @@
-import React from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Button, Row, Col, ListGroup, ListGroupItem } from "reactstrap";
 import PropTypes from "prop-types";
 import io from "socket.io-client";
+import FormItem from "../../components/form/FormItem";
 
-function TestSocket({ user }) {
-  const socket = io("localhost:5000");
-  //socket.emit("create", "room1");
-  socket.on("connect", function() {
-    // call the server-side function 'adduser' and send one parameter (value of prompt)
-    socket.emit("adduser", [user.user_name, user.id]);
-  });
-  // listener, whenever the server emits 'updatechat', this updates the chat body
-  /*
-  socket.on("updatechat", function(username, data) {
-    
-    $('#conversation').append('<b>'+username + ':</b> ' + data + '<br>');
-    
-  });
-  // listener, whenever the server emits 'updateusers', this updates the username list
-  socket.on("updateusers", function(data) {
-    
-		$('#users').empty();
-		$.each(data, function(key, value) {
-			$('#users').append('<div>' + key + '</div>');
+class TestSocket extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      message: "",
+      userList: [],
+      messages: []
+    };
+    this.socket = io("localhost:5000");
+  }
+
+  componentDidMount() {
+    this.socket.on("updatechat", data => {
+      this.setState({ messages: data });
     });
-    
-  });
-  
-  // on load of page
-	$(function(){
-		// when the client clicks SEND
-		$('#datasend').click( function() {
-			var message = $('#data').val();
-			$('#data').val('');
-			// tell server to execute 'sendchat' and send along one parameter
-			socket.emit('sendchat', message);
-		});
+    this.socket.on("updateusers", data => {
+      this.setState({ userList: data });
+    });
+    this.socket.on("connect", () => {
+      this.socket.emit("adduser", this.props.user);
+    });
+  }
 
-		// when the client hits ENTER on their keyboard
-		$('#data').keypress(function(e) {
-			if(e.which == 13) {
-				$(this).blur();
-				$('#datasend').focus().click();
-			}
-		});
-	}); */
-  return (
-    <React.Fragment>
-      <p>testing socket</p>
-    </React.Fragment>
-  );
+  sendMessage = () => {
+    let message = {
+      userInfo: this.props.user,
+      message: this.state.message
+    };
+    this.socket.emit("sendchat", message);
+  };
+
+  onChange = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  };
+
+  render() {
+    return (
+      <React.Fragment>
+        <Row>
+          <Col sm={{ size: 6, order: 2, offset: 3 }}>
+            <ListGroup>
+              {this.state.userList.map((item, i) => (
+                <ListGroupItem key={i}>name: {item.user_name}</ListGroupItem>
+              ))}
+            </ListGroup>
+          </Col>
+        </Row>
+        <Row>
+          <Col sm={{ size: 6, order: 2, offset: 3 }}>
+            <ListGroup>
+              {this.state.messages.map((item, i) => (
+                <ListGroupItem key={i}>
+                  name: {item.userInfo.user_name}
+                  {"   "} {item.message}
+                </ListGroupItem>
+              ))}
+            </ListGroup>
+          </Col>
+        </Row>
+        <FormItem
+          type="text"
+          name="message"
+          value={this.state.message}
+          onChange={this.onChange}
+        />
+        <Button onClick={this.sendMessage}>Send</Button>
+        {/*run list of users here and each message*/}
+      </React.Fragment>
+    );
+  }
 }
 
 TestSocket.propTypes = {
