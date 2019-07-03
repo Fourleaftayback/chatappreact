@@ -10,6 +10,7 @@ module.exports = function(io) {
       data.date = Date.now();
       messageList.push(data);
       socket.emit("updatechat", messageList);
+      socket.broadcast.emit("updatechat", messageList);
     });
 
     // when the client emits 'adduser', this listens and executes
@@ -18,6 +19,7 @@ module.exports = function(io) {
       user.sessionId = socket.id;
       userList.push(user);
       socket.emit("updateusers", userList);
+      socket.broadcast.emit("updateusers", userList);
     });
 
     // when the user disconnects.. perform this
