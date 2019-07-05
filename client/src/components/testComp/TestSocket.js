@@ -11,7 +11,8 @@ class TestSocket extends Component {
     this.state = {
       message: "",
       userList: [],
-      messages: []
+      messages: [],
+      room: "someRoom"
     };
     this.socket = io("localhost:5000");
   }
@@ -24,7 +25,7 @@ class TestSocket extends Component {
       this.setState({ userList: data });
     });
     this.socket.on("connect", () => {
-      this.socket.emit("adduser", this.props.user);
+      this.socket.emit("adduser", [this.state.room, this.props.user]);
     });
   }
 
