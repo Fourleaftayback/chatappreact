@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { Container, Row, Col, Button } from "reactstrap";
+import { Container, Row, Col } from "reactstrap";
 
 import { getAllUsers } from "../../redux/actions/userListAction";
 import { toggle } from "../../redux/actions/viewsActions";
@@ -61,8 +61,13 @@ class NewChat extends Component {
         errors: "Please use Group Chat Instead",
         errorIsOpen: true
       });
+    } else {
+      let chosenUser = this.state.userList.filter(
+        item => item.isSelected === true
+      );
+      //  console.log(chosenUser);
+      //run function through redux to create new chat
     }
-    //trigger single user chat
   };
 
   componentDidMount() {

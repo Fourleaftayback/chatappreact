@@ -22,6 +22,7 @@ const io = socketIo(server);
 const authApi = require("./routes/auth");
 const resetApi = require("./routes/reset");
 const userListApi = require("./routes/userList");
+const testChatRoutes = require("./routes/testData");
 
 require("./config/passportUser")(passport);
 
@@ -43,6 +44,8 @@ app.use(busboyBodyParser());
 app.use("/user", authApi);
 app.use("/reset", resetApi);
 app.use("/list", userListApi);
+
+app.use("/test", testChatRoutes);
 require("./routes/testSocket")(io);
 
 if (process.env.NODE_ENV === "production") {

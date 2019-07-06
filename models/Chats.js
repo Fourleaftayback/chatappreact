@@ -1,15 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const UserId = new Schema({
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: "users",
-    required: true
-  }
-});
-
-const Message = new Schema({
+const message = new Schema({
   text: { type: String, required: true, default: "" },
   user: {
     type: Schema.Types.ObjectId,
@@ -30,7 +22,7 @@ const Message = new Schema({
   }
 });
 
-const ChatSchema = new Schema(
+const chat = new Schema(
   {
     group_chat: {
       type: Boolean,
@@ -38,11 +30,10 @@ const ChatSchema = new Schema(
       default: false
     },
     chat_name: {
-      type: String,
-      required: true
+      type: String
     },
-    userListIds: [UserIds],
-    messages: [Message],
+    userListIds: [String],
+    messages: [message],
     created_by: {
       type: Schema.Types.ObjectId,
       ref: "users",
@@ -51,6 +42,10 @@ const ChatSchema = new Schema(
     created_on: {
       type: Date,
       default: Date.now
+    },
+    updated_on: {
+      type: Date,
+      required: true
     }
   },
   {
@@ -58,12 +53,10 @@ const ChatSchema = new Schema(
   }
 );
 
-const ChatSchema = mongoose.model("Chats", Chats);
-const UserIdSchema = mongoose.model("UserId", UserId);
-const MessageSchema = mogoose.model("Message", Message);
+const chatSchema = mongoose.model("chat", chat);
+const messageSchema = mongoose.model("message", message);
 
 module.exports = {
-  Chat: ChatSchema,
-  UserId: UserIdSchema,
-  Message: MessageSchema
+  Chat: chatSchema,
+  Message: messageSchema
 };

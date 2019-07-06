@@ -6,7 +6,7 @@ const NewChatButton = ({ color, onClick, iconType }) => {
   return (
     <React.Fragment>
       <Button outline color={color} onClick={onClick}>
-        <i className={`fab ${iconType}`} />
+        <i className={iconType} />
       </Button>
     </React.Fragment>
   );
