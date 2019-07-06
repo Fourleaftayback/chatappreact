@@ -52,7 +52,7 @@ const App = () => {
           <Switch>
             <Route exact path="/" component={Landing} />
             <PrivateRoute exact path="/hub" component={Hub} />
-            <PrivateRoute exact path="/chat" component={NewChat} />
+            <PrivateRoute exact path="/createchat" component={NewChat} />
             <PrivateRoute path="/socket" component={TestSocket} />
           </Switch>
         </Container>

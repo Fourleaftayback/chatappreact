@@ -9,6 +9,7 @@ import { toggle } from "../../redux/actions/viewsActions";
 import FormItem from "../form/FormItem";
 import UserList from "../../components/users/UserList";
 import AlertMessage from "../../components/common/AlertMessage";
+import NewChatButton from "../buttons/NewChatButton";
 
 class NewChat extends Component {
   constructor(props) {
@@ -90,14 +91,18 @@ class NewChat extends Component {
               />
             </Col>
             <Col xs="2">
-              <Button outline color="primary" onClick={this.chat}>
-                <i className="fas fa-user-friends fa-lg" />
-              </Button>
+              <NewChatButton
+                color="primary"
+                onClick={this.chat}
+                iconType="fas fa-user-friends fa-lg"
+              />
             </Col>
             <Col xs="2">
-              <Button outline color="primary" onClick={this.groupChat}>
-                <i className="fas fa-users fa-lg" />
-              </Button>
+              <NewChatButton
+                color="primary"
+                onClick={this.groupChat}
+                iconType="fas fa-users fa-lg"
+              />
             </Col>
           </Row>
           <Row>

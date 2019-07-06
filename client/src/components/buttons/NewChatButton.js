@@ -1,11 +1,21 @@
 import React from "react";
+import PropTypes from "prop-types";
+import { Button } from "reactstrap";
 
-export default function NewChatButton() {
+const NewChatButton = ({ color, onClick, iconType }) => {
   return (
     <React.Fragment>
-      <a href="/chat">
-        <i className="fab fa-rocketchat fa-2x" />
-      </a>
+      <Button outline color={color} onClick={onClick}>
+        <i className={`fab ${iconType}`} />
+      </Button>
     </React.Fragment>
   );
-}
+};
+
+NewChatButton.propTypes = {
+  color: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+  iconType: PropTypes.string
+};
+
+export default NewChatButton;

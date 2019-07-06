@@ -1,22 +1,16 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const UserInfo = new Schema({
+const UserId = new Schema({
   user: {
     type: Schema.Types.ObjectId,
     ref: "users",
     required: true
-  },
-  user_name: {
-    type: String,
-    required: true
-  },
-  profile_image_url: {
-    type: String
   }
 });
 
 const Message = new Schema({
+  text: { type: String, required: true, default: "" },
   user: {
     type: Schema.Types.ObjectId,
     ref: "users",
@@ -28,6 +22,11 @@ const Message = new Schema({
   },
   profile_image_url: {
     type: String
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+    required: true
   }
 });
 
@@ -38,7 +37,11 @@ const ChatSchema = new Schema(
       required: true,
       default: false
     },
-    userList: [UserInfo],
+    chat_name: {
+      type: String,
+      required: true
+    },
+    userListIds: [UserIds],
     messages: [Message],
     created_by: {
       type: Schema.Types.ObjectId,
@@ -56,11 +59,11 @@ const ChatSchema = new Schema(
 );
 
 const ChatSchema = mongoose.model("Chats", Chats);
-const UserInfoSchema = mongoose.model("UserInfo", UserInfo);
+const UserIdSchema = mongoose.model("UserId", UserId);
 const MessageSchema = mogoose.model("Message", Message);
 
 module.exports = {
   Chat: ChatSchema,
-  UserInfo: UserInfoSchema,
+  UserId: UserIdSchema,
   Message: MessageSchema
 };
