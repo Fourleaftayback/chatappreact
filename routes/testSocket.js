@@ -1,24 +1,34 @@
 const express = require("express");
 const router = express.Router();
-//const userList = [];
-//const messageList = [];
 const chatData = [];
+
+/*
+{
+          roomId: string,
+          userList: Array ,
+          {roodId, id, sessionId, user_name}
+          messageList: Array
+        }
+
+*/
 
 module.exports = function(io) {
   io.on("connection", socket => {
     socket.on("sendchat", function(data) {
-      // we tell the client to execute 'updatechat' with 2 parameters
       data.date = Date.now();
-      messageList.push(data);
-      socket.emit("updatechat", messageList);
-      socket.broadcast.emit("updatechat", messageList);
+      let indx = chatData.findIndex(item => item.roomId === data.roomId);
+      let roomId = data.roomId;
+      data.roomId = undefined;
+      chatData[indx].messageList.push(data);
+      socket.emit("updatechat", chatData[indx].messageList);
+      socket.broadcast
+        .to(roomId)
+        .emit("updatechat", chatData[indx].messageList);
     });
 
     // when the client emits 'adduser', this listens and executes
     socket.on("adduser", user => {
-      console.log("connected");
       user[1].sessionId = socket.id;
-      //check to see if room exist already if not create new room
       let indx = chatData.findIndex(item => item.roomId === user[0]);
       if (indx === -1) {
         chatData.push({
@@ -44,10 +54,25 @@ module.exports = function(io) {
 
     // when the user disconnects.. perform this
     socket.on("disconnect", function() {
-      let indx = userList.findIndex(item => item.sessionId === socket.id);
-      userList.splice(indx, 1);
+      let roomIndx = chatData.findIndex(item =>
+        item.userList.find(x => x.sessionId === socket.id) ? true : false
+      );
+      chatData[roomIndx].userList.forEach((item, i) => {
+        if (item.sessionId === socket.id) {
+          chatData[roomIndx].userList.splice(i, 1);
+        }
+      });
 
-      socket.emit("updateusers", userList);
+      if (chatData[roomIndx].userList.length === 0) {
+        chatData.splice(roomIndx, 1);
+      } else {
+        socket
+          .to(chatData[roomIndx].roomId)
+          .emit("updateusers", chatData[roomIndx].userList);
+        socket.broadcast
+          .to(chatData[roomIndx].roomId)
+          .emit("updateusers", chatData[roomIndx].userList);
+      }
     });
   });
 

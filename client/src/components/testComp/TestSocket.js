@@ -14,7 +14,9 @@ class TestSocket extends Component {
       messages: [],
       room: "someRoom"
     };
-    this.socket = io("localhost:5000");
+    this.socket = io("localhost:5000", {
+      query: `roomId=${this.state.room}`
+    });
   }
 
   componentDidMount() {
@@ -32,7 +34,8 @@ class TestSocket extends Component {
   sendMessage = () => {
     let message = {
       userInfo: this.props.user,
-      message: this.state.message
+      message: this.state.message,
+      roomId: this.state.room
     };
     this.socket.emit("sendchat", message);
   };
