@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
-//import PropTypes from "prop-types";
+import PropTypes from "prop-types";
 import { Container, Row, Col } from "reactstrap";
 import NewChatButton from "../buttons/NewChatButton";
 import ProfileImageModal from "../auth/ProfileImageModal";
 import history from "../../history/History";
 
-const Hub = () => {
+import { getAllChats } from "../../redux/actions/messageActions";
+
+const Hub = ({ getAllChats }) => {
+  useEffect(() => {
+    getAllChats();
+  }, [getAllChats]);
+
   return (
     <Container>
       <Row>
@@ -18,17 +24,27 @@ const Hub = () => {
           />
         </Col>
       </Row>
-      <Row>list of active chats here</Row>
+      <Row>
+        <Col sm={{ size: 6, order: 2, offset: 3 }}>
+          list of active chats here
+        </Col>
+      </Row>
       <ProfileImageModal />
     </Container>
   );
 };
 
-Hub.propTypes = {};
+Hub.propTypes = {
+  getAllChats: PropTypes.func.isRequired
+};
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  currentChats: state.messages.currentChats
+});
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  getAllChats: getAllChats
+};
 
 export default connect(
   mapStateToProps,

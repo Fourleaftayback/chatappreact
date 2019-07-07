@@ -7,7 +7,7 @@ import { getAllUsers } from "../../redux/actions/userListAction";
 import { toggle } from "../../redux/actions/viewsActions";
 
 import FormItem from "../form/FormItem";
-import UserList from "../../components/users/UserList";
+import UserList from "../../components/list/UserList";
 import AlertMessage from "../../components/common/AlertMessage";
 import NewChatButton from "../buttons/NewChatButton";
 

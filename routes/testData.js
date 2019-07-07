@@ -13,9 +13,8 @@ router.post(
   }),
   (req, res) => {
     const { _id } = req.user;
-    const { recieverId, recieverName } = req.body;
+    const { recieverId } = req.body;
     let newRoom = new Chat({
-      chat_name: recieverName,
       userListIds: [_id, recieverId],
       messages: [],
       created_by: _id,
@@ -57,6 +56,24 @@ router.put(
         res.status(200).json(chat);
       }
     );
+  }
+);
+
+router.get(
+  "/getmessages",
+  passport.authenticate("userPass", {
+    session: false
+  }),
+  (req, res) => {
+    const { _id } = req.user;
+    Chat.find({ userListIds: { $in: [_id] } })
+      .sort({ updated_on: -1 })
+      .then(data => {
+        res.status(200).json(data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 );
 
