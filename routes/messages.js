@@ -14,15 +14,13 @@ router.get(
   }),
   (req, res) => {
     const { _id } = req.user;
-    Chat.find({ userListIds: { $in: [_id] } })
+    Chat.find({ userListIds: { $elemMatch: { _id: _id } } })
       .sort({ updated_on: -1 })
       .then(data => {
         res.status(200).json(data);
       })
       .catch(err => {
-        res
-          .status(400)
-          .json({ error: "something went wrong getting chat data." });
+        console.log(err);
       });
   }
 );

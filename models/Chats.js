@@ -1,6 +1,21 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+const userInfo = new Schema({
+  _id: {
+    type: Schema.Types.ObjectId,
+    ref: "users",
+    required: true
+  },
+  user_name: {
+    type: String,
+    required: true
+  },
+  profile_image_url: {
+    type: String
+  }
+});
+
 const message = new Schema({
   text: { type: String, required: true, default: "" },
   user: {
@@ -32,7 +47,7 @@ const chat = new Schema(
     chat_name: {
       type: String
     },
-    userListIds: [String],
+    userListIds: [userInfo],
     messages: [message],
     created_by: {
       type: Schema.Types.ObjectId,
@@ -55,8 +70,10 @@ const chat = new Schema(
 
 const chatSchema = mongoose.model("chat", chat);
 const messageSchema = mongoose.model("message", message);
+const userInfoSchema = mongoose.model("userInfo", userInfo);
 
 module.exports = {
   Chat: chatSchema,
-  Message: messageSchema
+  Message: messageSchema,
+  UserInfo: userInfoSchema
 };
