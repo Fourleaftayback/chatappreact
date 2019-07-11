@@ -2,17 +2,18 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Container, Row, Col } from "reactstrap";
-import NewChatButton from "../buttons/NewChatButton";
-import ProfileImageModal from "../auth/ProfileImageModal";
 import history from "../../history/History";
 
 import { getAllChats } from "../../redux/actions/messageActions";
 
-const Hub = ({ getAllChats }) => {
+import NewChatButton from "../buttons/NewChatButton";
+import ProfileImageModal from "../auth/ProfileImageModal";
+import ChatList from "../../components/list/ChatList";
+
+const Hub = ({ getAllChats, user, currentChats }) => {
   useEffect(() => {
     getAllChats();
   }, [getAllChats]);
-
   return (
     <Container>
       <Row>
@@ -26,7 +27,7 @@ const Hub = ({ getAllChats }) => {
       </Row>
       <Row>
         <Col sm={{ size: 6, order: 2, offset: 3 }}>
-          list of active chats here
+          <ChatList chatList={currentChats} userId={user.id} />
         </Col>
       </Row>
       <ProfileImageModal />
@@ -35,11 +36,14 @@ const Hub = ({ getAllChats }) => {
 };
 
 Hub.propTypes = {
-  getAllChats: PropTypes.func.isRequired
+  getAllChats: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
+  currentChats: PropTypes.array.isRequired
 };
 
 const mapStateToProps = state => ({
-  currentChats: state.messages.currentChats
+  currentChats: state.messages.currentChats,
+  user: state.auth.user
 });
 
 const mapDispatchToProps = {

@@ -34,7 +34,8 @@ const message = new Schema({
     type: Date,
     default: Date.now,
     required: true
-  }
+  },
+  messageSeenBy: [{ type: String }]
 });
 
 const chat = new Schema(
