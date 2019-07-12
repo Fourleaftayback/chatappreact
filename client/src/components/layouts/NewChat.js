@@ -5,6 +5,7 @@ import { Container, Row, Col } from "reactstrap";
 
 import { getAllUsers } from "../../redux/actions/userListAction";
 import { toggle } from "../../redux/actions/viewsActions";
+import { doesChatExist } from "../../utils/dataFunctions";
 
 import FormItem from "../form/FormItem";
 import UserList from "../../components/list/UserList";
@@ -65,8 +66,18 @@ class NewChat extends Component {
       let chosenUser = this.state.userList.filter(
         item => item.isSelected === true
       );
-      //  console.log(chosenUser);
+      let singleChat = this.props.currentChats.filter(
+        item => item.group_chat === false
+      );
+      let { doesExist, indx } = doesChatExist(
+        this.props.user.id,
+        chosenUser[0]._id,
+        singleChat
+      );
       //run function through redux to create new chat
+
+      //if chat does not exist then create a new room [need to sent request to server with roomId, then pull in the approoeratier data into the new room]
+      //if chat does exist then open existing room with the data applied
     }
   };
 
@@ -134,14 +145,18 @@ class NewChat extends Component {
 }
 
 NewChat.propTypes = {
+  user: PropTypes.object.isRequired,
   getAllUsers: PropTypes.func.isRequired,
   userList: PropTypes.array.isRequired,
-  toggle: PropTypes.func.isRequired
+  toggle: PropTypes.func.isRequired,
+  currentChats: PropTypes.array.isRequired
 };
 
 const mapStateToProps = state => ({
   userList: state.users.userList,
-  groupChatModalIsOpen: state.views.groupChatModalIsOpen
+  groupChatModalIsOpen: state.views.groupChatModalIsOpen,
+  currentChats: state.messages.currentChats,
+  user: state.auth.user
 });
 
 const mapDispatchToProps = {

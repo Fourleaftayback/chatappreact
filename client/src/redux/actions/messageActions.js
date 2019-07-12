@@ -17,3 +17,7 @@ export const getAllChats = () => dispatch => {
       });
     });
 };
+
+export const createNewRoom = (user, receiver) => {};
+
+export const joinExistingRoom = (roomId, user) => {};

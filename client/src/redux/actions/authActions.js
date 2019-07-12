@@ -11,6 +11,7 @@ import {
 } from "./types";
 
 import { toggle } from "./viewsActions";
+import { getAllChats } from "./messageActions";
 
 // Register User
 export const registerUser = userData => dispatch => {
@@ -119,11 +120,9 @@ export const uploadProfileImage = image => dispatch => {
 };
 
 // Set logged in user
-export const setCurrentUser = decoded => {
-  return {
-    type: SET_CURRENT_USER,
-    payload: decoded
-  };
+export const setCurrentUser = decoded => dispatch => {
+  dispatch({ type: SET_CURRENT_USER, payload: decoded });
+  dispatch(getAllChats());
 };
 
 export const logOutUser = () => dispatch => {

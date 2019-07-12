@@ -14,7 +14,7 @@ router.get(
   }),
   (req, res) => {
     const { _id } = req.user;
-    Chat.find({ userListIds: { $elemMatch: { _id: _id } } })
+    Chat.find({ userList: { $elemMatch: { _id: _id } } })
       .sort({ updated_on: -1 })
       .then(data => {
         res.status(200).json(data);

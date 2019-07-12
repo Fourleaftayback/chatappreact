@@ -1,19 +1,14 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Container, Row, Col } from "reactstrap";
 import history from "../../history/History";
 
-import { getAllChats } from "../../redux/actions/messageActions";
-
 import NewChatButton from "../buttons/NewChatButton";
 import ProfileImageModal from "../auth/ProfileImageModal";
 import ChatList from "../../components/list/ChatList";
 
-const Hub = ({ getAllChats, user, currentChats }) => {
-  useEffect(() => {
-    getAllChats();
-  }, [getAllChats]);
+const Hub = ({ user, currentChats }) => {
   return (
     <Container>
       <Row>
@@ -36,7 +31,6 @@ const Hub = ({ getAllChats, user, currentChats }) => {
 };
 
 Hub.propTypes = {
-  getAllChats: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
   currentChats: PropTypes.array.isRequired
 };
@@ -46,9 +40,7 @@ const mapStateToProps = state => ({
   user: state.auth.user
 });
 
-const mapDispatchToProps = {
-  getAllChats: getAllChats
-};
+const mapDispatchToProps = {};
 
 export default connect(
   mapStateToProps,

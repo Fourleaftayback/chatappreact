@@ -48,7 +48,8 @@ const chat = new Schema(
     chat_name: {
       type: String
     },
-    userListIds: [userInfo],
+    userList: [userInfo],
+    userListIds: [String],
     messages: [message],
     created_by: {
       type: Schema.Types.ObjectId,

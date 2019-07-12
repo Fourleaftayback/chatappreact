@@ -23,7 +23,8 @@ router.post(
     let recieverInfo = new UserInfo(reciever);
 
     let newRoom = new Chat({
-      userListIds: [creatorInfo, recieverInfo],
+      userList: [creatorInfo, recieverInfo],
+      userListIds: [_id, recieverId],
       messages: [],
       created_by: _id,
       updated_on: Date.now()

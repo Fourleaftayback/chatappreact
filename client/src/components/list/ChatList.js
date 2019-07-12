@@ -23,10 +23,7 @@ const ChatList = ({ chatList, userId }) => {
         </ListGroupItem>
       );
     } else {
-      let { user_name, profile_image_url } = getUserInfo(
-        userId,
-        item.userListIds
-      );
+      let { user_name, profile_image_url } = getUserInfo(userId, item.userList);
       return (
         <ListGroupItem
           key={item._id}
