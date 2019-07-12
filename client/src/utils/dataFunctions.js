@@ -11,18 +11,15 @@ export const getUnseenCount = (id, messages) => {
 };
 
 export const doesChatExist = (userId, recieverId, currentChats) => {
-  let chatInfo = {
-    doesExist: false,
-    indx: -1
-  };
+  let indx = -1;
+
   currentChats.forEach((item, i) => {
     if (
       item.userListIds.includes(userId) &&
       item.userListIds.includes(recieverId)
     ) {
-      chatInfo.doesExist = true;
-      chatInfo.indx = i;
+      indx = i;
     }
   });
-  return chatInfo;
+  return indx;
 };

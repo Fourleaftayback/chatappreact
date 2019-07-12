@@ -58,26 +58,24 @@ class NewChat extends Component {
       return acc;
     }, 0);
     if (selectedCount > 1) {
-      this.setState({
+      return this.setState({
         errors: "Please use Group Chat Instead",
         errorIsOpen: true
       });
+    }
+    let chosenUser = this.state.userList.filter(
+      item => item.isSelected === true
+    );
+    let singleChat = this.props.currentChats.filter(
+      item => item.group_chat === false
+    );
+    let indx = doesChatExist(this.props.user.id, chosenUser[0]._id, singleChat);
+    if (indx === -1) {
+      console.log(false);
+      console.log(chosenUser[0]);
     } else {
-      let chosenUser = this.state.userList.filter(
-        item => item.isSelected === true
-      );
-      let singleChat = this.props.currentChats.filter(
-        item => item.group_chat === false
-      );
-      let { doesExist, indx } = doesChatExist(
-        this.props.user.id,
-        chosenUser[0]._id,
-        singleChat
-      );
-      //run function through redux to create new chat
-
-      //if chat does not exist then create a new room [need to sent request to server with roomId, then pull in the approoeratier data into the new room]
-      //if chat does exist then open existing room with the data applied
+      console.log(true);
+      console.log(singleChat[indx]);
     }
   };
 

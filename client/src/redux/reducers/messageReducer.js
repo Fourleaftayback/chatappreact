@@ -1,7 +1,8 @@
 import { GET_ALL_CHATS } from "../actions/types";
 
 const initialState = {
-  currentChats: []
+  currentChats: [],
+  activeChatRoom: {}
 };
 
 export default function(state = initialState, action) {
