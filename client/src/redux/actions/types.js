@@ -26,3 +26,4 @@ export const SHOULD_LAUNCH_MODAL = "SHOULD_LAUNCH_MODAL";
 
 export const GET_ALL_USERS = "GET_ALL_USERS";
 export const GET_ALL_CHATS = "GET_ALL_CHATS";
+export const SET_ACTIVE_CHAT = "SET_ACTIVE_CHAT";

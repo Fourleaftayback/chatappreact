@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Button, Row, Col } from "reactstrap";
 import PropTypes from "prop-types";
@@ -6,19 +6,35 @@ import io from "socket.io-client";
 import FormItem from "../form/FormItem";
 
 import RoomHeader from "./RoomHeader";
+import CollapsableUserList from "../list/CollapsableUserList";
 
-const Room = ({ errors }) => {
+const Room = ({ user, errors, activeChatRoom }) => {
   const [message, setMessage] = useState("");
+  const [recieverName, setRecieverName] = useState("");
+  useEffect(() => {
+    if (!activeChatRoom.group_chat) {
+      let otherUser = activeChatRoom.userList.filter(
+        item => item._id !== user.id
+      );
+      setRecieverName(otherUser[0].user_name);
+    }
+  }, [activeChatRoom.userList, user.id, activeChatRoom.group_chat]);
   return (
     <React.Fragment>
       <Row>
         <Col sm={{ size: 6, order: 2, offset: 3 }}>
-          <RoomHeader isGroup={false} groupName="" name="name of user" />
+          <RoomHeader
+            isGroup={activeChatRoom.group_chat}
+            groupName={activeChatRoom.chat_name}
+            name={recieverName}
+          />
         </Col>
       </Row>
       <Row>
         <Col sm={{ size: 6, order: 2, offset: 3 }}>
-          if group list here with count of members and collapsable list
+          {activeChatRoom.group_chat ? (
+            <CollapsableUserList userList={activeChatRoom.userList} />
+          ) : null}
         </Col>
       </Row>
       <Row>
@@ -38,7 +54,7 @@ const Room = ({ errors }) => {
             color="info"
             block={false}
             onClick={() => console.log("sent")}>
-            Login
+            Send
           </Button>
         </Col>
       </Row>
@@ -47,11 +63,15 @@ const Room = ({ errors }) => {
 };
 
 Room.propTypes = {
-  errors: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
+  activeChatRoom: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  errors: state.errors
+  errors: state.errors,
+  activeChatRoom: state.messages.activeChatRoom,
+  user: state.auth.user
 });
 
 const mapDispatchToProps = {};

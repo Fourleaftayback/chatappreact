@@ -15,7 +15,7 @@ const RoomHeader = ({ isGroup, groupName, name }) => {
 
 RoomHeader.propTypes = {
   isGroup: PropTypes.bool.isRequired,
-  groupName: PropTypes.string.isRequired,
+  groupName: PropTypes.string,
   name: PropTypes.string.isRequired
 };
 

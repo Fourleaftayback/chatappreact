@@ -6,6 +6,7 @@ import { Container, Row, Col } from "reactstrap";
 import { getAllUsers } from "../../redux/actions/userListAction";
 import { toggle } from "../../redux/actions/viewsActions";
 import { doesChatExist } from "../../utils/dataFunctions";
+import { createNewRoom } from "../../redux/actions/messageActions";
 
 import FormItem from "../form/FormItem";
 import UserList from "../../components/list/UserList";
@@ -71,8 +72,10 @@ class NewChat extends Component {
     );
     let indx = doesChatExist(this.props.user.id, chosenUser[0]._id, singleChat);
     if (indx === -1) {
-      console.log(false);
-      console.log(chosenUser[0]);
+      let data = {
+        recieverId: chosenUser[0]._id
+      };
+      this.props.createNewRoom(data);
     } else {
       console.log(true);
       console.log(singleChat[indx]);
@@ -147,7 +150,8 @@ NewChat.propTypes = {
   getAllUsers: PropTypes.func.isRequired,
   userList: PropTypes.array.isRequired,
   toggle: PropTypes.func.isRequired,
-  currentChats: PropTypes.array.isRequired
+  currentChats: PropTypes.array.isRequired,
+  createNewRoom: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -159,7 +163,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   getAllUsers: getAllUsers,
-  toggle: toggle
+  toggle: toggle,
+  createNewRoom: createNewRoom
 };
 
 export default connect(

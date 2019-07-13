@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const { Chat, Message } = require("../models/Chats");
+const { Chat, Message, UserInfo } = require("../models/Chats");
+const User = require("../models/User");
 const passport = require("passport");
 
 // GET  /messages/all
@@ -22,6 +23,43 @@ router.get(
       .catch(err => {
         console.log(err);
       });
+  }
+);
+
+//POST /messages/newroom
+// Create new one on one chat room data
+// Private
+router.post(
+  "/newroom",
+  passport.authenticate("userPass", {
+    session: false
+  }),
+  async (req, res) => {
+    const { _id, profile_image_url, user_name } = req.user;
+    const { recieverId } = req.body;
+    const reciever = await User.findById(recieverId).select(
+      "_id profile_image_url user_name"
+    );
+    let creatorInfo = new UserInfo({
+      _id: _id,
+      user_name: user_name,
+      profile_image_url: profile_image_url
+    });
+    let recieverInfo = new UserInfo(reciever);
+
+    let newRoom = new Chat({
+      userList: [creatorInfo, recieverInfo],
+      userListIds: [_id, recieverId],
+      messages: [],
+      created_by: _id,
+      updated_on: Date.now()
+    });
+    newRoom
+      .save()
+      .then(room => {
+        res.status(200).json(room);
+      })
+      .catch(err => res.status(400).json({ errors: "something went wrong" }));
   }
 );
 
