@@ -6,7 +6,7 @@ import ProfileImage from "../common/ProfileImage";
 import { getUserInfo, getUnseenCount } from "../../utils/dataFunctions";
 import group from "../../image/group.png";
 
-const ChatList = ({ chatList, userId }) => {
+const ChatList = ({ chatList, userId, onClick }) => {
   let chats = chatList.map(item => {
     let unseenCount = getUnseenCount(userId, item.messages);
     if (item.group_chat) {
@@ -14,7 +14,7 @@ const ChatList = ({ chatList, userId }) => {
         <ListGroupItem
           key={item._id}
           classnames="mb-1"
-          onClick={() => console.log(" ")}>
+          onClick={() => onClick(item)}>
           <ProfileImage imageUrl={group} size="2.5rem" />
           {"   "}
           {item.chat_name}
@@ -28,7 +28,7 @@ const ChatList = ({ chatList, userId }) => {
         <ListGroupItem
           key={item._id}
           classnames="mb-1"
-          onClick={() => console.log(" ")}>
+          onClick={() => onClick(item)}>
           <ProfileImage imageUrl={profile_image_url} size="2.5rem" />
           {"   "}
           {user_name}
@@ -47,14 +47,8 @@ const ChatList = ({ chatList, userId }) => {
 
 ChatList.propTypes = {
   chatList: PropTypes.array.isRequired,
-  userId: PropTypes.string.isRequired
+  userId: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired
 };
 
 export default ChatList;
-
-/* 
-let count = data.reduce(
-  (acc, item) => (item.messageSeenBy.includes("123") ? acc + 1 : acc),
-  0
-); 
-*/

@@ -40,4 +40,10 @@ export const createNewRoom = receiverId => dispatch => {
     });
 };
 
-export const joinExistingRoom = (roomId, user) => {};
+export const joinExistingRoom = room => dispatch => {
+  dispatch({
+    type: SET_ACTIVE_CHAT,
+    payload: room
+  });
+  history.push(`/room/${room._id}`);
+};

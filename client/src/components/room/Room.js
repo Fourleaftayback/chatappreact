@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { Button, Row, Col } from "reactstrap";
+import { Row, Col } from "reactstrap";
 import PropTypes from "prop-types";
-import io from "socket.io-client";
-import FormItem from "../form/FormItem";
+//import io from "socket.io-client";
 
 import RoomHeader from "./RoomHeader";
 import CollapsableUserList from "../list/CollapsableUserList";
+import MessageList from "../list/MessageList";
+import FormSend from "../form/FormSend";
 
 const Room = ({ user, errors, activeChatRoom }) => {
   const [message, setMessage] = useState("");
@@ -38,24 +39,21 @@ const Room = ({ user, errors, activeChatRoom }) => {
         </Col>
       </Row>
       <Row>
-        <Col sm={{ size: 6, order: 2, offset: 3 }}>list of previous chats</Col>
-      </Row>
-      <Row>
         <Col sm={{ size: 6, order: 2, offset: 3 }}>
-          <FormItem
+          <MessageList userId={user.id} messageList={activeChatRoom.messages} />
+        </Col>
+      </Row>
+      <Row className="fixed-bottom">
+        <Col sm={{ size: 6, order: 2, offset: 3 }}>
+          <FormSend
             type="text"
             name="message"
             placeholder="message"
             value={message}
             error={errors.message}
             onChange={e => setMessage(e.target.value)}
+            onClick={() => console.log("sent")}
           />
-          <Button
-            color="info"
-            block={false}
-            onClick={() => console.log("sent")}>
-            Send
-          </Button>
         </Col>
       </Row>
     </React.Fragment>

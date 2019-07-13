@@ -64,6 +64,12 @@ class NewChat extends Component {
         errorIsOpen: true
       });
     }
+    if (selectedCount === 0) {
+      return this.setState({
+        errors: "Please select at least one user",
+        errorIsOpen: true
+      });
+    }
     let chosenUser = this.state.userList.filter(
       item => item.isSelected === true
     );

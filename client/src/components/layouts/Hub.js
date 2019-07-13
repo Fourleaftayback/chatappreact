@@ -8,7 +8,9 @@ import NewChatButton from "../buttons/NewChatButton";
 import ProfileImageModal from "../auth/ProfileImageModal";
 import ChatList from "../../components/list/ChatList";
 
-const Hub = ({ user, currentChats }) => {
+import { joinExistingRoom } from "../../redux/actions/messageActions";
+
+const Hub = ({ user, currentChats, joinExistingRoom }) => {
   return (
     <Container>
       <Row>
@@ -22,7 +24,11 @@ const Hub = ({ user, currentChats }) => {
       </Row>
       <Row>
         <Col sm={{ size: 6, order: 2, offset: 3 }}>
-          <ChatList chatList={currentChats} userId={user.id} />
+          <ChatList
+            chatList={currentChats}
+            userId={user.id}
+            onClick={joinExistingRoom}
+          />
         </Col>
       </Row>
       <ProfileImageModal />
@@ -32,7 +38,8 @@ const Hub = ({ user, currentChats }) => {
 
 Hub.propTypes = {
   user: PropTypes.object.isRequired,
-  currentChats: PropTypes.array.isRequired
+  currentChats: PropTypes.array.isRequired,
+  joinExistingRoom: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -40,7 +47,9 @@ const mapStateToProps = state => ({
   user: state.auth.user
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  joinExistingRoom: joinExistingRoom
+};
 
 export default connect(
   mapStateToProps,
