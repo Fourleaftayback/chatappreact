@@ -1,7 +1,7 @@
 import React from "react";
 import classnames from "classnames";
 import PropTypes from "prop-types";
-import { FormGroup, Input, Label } from "reactstrap";
+import { FormGroup, Input, Label} from "reactstrap";
 
 const FormItem = ({
   name,

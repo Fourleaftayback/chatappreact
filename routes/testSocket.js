@@ -2,16 +2,6 @@ const express = require("express");
 const router = express.Router();
 const chatData = [];
 
-/*
-{
-          roomId: string,
-          userList: Array ,
-          {roodId, id, sessionId, user_name}
-          messageList: Array
-        }
-
-*/
-
 module.exports = function(io) {
   io.on("connection", socket => {
     socket.on("sendchat", function(data) {

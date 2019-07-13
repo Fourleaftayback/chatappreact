@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Row, Col } from "reactstrap";
 import PropTypes from "prop-types";
-//import io from "socket.io-client";
-
+import io from "socket.io-client";
 import RoomHeader from "./RoomHeader";
 import CollapsableUserList from "../list/CollapsableUserList";
 import MessageList from "../list/MessageList";
@@ -12,6 +11,7 @@ import FormSend from "../form/FormSend";
 const Room = ({ user, errors, activeChatRoom }) => {
   const [message, setMessage] = useState("");
   const [recieverName, setRecieverName] = useState("");
+
   useEffect(() => {
     if (!activeChatRoom.group_chat) {
       let otherUser = activeChatRoom.userList.filter(
@@ -20,6 +20,15 @@ const Room = ({ user, errors, activeChatRoom }) => {
       setRecieverName(otherUser[0].user_name);
     }
   }, [activeChatRoom.userList, user.id, activeChatRoom.group_chat]);
+
+  useEffect(() => {
+    const socket = io("localhost:5000", {
+      query: `roomId=${activeChatRoom._id}`
+    });
+    socket.on("connect", () => {
+      socket.emit("join", [activeChatRoom, user]);
+    });
+  }, [activeChatRoom, user]);
   return (
     <React.Fragment>
       <Row>

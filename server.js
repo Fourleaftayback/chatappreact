@@ -49,7 +49,7 @@ app.use("/list", userListApi);
 app.use("/messages", messageApi);
 
 app.use("/test", testChatRoutes);
-require("./routes/testSocket")(io);
+require("./routes/socket")(io);
 
 if (process.env.NODE_ENV === "production") {
   app.use(

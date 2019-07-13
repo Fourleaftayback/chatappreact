@@ -9,7 +9,7 @@ import {
   Button
 } from "reactstrap";
 
-const FormSend = ({ name, type, placeholder, value, error, onChange }) => {
+const FormSend = ({ name, type, placeholder, value, error, onChange , onClick}) => {
   return (
     <React.Fragment>
       <FormGroup>
@@ -28,7 +28,7 @@ const FormSend = ({ name, type, placeholder, value, error, onChange }) => {
             <Button
               color="info"
               block={false}
-              onClick={() => console.log("sent")}>
+              onClick={onClick}>
               Send
             </Button>
           </InputGroupAddon>
