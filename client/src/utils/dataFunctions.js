@@ -5,7 +5,7 @@ export const getUserInfo = (id, userList) => {
 
 export const getUnseenCount = (id, messages) => {
   return messages.reduce(
-    (acc, item) => (item.messageSeenBy.includes(id) ? acc + 1 : acc),
+    (acc, item) => (item.messageSeenBy.includes(id) ? acc : acc + 1),
     0
   );
 };

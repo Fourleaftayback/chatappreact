@@ -20,18 +20,6 @@ import TestSocket from "./components/testComp/TestSocket";
 
 import "./sass/App.scss";
 
-/*
-constructor() {
-    super();
-    this.state = {
-      ///
-    };
-    if (window.location.pathname === "/chat") {
-      const socket = io("localhost:5000");
-    }
-  }
-*/
-
 if (localStorage.jwtToken) {
   setAuthToken(localStorage.jwtToken);
   const decoded = jwt_decode(localStorage.jwtToken);
