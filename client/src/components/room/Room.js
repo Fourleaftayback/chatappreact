@@ -18,7 +18,7 @@ class Room extends Component {
     };
     this.socket = io("localhost:5000");
   }
-
+  messageEnd = React.createRef();
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
@@ -31,6 +31,10 @@ class Room extends Component {
     };
     this.socket.emit("sendChat", message);
     this.setState({ message: "" });
+  };
+
+  scrollToEnd = () => {
+    this.messageEnd.current.scrollIntoView({ behavior: "smooth" });
   };
 
   componentWillMount() {
@@ -53,6 +57,11 @@ class Room extends Component {
     this.socket.on("update", data => {
       this.setState({ messages: data });
     });
+    this.scrollToEnd();
+  }
+
+  componentDidUpdate() {
+    this.scrollToEnd();
   }
 
   componentWillUnmount() {
@@ -86,6 +95,7 @@ class Room extends Component {
               userId={this.props.user.id}
               messageList={this.state.messages}
             />
+            <div ref={this.messageEnd} />
           </Col>
         </Row>
         <Row className="fixed-bottom">

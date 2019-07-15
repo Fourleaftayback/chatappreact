@@ -16,7 +16,6 @@ import PrivateRoute from "./components/common/PrivateRoute";
 import Hub from "./components/layouts/Hub";
 import NewChat from "./components/layouts/NewChat.js";
 import Room from "./components/room/Room";
-import TestSocket from "./components/testComp/TestSocket";
 
 import "./sass/App.scss";
 
@@ -43,7 +42,6 @@ const App = () => {
             <PrivateRoute exact path="/hub" component={Hub} />
             <PrivateRoute exact path="/createchat" component={NewChat} />
             <PrivateRoute path="/room" component={Room} />
-            <PrivateRoute path="/socket" component={TestSocket} />
           </Switch>
         </Container>
       </Router>

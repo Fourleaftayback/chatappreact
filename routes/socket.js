@@ -4,15 +4,18 @@ const { Chat, Message, UserId } = require("../models/Chats");
 
 module.exports = io => {
   io.on("connection", socket => {
-    socket.on("join", async data => {
+    socket.on("join", data => {
       socket.join(data[0]);
-      let { messages } = await Chat.findById(data[0])
-        .select("messages")
-        .then(data => {
-          return data;
+      Chat.findById(data[0]).then(doc => {
+        doc.messages.map(item => {
+          if (!item.messageSeenBy.includes(data[1].id))
+            item.messageSeenBy.push(data[1].id);
         });
-      socket.emit("update", messages);
-      socket.broadcast.to(data[0]).emit("update", messages);
+        doc.save().then(newDoc => {
+          socket.emit("update", newDoc.messages);
+          socket.broadcast.to(data[0]).emit("update", newDoc.messages);
+        });
+      });
     });
 
     socket.on("sendChat", async data => {

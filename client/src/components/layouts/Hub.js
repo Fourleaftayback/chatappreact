@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Container, Row, Col } from "reactstrap";
@@ -8,9 +8,16 @@ import NewChatButton from "../buttons/NewChatButton";
 import ProfileImageModal from "../auth/ProfileImageModal";
 import ChatList from "../../components/list/ChatList";
 
-import { joinExistingRoom } from "../../redux/actions/messageActions";
+import {
+  joinExistingRoom,
+  getAllChats
+} from "../../redux/actions/messageActions";
 
-const Hub = ({ user, currentChats, joinExistingRoom }) => {
+const Hub = ({ user, currentChats, joinExistingRoom, getAllChats }) => {
+  useEffect(() => {
+    getAllChats();
+  }, [getAllChats]);
+
   return (
     <Container>
       <Row>
@@ -39,7 +46,8 @@ const Hub = ({ user, currentChats, joinExistingRoom }) => {
 Hub.propTypes = {
   user: PropTypes.object.isRequired,
   currentChats: PropTypes.array.isRequired,
-  joinExistingRoom: PropTypes.func.isRequired
+  joinExistingRoom: PropTypes.func.isRequired,
+  getAllChats: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -48,7 +56,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  joinExistingRoom: joinExistingRoom
+  joinExistingRoom: joinExistingRoom,
+  getAllChats: getAllChats
 };
 
 export default connect(
