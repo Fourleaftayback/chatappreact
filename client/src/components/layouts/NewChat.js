@@ -6,12 +6,16 @@ import { Container, Row, Col } from "reactstrap";
 import { getAllUsers } from "../../redux/actions/userListAction";
 import { toggle } from "../../redux/actions/viewsActions";
 import { doesChatExist } from "../../utils/dataFunctions";
-import { createNewRoom } from "../../redux/actions/messageActions";
+import {
+  createNewRoom,
+  joinExistingRoom
+} from "../../redux/actions/messageActions";
 
 import FormItem from "../form/FormItem";
 import UserList from "../../components/list/UserList";
 import AlertMessage from "../../components/common/AlertMessage";
 import NewChatButton from "../buttons/NewChatButton";
+import GroupChatModal from "../groupchat/GroupChatModal";
 
 class NewChat extends Component {
   constructor(props) {
@@ -20,7 +24,8 @@ class NewChat extends Component {
       userList: [],
       search: "",
       errors: "",
-      errorIsOpen: false
+      errorIsOpen: false,
+      groupChatList: []
     };
   }
 
@@ -50,7 +55,14 @@ class NewChat extends Component {
 
   groupChat = () => {
     let users = this.state.userList.filter(item => item.isSelected === true);
-    console.log(users);
+    if (users.length <= 1) {
+      return this.setState({
+        errors: "Please select at least two user to create a group",
+        errorIsOpen: true
+      });
+    }
+    this.setState({ groupChatList: users });
+    this.props.toggle("groupchatcreator");
   };
 
   chat = () => {
@@ -83,8 +95,7 @@ class NewChat extends Component {
       };
       this.props.createNewRoom(data);
     } else {
-      console.log(true);
-      console.log(singleChat[indx]);
+      this.props.joinExistingRoom(singleChat[indx]);
     }
   };
 
@@ -146,6 +157,7 @@ class NewChat extends Component {
             </Col>
           </Row>
         </Container>
+        <GroupChatModal groupList={this.state.groupChatList} />
       </React.Fragment>
     );
   }
@@ -157,7 +169,8 @@ NewChat.propTypes = {
   userList: PropTypes.array.isRequired,
   toggle: PropTypes.func.isRequired,
   currentChats: PropTypes.array.isRequired,
-  createNewRoom: PropTypes.func.isRequired
+  createNewRoom: PropTypes.func.isRequired,
+  joinExistingRoom: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -170,7 +183,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   getAllUsers: getAllUsers,
   toggle: toggle,
-  createNewRoom: createNewRoom
+  createNewRoom: createNewRoom,
+  joinExistingRoom
 };
 
 export default connect(

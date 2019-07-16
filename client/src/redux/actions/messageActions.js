@@ -1,6 +1,7 @@
 import axios from "axios";
 import { GET_ALL_CHATS, GET_ERRORS, SET_ACTIVE_CHAT } from "./types";
 import history from "../../history/History";
+import { toggle } from "./viewsActions";
 
 export const getAllChats = () => dispatch => {
   axios
@@ -27,6 +28,28 @@ export const createNewRoom = receiverId => dispatch => {
         type: SET_ACTIVE_CHAT,
         payload: res.data
       });
+      return res.data._id;
+    })
+    .then(id => {
+      history.push(`/room/${id}`);
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
+};
+
+export const createGroup = data => dispatch => {
+  axios
+    .post("/messages/newgroup", data)
+    .then(res => {
+      dispatch({
+        type: SET_ACTIVE_CHAT,
+        payload: res.data
+      });
+      dispatch(toggle("groupchatcreator"));
       return res.data._id;
     })
     .then(id => {

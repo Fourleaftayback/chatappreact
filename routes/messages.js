@@ -63,4 +63,48 @@ router.post(
   }
 );
 
+router.post(
+  "/newgroup",
+  passport.authenticate("userPass", {
+    session: false
+  }),
+  (req, res) => {
+    const { _id, profile_image_url, user_name } = req.user;
+    let creatorInfo = new UserInfo({
+      _id: _id,
+      user_name: user_name,
+      profile_image_url: profile_image_url
+    });
+    let userListIds = req.body.userList
+      .reduce((acc, item) => acc.concat(item._id), [])
+      .concat(_id);
+    let userList = req.body.userList
+      .map(
+        item =>
+          new UserInfo({
+            _id: item._id,
+            user_name: item.user_name,
+            profile_image_url: item.profile_image_url
+          })
+      )
+      .concat(creatorInfo);
+
+    const newGroup = new Chat({
+      group_chat: true,
+      chat_name: req.body.chat_name,
+      userList: userList,
+      userListIds: userListIds,
+      messages: [],
+      created_by: _id,
+      updated_on: Date.now()
+    });
+    newGroup
+      .save()
+      .then(room => {
+        res.status(200).json(room);
+      })
+      .catch(err => res.status(400).json({ errors: "something went wrong" }));
+  }
+);
+
 module.exports = router;
