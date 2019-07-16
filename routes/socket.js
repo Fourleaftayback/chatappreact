@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { Chat, Message, UserId } = require("../models/Chats");
+const { Chat, Message } = require("../models/Chats");
 
 module.exports = io => {
   io.on("connection", socket => {
@@ -12,8 +12,9 @@ module.exports = io => {
             item.messageSeenBy.push(data[1].id);
         });
         doc.save().then(newDoc => {
-          socket.emit("update", newDoc.messages);
-          socket.broadcast.to(data[0]).emit("update", newDoc.messages);
+          //socket.emit("update", newDoc.messages);
+          //socket.broadcast.to(data[0]).emit("update", newDoc.messages);
+          io.in(data[0]).emit("update", newDoc.messages);
         });
       });
     });
@@ -37,6 +38,16 @@ module.exports = io => {
         { new: true }
       ).then(doc => {
         io.in(doc._id).emit("update", doc.messages);
+      });
+    });
+
+    socket.on("updateUnseen", data => {
+      const { roomId, _id } = data;
+      Chat.findById(roomId).then(doc => {
+        doc.messages.map(item => {
+          if (!item.messageSeenBy.includes(_id)) item.messageSeenBy.push(_id);
+        });
+        doc.save();
       });
     });
 

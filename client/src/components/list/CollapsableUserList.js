@@ -22,6 +22,9 @@ const CollapsableUserList = ({ userList }) => {
         <Button color="primary" outline onClick={toggle}>
           {userList.length} Group Members
         </Button>
+        <Button color="primary" outline onClick={() => console.log("")}>
+          Add New Member
+        </Button>
         <Collapse isOpen={isOpen}>
           <ListGroup>{users}</ListGroup>
         </Collapse>

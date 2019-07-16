@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { Row, Col } from "reactstrap";
 import PropTypes from "prop-types";
 import io from "socket.io-client";
+import history from "../../history/History";
+
 import RoomHeader from "./RoomHeader";
 import CollapsableUserList from "../list/CollapsableUserList";
 import MessageList from "../list/MessageList";
@@ -38,6 +40,8 @@ class Room extends Component {
   };
 
   componentWillMount() {
+    if (Object.keys(this.props.activeChatRoom).length === 0)
+      return history.push("/hub");
     this.setState({ messages: this.props.activeChatRoom.messages });
     if (!this.props.activeChatRoom.group_chat) {
       let otherUser = this.props.activeChatRoom.userList.filter(
@@ -65,6 +69,11 @@ class Room extends Component {
   }
 
   componentWillUnmount() {
+    let data = {
+      roomId: this.props.activeChatRoom._id,
+      _id: this.props.user.id
+    };
+    this.socket.emit("updateUnseen", data);
     this.socket.close();
   }
 
