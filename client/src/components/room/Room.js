@@ -94,6 +94,7 @@ class Room extends Component {
             {this.props.activeChatRoom.group_chat ? (
               <CollapsableUserList
                 userList={this.props.activeChatRoom.userList}
+                socket={this.socket}
               />
             ) : null}
           </Col>

@@ -9,7 +9,6 @@ const UserList = ({ userList, selectUser }) => {
   const onClick = id => {
     selectUser(id);
   };
-
   let users = userList.map(item => (
     <ListGroupItem
       key={item._id}

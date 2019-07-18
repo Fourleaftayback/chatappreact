@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { Chat, Message } = require("../models/Chats");
+const { Chat, Message, UserInfo } = require("../models/Chats");
 
 module.exports = io => {
   io.on("connection", socket => {
@@ -48,6 +48,26 @@ module.exports = io => {
           if (!item.messageSeenBy.includes(_id)) item.messageSeenBy.push(_id);
         });
         doc.save();
+      });
+    });
+
+    socket.on("addGroupMemebers", data => {
+      const { roomId, users } = data;
+      let userIds = users.map(item => item._id);
+      let userArr = users.map(item => {
+        return new UserInfo({
+          _id: item._id,
+          user_name: item.user_name,
+          profile_image_url: item.profile_image_url
+        });
+      });
+      Chat.findById(roomId).then(doc => {
+        doc.userListIds = doc.userListIds.concat(userIds);
+        doc.userList = doc.userList.concat(userArr);
+        doc.save(err => {
+          if (err) console.log(error);
+          io.in(roomId).emit("updateGroup", doc);
+        });
       });
     });
 

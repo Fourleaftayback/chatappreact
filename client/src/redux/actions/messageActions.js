@@ -70,3 +70,10 @@ export const joinExistingRoom = room => dispatch => {
   });
   history.push(`/room/${room._id}`);
 };
+
+export const setActiveChat = data => {
+  return {
+    type: SET_ACTIVE_CHAT,
+    payload: data
+  };
+};
