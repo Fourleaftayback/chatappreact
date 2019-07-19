@@ -1,8 +1,7 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import { Router, Route, Switch } from "react-router-dom";
-//import io from "socket.io-client";
 import { Container } from "reactstrap";
 import history from "./history/History";
 import jwt_decode from "jwt-decode";
@@ -14,10 +13,13 @@ import NavBar from "./components/navbar/NavBar";
 import Landing from "./components/layouts/Landing";
 import PrivateRoute from "./components/common/PrivateRoute";
 import Hub from "./components/layouts/Hub";
-import NewChat from "./components/layouts/NewChat.js";
 import Room from "./components/room/Room";
 
+import FallBack from "./components/common/FallBack";
+
 import "./sass/App.scss";
+
+const NewChat = React.lazy(() => import("./components/layouts/NewChat.js"));
 
 if (localStorage.jwtToken) {
   setAuthToken(localStorage.jwtToken);
@@ -40,7 +42,15 @@ const App = () => {
           <Switch>
             <Route exact path="/" component={Landing} />
             <PrivateRoute exact path="/hub" component={Hub} />
-            <PrivateRoute exact path="/createchat" component={NewChat} />
+            <Route
+              exact
+              path="/createchat"
+              component={() => (
+                <Suspense fallback={<FallBack />}>
+                  <NewChat />
+                </Suspense>
+              )}
+            />
             <PrivateRoute path="/room" component={Room} />
           </Switch>
         </Container>
