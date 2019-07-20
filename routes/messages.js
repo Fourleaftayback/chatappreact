@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { Chat, Message, UserInfo } = require("../models/Chats");
+const { Chat, UserInfo } = require("../models/Chats");
 const User = require("../models/User");
 const passport = require("passport");
 

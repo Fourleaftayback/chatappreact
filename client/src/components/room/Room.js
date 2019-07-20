@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Row, Col } from "reactstrap";
 import PropTypes from "prop-types";
@@ -10,121 +10,103 @@ import CollapsableUserList from "../list/CollapsableUserList";
 import MessageList from "../list/MessageList";
 import FormSend from "../form/FormSend";
 
-class Room extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      message: "",
-      recieverName: "",
-      messages: []
-    };
-    this.socket = io("localhost:5000");
-  }
-  messageEnd = React.createRef();
-  onChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
+const Room = ({ user, errors, activeChatRoom }) => {
+  const [text, setText] = useState("");
+  const [recieverName, setRecieverName] = useState("");
+  const [messages, setMessages] = useState(null);
+
+  const socket = io("localhost:5000");
+
+  const messageEnd = React.createRef();
+  const onChange = e => {
+    setText(e.target.value);
   };
 
-  sendChat = () => {
+  const sendChat = () => {
     let message = {
-      roomId: this.props.activeChatRoom._id,
-      user: this.props.user,
-      text: this.state.message
+      roomId: activeChatRoom._id,
+      user: user,
+      text: text
     };
-    this.socket.emit("sendChat", message);
-    this.setState({ message: "" });
+    socket.emit("sendChat", message);
+    setText({ text: "" });
   };
 
-  scrollToEnd = () => {
-    this.messageEnd.current.scrollIntoView({ behavior: "smooth" });
-  };
+  useEffect(() => {
+    if (Object.keys(activeChatRoom).length === 0) return history.push("/hub");
+    setMessages(activeChatRoom.messages);
+  }, [activeChatRoom]);
 
-  componentWillMount() {
-    if (Object.keys(this.props.activeChatRoom).length === 0)
-      return history.push("/hub");
-    this.setState({ messages: this.props.activeChatRoom.messages });
-    if (!this.props.activeChatRoom.group_chat) {
-      let otherUser = this.props.activeChatRoom.userList.filter(
-        item => item._id !== this.props.user.id
+  useEffect(() => {
+    if (activeChatRoom.group_chat) {
+      let otherUser = activeChatRoom.userList.filter(
+        item => item._id !== user.id
       );
-      this.setState({ recieverName: otherUser[0].user_name });
+      setRecieverName(otherUser[0].user_name);
     }
-  }
+  }, [activeChatRoom, user]);
 
-  componentDidMount() {
-    this.socket.on("connect", () => {
-      this.socket.emit("join", [
-        this.props.activeChatRoom._id,
-        this.props.user
-      ]);
-    });
-    this.socket.on("update", data => {
-      this.setState({ messages: data });
-    });
-    this.scrollToEnd();
-  }
-
-  componentDidUpdate() {
-    this.scrollToEnd();
-  }
-
-  componentWillUnmount() {
-    let data = {
-      roomId: this.props.activeChatRoom._id,
-      _id: this.props.user.id
+  useEffect(() => {
+    const scrollToEnd = () => {
+      messageEnd.current.scrollIntoView({ behavior: "smooth" });
     };
-    this.socket.emit("updateUnseen", data);
-    this.socket.close();
-  }
-
-  render() {
-    return (
-      <React.Fragment>
-        <Row>
-          <Col sm={{ size: 6, order: 2, offset: 3 }}>
-            <RoomHeader
-              isGroup={this.props.activeChatRoom.group_chat}
-              groupName={this.props.activeChatRoom.chat_name}
-              name={this.state.recieverName}
+    scrollToEnd();
+  }, [messageEnd, messages]);
+  /*
+  useEffect(() => {
+    return () => {
+      let data = {
+        roomId: activeChatRoom._id,
+        _id: user.id
+      };
+      socket.emit("updateUnseen", data);
+      socket.close();
+    }
+  }, [])
+  */
+  return (
+    <React.Fragment>
+      <Row>
+        <Col sm={{ size: 6, order: 2, offset: 3 }}>
+          <RoomHeader
+            isGroup={activeChatRoom.group_chat}
+            groupName={activeChatRoom.chat_name}
+            name={recieverName}
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col sm={{ size: 6, order: 2, offset: 3 }}>
+          {activeChatRoom.group_chat ? (
+            <CollapsableUserList
+              userList={activeChatRoom.userList}
+              socket={socket}
             />
-          </Col>
-        </Row>
-        <Row>
-          <Col sm={{ size: 6, order: 2, offset: 3 }}>
-            {this.props.activeChatRoom.group_chat ? (
-              <CollapsableUserList
-                userList={this.props.activeChatRoom.userList}
-                socket={this.socket}
-              />
-            ) : null}
-          </Col>
-        </Row>
-        <Row>
-          <Col sm={{ size: 6, order: 2, offset: 3 }}>
-            <MessageList
-              userId={this.props.user.id}
-              messageList={this.state.messages}
-            />
-            <div ref={this.messageEnd} />
-          </Col>
-        </Row>
-        <Row className="fixed-bottom">
-          <Col sm={{ size: 6, order: 2, offset: 3 }}>
-            <FormSend
-              type="text"
-              name="message"
-              placeholder="message"
-              value={this.state.message}
-              error={this.props.errors.message}
-              onChange={e => this.onChange(e)}
-              onClick={this.sendChat}
-            />
-          </Col>
-        </Row>
-      </React.Fragment>
-    );
-  }
-}
+          ) : null}
+        </Col>
+      </Row>
+      <Row>
+        <Col sm={{ size: 6, order: 2, offset: 3 }}>
+          <MessageList userId={user.id} messageList={this.state.messages} />
+          <div ref={messageEnd} />
+        </Col>
+      </Row>
+      <Row className="fixed-bottom">
+        <Col sm={{ size: 6, order: 2, offset: 3 }}>
+          <FormSend
+            type="text"
+            name="message"
+            placeholder="message"
+            value={text}
+            error={errors.message}
+            onChange={onChange}
+            onClick={sendChat}
+          />
+        </Col>
+      </Row>
+    </React.Fragment>
+  );
+};
 
 Room.propTypes = {
   user: PropTypes.object.isRequired,

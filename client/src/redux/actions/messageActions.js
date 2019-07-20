@@ -20,6 +20,13 @@ export const getAllChats = () => dispatch => {
     });
 };
 
+export const setAllChats = data => dispatch => {
+  dispatch({
+    type: GET_ALL_CHATS,
+    payload: data
+  });
+};
+
 export const createNewRoom = receiverId => dispatch => {
   axios
     .post("/messages/newroom", receiverId)

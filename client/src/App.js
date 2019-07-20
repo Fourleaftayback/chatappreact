@@ -13,7 +13,7 @@ import NavBar from "./components/navbar/NavBar";
 import Landing from "./components/layouts/Landing";
 import PrivateRoute from "./components/common/PrivateRoute";
 import Hub from "./components/layouts/Hub";
-import Room from "./components/room/Room";
+//import Room from "./components/room/Room";
 
 import FallBack from "./components/common/FallBack";
 
@@ -51,7 +51,7 @@ const App = () => {
                 </Suspense>
               )}
             />
-            <PrivateRoute path="/room" component={Room} />
+            {/*<PrivateRoute path="/room" component={Room} />*/}
           </Switch>
         </Container>
       </Router>

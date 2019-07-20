@@ -24,8 +24,6 @@ const resetApi = require("./routes/reset");
 const userListApi = require("./routes/userList");
 const messageApi = require("./routes/messages");
 
-const testChatRoutes = require("./routes/testData");
-
 require("./config/passportUser")(passport);
 
 mongoose.connect(db, {
@@ -48,7 +46,6 @@ app.use("/reset", resetApi);
 app.use("/list", userListApi);
 app.use("/messages", messageApi);
 
-app.use("/test", testChatRoutes);
 require("./routes/socket")(io);
 
 if (process.env.NODE_ENV === "production") {
