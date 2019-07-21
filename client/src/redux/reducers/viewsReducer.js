@@ -8,7 +8,9 @@ import {
   PROFILEIMAGE_OPEN,
   PROFILEIMAGE_CLOSE,
   GROUPCHATCREATOR_OPEN,
-  GROUPCHATCREATOR_CLOSE
+  GROUPCHATCREATOR_CLOSE,
+  ROOMISACTIVE,
+  ROOMISINACTIVE
 } from "../actions/types";
 
 const initialState = {
@@ -16,7 +18,8 @@ const initialState = {
   loginModalIsOpen: false,
   registerModalIsOpen: false,
   profileImageModalIsOpen: false,
-  groupChatModalIsOpen: false
+  groupChatModalIsOpen: false,
+  roomIsActive: false
 };
 
 export default function(state = initialState, action) {
@@ -60,6 +63,14 @@ export default function(state = initialState, action) {
     case GROUPCHATCREATOR_CLOSE:
       return Object.assign({}, state, {
         groupChatModalIsOpen: false
+      });
+    case ROOMISACTIVE:
+      return Object.assign({}, state, {
+        roomIsActive: true
+      });
+    case ROOMISINACTIVE:
+      return Object.assign({}, state, {
+        roomIsActive: false
       });
     default:
       return state;

@@ -75,12 +75,12 @@ export const joinExistingRoom = room => dispatch => {
     type: SET_ACTIVE_CHAT,
     payload: room
   });
-  history.push(`/room/${room._id}`);
+  dispatch(toggle("room"));
 };
 
-export const setActiveChat = data => {
-  return {
+export const setActiveChat = data => dispatch => {
+  dispatch({
     type: SET_ACTIVE_CHAT,
     payload: data
-  };
+  });
 };

@@ -14,6 +14,9 @@ import {
   GROUPCHATCREATOR_TOGGLE,
   GROUPCHATCREATOR_OPEN,
   GROUPCHATCREATOR_CLOSE,
+  ROOMISACTIVE,
+  ROOMISINACTIVE,
+  ROOM_TOGGLE,
   SHOULD_LAUNCH_MODAL
 } from "../actions/types";
 
@@ -43,6 +46,11 @@ export const viewsToggle = store => next => action => {
     current.views.groupChatModalIsOpen
       ? (action.type = GROUPCHATCREATOR_CLOSE)
       : (action.type = GROUPCHATCREATOR_OPEN);
+  }
+  if (action.type === ROOM_TOGGLE) {
+    current.views.roomIsActive
+      ? (action.type = ROOMISINACTIVE)
+      : (action.type = ROOMISACTIVE);
   }
   if (action.type === SHOULD_LAUNCH_MODAL) {
     if (
