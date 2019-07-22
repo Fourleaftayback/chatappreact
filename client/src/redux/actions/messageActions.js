@@ -70,7 +70,11 @@ export const createGroup = data => dispatch => {
     });
 };
 
-export const joinExistingRoom = room => dispatch => {
+export const joinExistingRoom = (room, id) => dispatch => {
+  if (!room.group_chat) {
+    let otherUser = room.userList.filter(item => item._id !== id);
+    room.receiver_name = otherUser[0].user_name;
+  }
   dispatch({
     type: SET_ACTIVE_CHAT,
     payload: room

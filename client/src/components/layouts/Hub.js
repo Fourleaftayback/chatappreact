@@ -42,7 +42,11 @@ class Hub extends Component {
         joinExistingRoom={this.props.joinExistingRoom}
       />
     ) : (
-      <Room />
+      <Room
+        socket={this.socket}
+        user={this.props.user}
+        activeChatRoom={this.props.activeChatRoom}
+      />
     );
 
     return <Container>{content}</Container>;
@@ -54,13 +58,15 @@ Hub.propTypes = {
   currentChats: PropTypes.array.isRequired,
   joinExistingRoom: PropTypes.func.isRequired,
   setAllChats: PropTypes.func.isRequired,
-  roomIsActive: PropTypes.bool.isRequired
+  roomIsActive: PropTypes.bool.isRequired,
+  activeChatRoom: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   currentChats: state.messages.currentChats,
   user: state.auth.user,
-  roomIsActive: state.views.roomIsActive
+  roomIsActive: state.views.roomIsActive,
+  activeChatRoom: state.messages.activeChatRoom
 });
 
 const mapDispatchToProps = {
