@@ -2,16 +2,16 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Row, Col } from "reactstrap";
 import PropTypes from "prop-types";
-import history from "../../history/History";
+//import history from "../../history/History";
 
 import RoomHeader from "./RoomHeader";
 import CollapsableUserList from "../list/CollapsableUserList";
 import MessageList from "../list/MessageList";
 import FormSend from "../form/FormSend";
+import RoomBackButton from "../buttons/RoomBackButton";
 
-const Room = ({ user, activeChatRoom, socket }) => {
+const Room = ({ user, activeChatRoom, socket, clearActiveChat }) => {
   const [text, setText] = useState("");
-  const [messages, setMessages] = useState(null);
 
   const messageEnd = React.createRef();
 
@@ -30,22 +30,14 @@ const Room = ({ user, activeChatRoom, socket }) => {
       messageEnd.current.scrollIntoView({ behavior: "smooth" });
     };
     scrollToEnd();
-  }, [messageEnd, messages]);
-  /*
-  useEffect(() => {
-    return () => {
-      let data = {
-        roomId: activeChatRoom._id,
-        _id: user.id
-      };
-      socket.emit("updateUnseen", data);
-      socket.close();
-    }
-  }, [])
-  */
+  }, [messageEnd]);
+
   return (
     <React.Fragment>
       <Row>
+        <Col sm={{ size: 2, order: 1 }}>
+          <RoomBackButton onClick={clearActiveChat} />
+        </Col>
         <Col sm={{ size: 6, order: 2, offset: 3 }}>
           <RoomHeader
             isGroup={activeChatRoom.group_chat}
@@ -66,7 +58,7 @@ const Room = ({ user, activeChatRoom, socket }) => {
       </Row>
       <Row>
         <Col sm={{ size: 6, order: 2, offset: 3 }}>
-          <MessageList userId={user.id} messageList={[]} />
+          <MessageList userId={user.id} messageList={activeChatRoom.messages} />
           <div ref={messageEnd} />
         </Col>
       </Row>
@@ -89,7 +81,8 @@ const Room = ({ user, activeChatRoom, socket }) => {
 Room.propTypes = {
   user: PropTypes.object.isRequired,
   socket: PropTypes.object.isRequired,
-  activeChatRoom: PropTypes.object.isRequired
+  activeChatRoom: PropTypes.object.isRequired,
+  clearActiveChat: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = {};

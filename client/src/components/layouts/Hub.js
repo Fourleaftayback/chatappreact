@@ -10,7 +10,8 @@ import Room from "../room/Room";
 
 import {
   joinExistingRoom,
-  setAllChats
+  setAllChats,
+  clearActiveChat
 } from "../../redux/actions/messageActions";
 
 class Hub extends Component {
@@ -34,6 +35,13 @@ class Hub extends Component {
     this.socket.close();
   }
 
+  componentDidUpdate() {
+    window.onpopstate = e => {
+      console.log("back browser button clicked");
+      console.log(this.props.roomIsActive);
+    };
+  }
+
   render() {
     let content = !this.props.roomIsActive ? (
       <ExistingChats
@@ -46,6 +54,7 @@ class Hub extends Component {
         socket={this.socket}
         user={this.props.user}
         activeChatRoom={this.props.activeChatRoom}
+        clearActiveChat={this.props.clearActiveChat}
       />
     );
 
@@ -59,7 +68,8 @@ Hub.propTypes = {
   joinExistingRoom: PropTypes.func.isRequired,
   setAllChats: PropTypes.func.isRequired,
   roomIsActive: PropTypes.bool.isRequired,
-  activeChatRoom: PropTypes.object.isRequired
+  activeChatRoom: PropTypes.object.isRequired,
+  clearActiveChat: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -71,7 +81,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   joinExistingRoom: joinExistingRoom,
-  setAllChats: setAllChats
+  setAllChats: setAllChats,
+  clearActiveChat: clearActiveChat
 };
 
 export default connect(

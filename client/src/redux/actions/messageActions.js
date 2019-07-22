@@ -88,3 +88,10 @@ export const setActiveChat = data => dispatch => {
     payload: data
   });
 };
+export const clearActiveChat = () => dispatch => {
+  dispatch(toggle("room"));
+  dispatch({
+    type: SET_ACTIVE_CHAT,
+    payload: {}
+  });
+};

@@ -44,7 +44,7 @@ const AddGroupMember = ({
       toggleModal();
       setActiveChat(data);
     });
-  }, []);
+  }, [socket, setActiveChat, toggleModal]);
   useEffect(() => {
     let ids = existingMember.map(item => item._id);
     setMemberIds(ids);
