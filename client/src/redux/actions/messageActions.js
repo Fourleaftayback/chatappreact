@@ -89,6 +89,7 @@ export const setActiveChat = data => dispatch => {
   });
 };
 export const clearActiveChat = () => dispatch => {
+  dispatch(getAllChats());
   dispatch(toggle("room"));
   dispatch({
     type: SET_ACTIVE_CHAT,

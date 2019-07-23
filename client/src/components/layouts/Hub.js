@@ -29,6 +29,9 @@ class Hub extends Component {
       this.socket.emit("join", roomData);
       this.props.setAllChats(res.data);
     });
+    this.socket.on("updateAllRooms", data => {
+      this.props.setAllChats(data);
+    });
     /*
     window.onpopstate = e => {
       console.log(

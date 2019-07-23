@@ -47,20 +47,10 @@ const Room = ({
   }, [messageEnd]);
 
   useEffect(() => {
-    socket.on("update", payload => {
+    socket.on("updateRoom", payload => {
       setActiveChat(payload);
     });
   }, [socket, setActiveChat]);
-
-  useEffect(() => {
-    let data = {
-      roomId: activeChatRoom._id,
-      _id: user.id
-    };
-    return () => {
-      socket.emit("updateUnseen", data);
-    };
-  }, []);
 
   return (
     <React.Fragment>

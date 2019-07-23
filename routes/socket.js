@@ -20,7 +20,7 @@ module.exports = io => {
         profile_image_url: user.profile_image_url,
         messageSeenBy: [user.id]
       });
-
+      //update room only
       Chat.findByIdAndUpdate(
         roomId,
         {
@@ -29,8 +29,17 @@ module.exports = io => {
         },
         { new: true }
       ).then(doc => {
-        io.in(doc._id).emit("update", doc);
+        io.in(doc._id).emit("updateRoom", doc);
       });
+      //update all data for sender only
+      Chat.find({ userList: { $elemMatch: { _id: user.id } } })
+        .sort({ updated_on: -1 })
+        .then(data => {
+          socket.emit("updateAllRooms", data);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     });
 
     socket.on("updateUnseen", data => {
@@ -40,6 +49,26 @@ module.exports = io => {
           if (!item.messageSeenBy.includes(_id)) item.messageSeenBy.push(_id);
         });
         doc.save();
+      });
+    });
+
+    socket.on("addGroupMemebers", data => {
+      const { roomId, users } = data;
+      let userIds = users.map(item => item._id);
+      let userArr = users.map(item => {
+        return new UserInfo({
+          _id: item._id,
+          user_name: item.user_name,
+          profile_image_url: item.profile_image_url
+        });
+      });
+      Chat.findById(roomId).then(doc => {
+        doc.userListIds = doc.userListIds.concat(userIds);
+        doc.userList = doc.userList.concat(userArr);
+        doc.save(err => {
+          if (err) console.log(error);
+          io.in(roomId).emit("updateGroup", doc);
+        });
       });
     });
 
