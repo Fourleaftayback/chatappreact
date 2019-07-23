@@ -29,17 +29,17 @@ class Hub extends Component {
       this.socket.emit("join", roomData);
       this.props.setAllChats(res.data);
     });
+    /*
+    window.onpopstate = e => {
+      console.log(
+        "location: " + document.location + ", state: " + JSON.stringify(e.state)
+      );
+    };
+    */
   }
 
   componentWillUnmount() {
     this.socket.close();
-  }
-
-  componentDidUpdate() {
-    window.onpopstate = e => {
-      console.log("back browser button clicked");
-      console.log(this.props.roomIsActive);
-    };
   }
 
   render() {
