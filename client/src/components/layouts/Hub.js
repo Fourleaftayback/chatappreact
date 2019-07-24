@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import { Container } from "reactstrap";
 import io from "socket.io-client";
 import axios from "axios";
-//import history from "../../history/History";
 
 import ExistingChats from "../allChat/ExistingChats";
 import Room from "../room/Room";

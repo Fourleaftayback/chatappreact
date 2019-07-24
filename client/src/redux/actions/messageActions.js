@@ -1,5 +1,10 @@
 import axios from "axios";
-import { GET_ALL_CHATS, GET_ERRORS, SET_ACTIVE_CHAT } from "./types";
+import {
+  GET_ALL_CHATS,
+  GET_ERRORS,
+  SET_ACTIVE_CHAT,
+  ROOMISINACTIVE
+} from "./types";
 import history from "../../history/History";
 import { toggle } from "./viewsActions";
 
@@ -90,7 +95,9 @@ export const setActiveChat = data => dispatch => {
 };
 export const clearActiveChat = () => dispatch => {
   dispatch(getAllChats());
-  dispatch(toggle("room"));
+  dispatch({
+    type: ROOMISINACTIVE
+  });
   dispatch({
     type: SET_ACTIVE_CHAT,
     payload: {}

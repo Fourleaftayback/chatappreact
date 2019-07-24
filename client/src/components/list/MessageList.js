@@ -5,7 +5,7 @@ import { ListGroup, ListGroupItem } from "reactstrap";
 import ProfileImage from "../common/ProfileImage";
 
 const MessageList = ({ userId, messageList }) => {
-  let messages = messageList.map(item =>
+  let content = messageList.map(item =>
     item.user === userId ? (
       <ListGroupItem key={item._id} className="bg-secondary text-right">
         {" "}
@@ -21,7 +21,7 @@ const MessageList = ({ userId, messageList }) => {
   );
   return (
     <React.Fragment>
-      <ListGroup>{messages}</ListGroup>
+      <ListGroup>{content}</ListGroup>
     </React.Fragment>
   );
 };

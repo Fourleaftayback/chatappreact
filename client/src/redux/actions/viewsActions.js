@@ -1,4 +1,4 @@
-import { SHOULD_LAUNCH_MODAL } from "./types";
+import { SHOULD_LAUNCH_MODAL, ROOMISINACTIVE } from "./types";
 
 export const toggle = name => {
   return {
@@ -9,5 +9,11 @@ export const toggle = name => {
 export const shouldLaunchModal = () => {
   return {
     type: SHOULD_LAUNCH_MODAL
+  };
+};
+
+export const deactivateRoom = () => {
+  return {
+    type: ROOMISINACTIVE
   };
 };

@@ -8,10 +8,17 @@ import MessageList from "../list/MessageList";
 import FormSend from "../form/FormSend";
 import RoomBackButton from "../buttons/RoomBackButton";
 import { clearActiveChat } from "../../redux/actions/messageActions";
-import { toggle } from "../../redux/actions/viewsActions";
+import { deactivateRoom } from "../../redux/actions/viewsActions";
 
-const Room = ({ user, activeChatRoom, socket, clearActiveChat, toggle }) => {
+const Room = ({
+  user,
+  activeChatRoom,
+  socket,
+  clearActiveChat,
+  deactivateRoom
+}) => {
   const [text, setText] = useState("");
+  const [messages, setMessages] = useState([]);
 
   const messageEnd = React.createRef();
 
@@ -24,6 +31,17 @@ const Room = ({ user, activeChatRoom, socket, clearActiveChat, toggle }) => {
     socket.emit("sendMessage", message);
     setText("");
   };
+
+  useEffect(() => {
+    activeChatRoom.messages.length >= 20
+      ? setMessages(
+          activeChatRoom.messages.slice(
+            activeChatRoom.messages.length - 20,
+            activeChatRoom.messages.length
+          )
+        )
+      : setMessages(activeChatRoom.messages);
+  }, [activeChatRoom]);
 
   useEffect(() => {
     let data = {
@@ -41,9 +59,9 @@ const Room = ({ user, activeChatRoom, socket, clearActiveChat, toggle }) => {
   }, [messageEnd]);
   useEffect(() => {
     return () => {
-      toggle("room");
+      deactivateRoom();
     };
-  }, [toggle]);
+  }, [deactivateRoom]);
 
   return (
     <React.Fragment>
@@ -71,7 +89,7 @@ const Room = ({ user, activeChatRoom, socket, clearActiveChat, toggle }) => {
       </Row>
       <Row>
         <Col sm={{ size: 6, order: 2, offset: 3 }}>
-          <MessageList userId={user.id} messageList={activeChatRoom.messages} />
+          <MessageList userId={user.id} messageList={messages} />
           <div ref={messageEnd} />
         </Col>
       </Row>
@@ -97,12 +115,12 @@ Room.propTypes = {
   activeChatRoom: PropTypes.object.isRequired,
   clearActiveChat: PropTypes.func.isRequired,
   roomIsActive: PropTypes.bool.isRequired,
-  toggle: PropTypes.func.isRequired
+  deactivateRoom: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = {
   clearActiveChat: clearActiveChat,
-  toggle: toggle
+  deactivateRoom: deactivateRoom
 };
 
 export default connect(
