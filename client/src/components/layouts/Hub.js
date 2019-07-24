@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Container } from "reactstrap";
-import { withRouter } from "react-router-dom";
 import io from "socket.io-client";
 import axios from "axios";
 //import history from "../../history/History";
@@ -13,7 +12,6 @@ import Room from "../room/Room";
 import {
   joinExistingRoom,
   setAllChats,
-  clearActiveChat,
   getAllChats,
   setActiveChat
 } from "../../redux/actions/messageActions";
@@ -58,10 +56,8 @@ class Hub extends Component {
       <Room
         socket={this.socket}
         user={this.props.user}
-        activeChatRoom={this.props.activeChatRoom}
-        clearActiveChat={this.props.clearActiveChat}
         roomIsActive={this.props.roomIsActive}
-        getAllChats={this.props.getAllChats}
+        activeChatRoom={this.props.activeChatRoom}
       />
     );
 
@@ -76,7 +72,6 @@ Hub.propTypes = {
   setAllChats: PropTypes.func.isRequired,
   roomIsActive: PropTypes.bool.isRequired,
   activeChatRoom: PropTypes.object.isRequired,
-  clearActiveChat: PropTypes.func.isRequired,
   getAllChats: PropTypes.func.isRequired,
   setActiveChat: PropTypes.func.isRequired
 };
@@ -91,14 +86,11 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   joinExistingRoom: joinExistingRoom,
   setAllChats: setAllChats,
-  clearActiveChat: clearActiveChat,
   getAllChats: getAllChats,
   setActiveChat: setActiveChat
 };
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(Hub)
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Hub);

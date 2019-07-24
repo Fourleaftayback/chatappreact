@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
 import { Row, Col } from "reactstrap";
 import PropTypes from "prop-types";
 import RoomHeader from "./RoomHeader";
@@ -6,9 +7,10 @@ import CollapsableUserList from "../list/CollapsableUserList";
 import MessageList from "../list/MessageList";
 import FormSend from "../form/FormSend";
 import RoomBackButton from "../buttons/RoomBackButton";
-import history from "../../history/History";
+import { clearActiveChat } from "../../redux/actions/messageActions";
+import { toggle } from "../../redux/actions/viewsActions";
 
-const Room = ({ user, activeChatRoom, socket, clearActiveChat }) => {
+const Room = ({ user, activeChatRoom, socket, clearActiveChat, toggle }) => {
   const [text, setText] = useState("");
 
   const messageEnd = React.createRef();
@@ -37,18 +39,11 @@ const Room = ({ user, activeChatRoom, socket, clearActiveChat }) => {
     };
     scrollToEnd();
   }, [messageEnd]);
-
   useEffect(() => {
-    window.onpopstate = e => {
-      console.log(e);
-      console.log(Object.keys(activeChatRoom).length);
-      if (Object.keys(activeChatRoom).length !== 0) {
-        history.push("/hub");
-        //check to see if roomisactive and if it is push back to hub toggle active and set active chat to black object
-        //call tooggle room is active
-      }
+    return () => {
+      toggle("room");
     };
-  }, [activeChatRoom]);
+  }, [toggle]);
 
   return (
     <React.Fragment>
@@ -100,7 +95,17 @@ Room.propTypes = {
   user: PropTypes.object.isRequired,
   socket: PropTypes.object.isRequired,
   activeChatRoom: PropTypes.object.isRequired,
-  clearActiveChat: PropTypes.func.isRequired
+  clearActiveChat: PropTypes.func.isRequired,
+  roomIsActive: PropTypes.bool.isRequired,
+  toggle: PropTypes.func.isRequired
 };
 
-export default Room;
+const mapDispatchToProps = {
+  clearActiveChat: clearActiveChat,
+  toggle: toggle
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Room);
