@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Container } from "reactstrap";
+import { withRouter } from "react-router-dom";
 import io from "socket.io-client";
 import axios from "axios";
+//import history from "../../history/History";
 
 import ExistingChats from "../allChat/ExistingChats";
 import Room from "../room/Room";
@@ -11,7 +13,9 @@ import Room from "../room/Room";
 import {
   joinExistingRoom,
   setAllChats,
-  clearActiveChat
+  clearActiveChat,
+  getAllChats,
+  setActiveChat
 } from "../../redux/actions/messageActions";
 
 class Hub extends Component {
@@ -32,13 +36,11 @@ class Hub extends Component {
     this.socket.on("updateAllRooms", data => {
       this.props.setAllChats(data);
     });
-    /*
-    window.onpopstate = e => {
-      console.log(
-        "location: " + document.location + ", state: " + JSON.stringify(e.state)
-      );
-    };
-    */
+    this.socket.on("updateRoom", payload => {
+      this.props.roomIsActive
+        ? this.props.setActiveChat(payload)
+        : this.props.getAllChats();
+    });
   }
 
   componentWillUnmount() {
@@ -58,6 +60,8 @@ class Hub extends Component {
         user={this.props.user}
         activeChatRoom={this.props.activeChatRoom}
         clearActiveChat={this.props.clearActiveChat}
+        roomIsActive={this.props.roomIsActive}
+        getAllChats={this.props.getAllChats}
       />
     );
 
@@ -72,7 +76,9 @@ Hub.propTypes = {
   setAllChats: PropTypes.func.isRequired,
   roomIsActive: PropTypes.bool.isRequired,
   activeChatRoom: PropTypes.object.isRequired,
-  clearActiveChat: PropTypes.func.isRequired
+  clearActiveChat: PropTypes.func.isRequired,
+  getAllChats: PropTypes.func.isRequired,
+  setActiveChat: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -85,10 +91,14 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   joinExistingRoom: joinExistingRoom,
   setAllChats: setAllChats,
-  clearActiveChat: clearActiveChat
+  clearActiveChat: clearActiveChat,
+  getAllChats: getAllChats,
+  setActiveChat: setActiveChat
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Hub);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Hub)
+);
