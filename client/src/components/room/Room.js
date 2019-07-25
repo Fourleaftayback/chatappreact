@@ -19,6 +19,7 @@ const Room = ({
 }) => {
   const [text, setText] = useState("");
   const [messages, setMessages] = useState([]);
+  const [maxMessages, setMaxMessages] = useState(20);
 
   const messageEnd = React.createRef();
 
@@ -53,15 +54,41 @@ const Room = ({
 
   useEffect(() => {
     const scrollToEnd = () => {
-      messageEnd.current.scrollIntoView({ behavior: "smooth" });
+      messageEnd.current.scrollIntoView({
+        behavior: "auto"
+      });
     };
     scrollToEnd();
   }, [messageEnd]);
+
   useEffect(() => {
     return () => {
       deactivateRoom();
     };
   }, [deactivateRoom]);
+  const loadMore = () => {
+    if (document.documentElement.scrollTop === 0) {
+      if (activeChatRoom.messages.length >= maxMessages + 20) {
+        console.log(true);
+        let newCount = maxMessages + 20;
+        setMaxMessages(maxMessages + 20);
+        console.log(newCount);
+        console.log(maxMessages);
+        let moreMessages = activeChatRoom.messages.slice(
+          activeChatRoom.messages.length - maxMessages,
+          activeChatRoom.messages.length
+        );
+        setMessages(moreMessages);
+      } else {
+        setMessages(activeChatRoom.messages);
+      }
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", loadMore);
+    return () => window.removeEventListener("scroll", loadMore);
+  }, []);
 
   return (
     <React.Fragment>

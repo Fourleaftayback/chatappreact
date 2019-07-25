@@ -36,15 +36,15 @@ export const createNewRoom = receiverId => dispatch => {
   axios
     .post("/messages/newroom", receiverId)
     .then(res => {
+      let otherUser = res.data.userList.filter(item => item._id !== receiverId);
+      res.data.receiver_name = otherUser[0].user_name;
       dispatch({
         type: SET_ACTIVE_CHAT,
         payload: res.data
       });
-      return res.data._id;
     })
-    .then(id => {
-      history.push(`/room/${id}`);
-    })
+    .then(() => history.push("/hub"))
+    .then(dispatch(toggle("room")))
     .catch(err => {
       dispatch({
         type: GET_ERRORS,
@@ -61,12 +61,10 @@ export const createGroup = data => dispatch => {
         type: SET_ACTIVE_CHAT,
         payload: res.data
       });
-      dispatch(toggle("groupchatcreator"));
-      return res.data._id;
     })
-    .then(id => {
-      history.push(`/room/${id}`);
-    })
+    .then(() => toggle("groupchatcreator"))
+    .then(() => history.push("/hub"))
+    .then(() => dispatch(toggle("room")))
     .catch(err => {
       dispatch({
         type: GET_ERRORS,
