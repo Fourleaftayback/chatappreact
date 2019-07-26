@@ -1,4 +1,27 @@
-import React, { useState, useEffect } from "react";
+//pass in array list for messages
+export const roomReducer = (state, action) => {
+  switch (action.type) {
+    case "initalload":
+      return {
+        ...state,
+        messages: [
+          state.messages.slice(
+            state.messages.length - 20,
+            state.messages.length
+          )
+        ]
+      };
+    case "wholelist":
+      return { ...state, messages: [...action.payload] };
+    case "loadmore":
+      //run finction here to load more
+      return;
+    default:
+      throw new Error();
+  }
+};
+
+import React, { useState, useEffect, useReducer } from "react";
 import { connect } from "react-redux";
 import { Row, Col } from "reactstrap";
 import PropTypes from "prop-types";
@@ -9,6 +32,7 @@ import FormSend from "../form/FormSend";
 import RoomBackButton from "../buttons/RoomBackButton";
 import { clearActiveChat } from "../../redux/actions/messageActions";
 import { deactivateRoom } from "../../redux/actions/viewsActions";
+import { roomReducer } from "../../reactReducers/roomReducer";
 
 const Room = ({
   user,
@@ -18,7 +42,10 @@ const Room = ({
   deactivateRoom
 }) => {
   const [text, setText] = useState("");
-  const [messages, setMessages] = useState([]);
+  //const [messages, setMessages] = useState([]);
+  const initialState = { length: 20, messages: [] };
+
+  const state = useReducer(roomReducer, initialState);
 
   const messageEnd = React.createRef();
 
@@ -33,6 +60,7 @@ const Room = ({
   };
 
   useEffect(() => {
+    /*
     activeChatRoom.messages.length >= 20
       ? setMessages(
           activeChatRoom.messages.slice(
@@ -41,6 +69,7 @@ const Room = ({
           )
         )
       : setMessages(activeChatRoom.messages);
+      */
   }, [activeChatRoom]);
 
   useEffect(() => {
@@ -154,118 +183,3 @@ export default connect(
     return () => window.removeEventListener("scroll", loadMore);
   }, []);
   */
-/*
-class Room extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { text: "", messages: [], messageCount: 20 };
-
-    this.messageEnd = React.createRef();
-  }
-  sendChat = () => {
-    let message = {
-      roomId: this.props.activeChatRoom._id,
-      user: this.props.user,
-      text: this.state.text
-    };
-    this.props.socket.emit("sendMessage", message);
-    this.setState({ text: "" });
-  };
-
-  scrollToEnd = () => {
-    this.messageEnd.current.scrollIntoView({
-      behavior: "auto"
-    });
-  };
-  componentDidMount() {
-    this.props.activeChatRoom.messages.length >= 20
-      ? this.setState({
-          messages: this.props.activeChatRoom.messages.slice(
-            this.props.activeChatRoom.messages.length - 20,
-            this.props.activeChatRoom.messages.length
-          )
-        })
-      : this.setState({ messages: this.props.activeChatRoom.messages });
-
-    let data = {
-      roomId: this.props.activeChatRoom._id,
-      _id: this.props.user.id
-    };
-    //this.props.socket.emit("updateUnseen", data);
-    this.scrollToEnd();
-  }
-
-  componentWillUnmount() {
-    this.props.deactivateRoom();
-  }
-
-  render() {
-    return (
-      <React.Fragment>
-        <Row>
-          <Col sm={{ size: 2, order: 1 }}>
-            <RoomBackButton onClick={clearActiveChat} />
-          </Col>
-          <Col sm={{ size: 6, order: 2, offset: 3 }}>
-            <RoomHeader
-              isGroup={this.props.activeChatRoom.group_chat}
-              groupName={this.props.activeChatRoom.chat_name}
-              name={this.props.activeChatRoom.receiver_name}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col sm={{ size: 6, order: 2, offset: 3 }}>
-            {this.props.activeChatRoom.group_chat ? (
-              <CollapsableUserList
-                userList={this.props.activeChatRoom.userList}
-                socket={this.props.socket}
-              />
-            ) : null}
-          </Col>
-        </Row>
-        <Row>
-          <Col sm={{ size: 6, order: 2, offset: 3 }}>
-            <MessageList
-              userId={this.props.user.id}
-              messageList={this.state.messages}
-            />
-            <div ref={this.messageEnd} />
-          </Col>
-        </Row>
-        <Row className="fixed-bottom">
-          <Col sm={{ size: 6, order: 2, offset: 3 }}>
-            <FormSend
-              type="text"
-              name="message"
-              placeholder="message"
-              value={this.state.text}
-              onChange={e => this.setState({ text: e.target.value })}
-              onClick={this.sendChat}
-            />
-          </Col>
-        </Row>
-      </React.Fragment>
-    );
-  }
-}
-
-Room.propTypes = {
-  user: PropTypes.object.isRequired,
-  socket: PropTypes.object.isRequired,
-  activeChatRoom: PropTypes.object.isRequired,
-  clearActiveChat: PropTypes.func.isRequired,
-  roomIsActive: PropTypes.bool.isRequired,
-  deactivateRoom: PropTypes.func.isRequired
-};
-
-const mapDispatchToProps = {
-  clearActiveChat: clearActiveChat,
-  deactivateRoom: deactivateRoom
-};
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(Room);
-*/
