@@ -3,7 +3,10 @@ import {
   GET_ALL_CHATS,
   GET_ERRORS,
   SET_ACTIVE_CHAT,
-  ROOMISINACTIVE
+  ROOMISINACTIVE,
+  SET_INITIAL_LIST,
+  RESET_LENGTH,
+  CLEAR_LIST
 } from "./types";
 import history from "../../history/History";
 import { toggle } from "./viewsActions";
@@ -82,6 +85,17 @@ export const joinExistingRoom = (room, id) => dispatch => {
     type: SET_ACTIVE_CHAT,
     payload: room
   });
+  let messages;
+  room.messages.length > 20
+    ? (messages = room.messages.slice(
+        room.messages.length - 20,
+        room.messages.length
+      ))
+    : (messages = room.messages);
+  dispatch({
+    type: SET_INITIAL_LIST,
+    payload: messages
+  });
   dispatch(toggle("room"));
 };
 
@@ -91,6 +105,7 @@ export const setActiveChat = data => dispatch => {
     payload: data
   });
 };
+
 export const clearActiveChat = () => dispatch => {
   dispatch(getAllChats());
   dispatch({
@@ -99,5 +114,12 @@ export const clearActiveChat = () => dispatch => {
   dispatch({
     type: SET_ACTIVE_CHAT,
     payload: {}
+  });
+  dispatch({
+    type: CLEAR_LIST,
+    payload: []
+  });
+  dispatch({
+    type: RESET_LENGTH
   });
 };
