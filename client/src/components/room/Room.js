@@ -9,6 +9,7 @@ import FormSend from "../form/FormSend";
 import RoomBackButton from "../buttons/RoomBackButton";
 import { clearActiveChat } from "../../redux/actions/messageActions";
 import { deactivateRoom } from "../../redux/actions/viewsActions";
+import { handleLoadMore } from "../../redux/actions/messageActions";
 //need to refactor so it deals with new data
 
 const Room = ({
@@ -17,7 +18,8 @@ const Room = ({
   socket,
   clearActiveChat,
   deactivateRoom,
-  currentList
+  currentList,
+  handleLoadMore
 }) => {
   const [text, setText] = useState("");
 
@@ -40,13 +42,20 @@ const Room = ({
     };
     socket.emit("updateUnseen", data);
   }, [socket, activeChatRoom, user]);
+  const loadMore = () => {
+    if (document.documentElement.scrollTop === 0) {
+      handleLoadMore();
+    }
+  };
 
   useEffect(() => {
     const scrollToEnd = () => {
       messageEnd.current.scrollIntoView({ behavior: "smooth" });
     };
     scrollToEnd();
-  }, [messageEnd]);
+    window.addEventListener("scroll", loadMore);
+    return () => window.removeEventListener("scroll", loadMore);
+  }, []);
 
   useEffect(() => {
     return () => {
@@ -107,7 +116,8 @@ Room.propTypes = {
   clearActiveChat: PropTypes.func.isRequired,
   roomIsActive: PropTypes.bool.isRequired,
   deactivateRoom: PropTypes.func.isRequired,
-  currentList: PropTypes.array.isRequired
+  currentList: PropTypes.array.isRequired,
+  handleLoadMore: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -116,7 +126,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   clearActiveChat: clearActiveChat,
-  deactivateRoom: deactivateRoom
+  deactivateRoom: deactivateRoom,
+  handleLoadMore: handleLoadMore
 };
 
 export default connect(

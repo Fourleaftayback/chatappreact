@@ -6,7 +6,8 @@ import {
   ROOMISINACTIVE,
   SET_INITIAL_LIST,
   RESET_LENGTH,
-  CLEAR_LIST
+  CLEAR_LIST,
+  HANDLE_LOAD
 } from "./types";
 import history from "../../history/History";
 import { toggle } from "./viewsActions";
@@ -122,4 +123,10 @@ export const clearActiveChat = () => dispatch => {
   dispatch({
     type: RESET_LENGTH
   });
+};
+
+export const handleLoadMore = () => {
+  return {
+    type: HANDLE_LOAD
+  };
 };

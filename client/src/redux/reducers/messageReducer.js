@@ -3,7 +3,7 @@ import {
   SET_ACTIVE_CHAT,
   SET_INITIAL_LIST,
   CLEAR_LIST,
-  RESET_LENGTH
+  LOAD_MORE
 } from "../actions/types";
 
 const initialState = {
@@ -23,8 +23,8 @@ export default function(state = initialState, action) {
       return { ...state, currentList: [...action.payload] };
     case CLEAR_LIST:
       return { ...state, currentList: [...action.payload] };
-    case RESET_LENGTH:
-      return { ...state, listLength: 20 };
+    case LOAD_MORE:
+      return { ...state, currentList: [...action.payload] };
     default:
       return state;
   }

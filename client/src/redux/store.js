@@ -4,9 +4,11 @@ import thunk from "redux-thunk";
 
 import { viewsToggle } from "./middleware/viewsToggle";
 
+import { messageMiddleWare } from "./middleware/messageMiddleWare";
+
 const initialState = {};
 
-const middleware = [thunk, viewsToggle];
+const middleware = [thunk, viewsToggle, messageMiddleWare];
 
 const store = createStore(
   rootReducer,
