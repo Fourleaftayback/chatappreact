@@ -110,14 +110,14 @@ Room.propTypes = {
   user: PropTypes.object.isRequired,
   socket: PropTypes.object.isRequired,
   activeChatRoom: PropTypes.object.isRequired,
-  clearActiveChat: PropTypes.func.isRequired,
-  roomIsActive: PropTypes.bool.isRequired,
   currentList: PropTypes.array.isRequired,
+  clearActiveChat: PropTypes.func.isRequired,
   handleLoadMore: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  currentList: state.messages.currentList
+  currentList: state.messages.currentList,
+  activeChatRoom: state.messages.activeChatRoom
 });
 
 const mapDispatchToProps = {

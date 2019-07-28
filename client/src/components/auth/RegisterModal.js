@@ -115,7 +115,6 @@ RegisterModal.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth,
   errors: state.errors,
   registerModalIsOpen: state.views.registerModalIsOpen
 });

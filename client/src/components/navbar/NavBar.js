@@ -28,8 +28,9 @@ const NavBar = ({ navBarIsOpen, toggle, isLoggedIn, logOutUser }) => {
 };
 
 NavBar.propTypes = {
-  toggle: PropTypes.func.isRequired,
   navBarIsOpen: PropTypes.bool.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
+  toggle: PropTypes.func.isRequired,
   logOutUser: PropTypes.func.isRequired
 };
 

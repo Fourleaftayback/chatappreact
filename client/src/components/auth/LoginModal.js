@@ -96,7 +96,6 @@ LoginModal.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth,
   errors: state.errors,
   loginModalIsOpen: state.views.loginModalIsOpen
 });
