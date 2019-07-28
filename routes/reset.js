@@ -10,28 +10,26 @@ const EmailErrors = require("../models/EmailErrors");
 const validateEmail = require("../validation/emailValidation");
 const validateResetPassword = require("../validation/resetPasswordValidation");
 
-const {
-  PasswordResetMessageUser
-} = require("../emails/Emails");
+const { PasswordResetMessageUser } = require("../emails/Emails");
 sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
 
 // @route   POST /reset/forgot
 // @desc    request user reset email
 // @access  Public
 router.post("/forgot", (req, res) => {
-  const {
-    errors,
-    isValid
-  } = validateEmail(req.body);
+  const { errors, isValid } = validateEmail(req.body);
   if (!isValid) return res.status(400).json(errors);
 
   let token = crypto.randomBytes(20).toString("hex");
-  User.findOneAndUpdate({
-    email: req.body.email
-  }, {
-    resetPasswordToken: token,
-    resetPasswordExp: Date.now() + 3600000
-  }).then(user => {
+  User.findOneAndUpdate(
+    {
+      email: req.body.email
+    },
+    {
+      resetPasswordToken: token,
+      resetPasswordExp: Date.now() + 3600000
+    }
+  ).then(user => {
     if (!user) {
       errors.email = "Sorry this email does not exist";
       return res.status(400).json(errors);
@@ -46,15 +44,12 @@ router.post("/forgot", (req, res) => {
         .send(email)
         .then(() => {
           return res.status(200).json({
-            success: "Please check your email. You should recieve a link to reset your password"
+            success:
+              "Please check your email. You should recieve a link to reset your password"
           });
         })
         .catch(err => {
-          let emailErr = new EmailErrors(
-            req.body.email,
-            "/reset/forgot",
-            err
-          );
+          let emailErr = new EmailErrors(req.body.email, "/reset/forgot", err);
           emailErr.save();
           errors.email = "Sorry email could not be sent";
           return res.status(400).json(errors);
@@ -69,11 +64,11 @@ router.post("/forgot", (req, res) => {
 
 router.get("/:token", (req, res) => {
   User.findOne({
-      resetPasswordToken: req.params.token,
-      resetPasswordExp: {
-        $gte: Date.now()
-      }
-    })
+    resetPasswordToken: req.params.token,
+    resetPasswordExp: {
+      $gte: Date.now()
+    }
+  })
     .then(user => {
       if (user === null) {
         return res.status(400).json({
@@ -85,49 +80,48 @@ router.get("/:token", (req, res) => {
         });
       }
     })
-    .catch(err => res.status(400).json({
-      token: "Something went wrong"
-    }));
+    .catch(err =>
+      res.status(400).json({
+        token: "Something went wrong"
+      })
+    );
 });
 
 // @route   POST reset/newpassword
-// @desc    set new password. the token is passed from the body get from url params 
+// @desc    set new password. the token is passed from the body get from url params
 // @access  public
 router.post("/newpassword", (req, res) => {
-  const {
-    errors,
-    isValid
-  } = validateResetPassword(req.body);
+  const { errors, isValid } = validateResetPassword(req.body);
   if (!isValid) return res.status(400).json(errors);
 
   User.findOne({
     resetPasswordToken: req.body.resetPasswordToken
-  }).then(
-    user => {
-      if (!user) {
-        errors.password = "Sorry your password could not be reset";
-        return res.status(400).json(errors);
-      }
-      let newPassword = req.body.password;
-      bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(newPassword, salt, (err, hash) => {
-          if (err) throw err;
-          user.password = hash;
-          user.resetPasswordToken = undefined;
-          user.resetPasswordExp = undefined;
-          user
-            .save()
-            .then(user => res.status(200).json({
-              success: "Ok"
-            }))
-            .catch(err => {
-              errors.email = "something went wrong";
-              res.status(400).json(errors);
-            });
-        });
-      });
+  }).then(user => {
+    if (!user) {
+      errors.password = "Sorry your password could not be reset";
+      return res.status(400).json(errors);
     }
-  );
+    let newPassword = req.body.password;
+    bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.hash(newPassword, salt, (err, hash) => {
+        if (err) throw err;
+        user.password = hash;
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExp = undefined;
+        user
+          .save()
+          .then(user =>
+            res.status(200).json({
+              success: "Ok"
+            })
+          )
+          .catch(err => {
+            errors.email = "something went wrong";
+            res.status(400).json(errors);
+          });
+      });
+    });
+  });
 });
 
 module.exports = router;

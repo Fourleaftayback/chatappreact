@@ -4,7 +4,6 @@ import classnames from "classnames";
 import { Col, Row } from "reactstrap";
 
 const Message = ({ error, message }) => {
-  console.log(message);
   return (
     <React.Fragment>
       <Row className="mt-2">

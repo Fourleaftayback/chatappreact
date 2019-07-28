@@ -22,6 +22,9 @@ const NewChat = React.lazy(() => import("./components/layouts/NewChat.js"));
 const ResetRequest = React.lazy(() =>
   import("./components/layouts/ResetRequest.js")
 );
+const ResetPassword = React.lazy(() =>
+  import("./components/layouts/ResetPassword.js")
+);
 
 if (localStorage.jwtToken) {
   setAuthToken(localStorage.jwtToken);
@@ -59,6 +62,14 @@ const App = () => {
               component={() => (
                 <Suspense fallback={<FallBack />}>
                   <ResetRequest />
+                </Suspense>
+              )}
+            />
+            <Route
+              path="/reset"
+              component={() => (
+                <Suspense fallback={<FallBack />}>
+                  <ResetPassword />
                 </Suspense>
               )}
             />
