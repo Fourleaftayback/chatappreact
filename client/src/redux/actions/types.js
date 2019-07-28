@@ -35,3 +35,5 @@ export const SET_INITIAL_LIST = "SET_INITIAL_LIST";
 export const CLEAR_LIST = "CLEAR_LIST";
 export const HANDLE_LOAD = "HANDLE_LOAD";
 export const LOAD_MORE = "LOAD_MORE";
+
+export const MESSAGE = "MESSAGE";

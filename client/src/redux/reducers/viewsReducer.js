@@ -10,7 +10,8 @@ import {
   GROUPCHATCREATOR_OPEN,
   GROUPCHATCREATOR_CLOSE,
   ROOMISACTIVE,
-  ROOMISINACTIVE
+  ROOMISINACTIVE,
+  MESSAGE
 } from "../actions/types";
 
 const initialState = {
@@ -19,7 +20,8 @@ const initialState = {
   registerModalIsOpen: false,
   profileImageModalIsOpen: false,
   groupChatModalIsOpen: false,
-  roomIsActive: false
+  roomIsActive: false,
+  message: {}
 };
 
 export default function(state = initialState, action) {
@@ -71,6 +73,10 @@ export default function(state = initialState, action) {
     case ROOMISINACTIVE:
       return Object.assign({}, state, {
         roomIsActive: false
+      });
+    case MESSAGE:
+      return Object.assign({}, state, {
+        message: action.payload
       });
     default:
       return state;
