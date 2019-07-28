@@ -5,7 +5,6 @@ import {
   SET_ACTIVE_CHAT,
   ROOMISINACTIVE,
   SET_INITIAL_LIST,
-  RESET_LENGTH,
   CLEAR_LIST,
   HANDLE_LOAD
 } from "./types";
@@ -119,9 +118,6 @@ export const clearActiveChat = () => dispatch => {
   dispatch({
     type: CLEAR_LIST,
     payload: []
-  });
-  dispatch({
-    type: RESET_LENGTH
   });
 };
 

@@ -8,16 +8,13 @@ import MessageList from "../list/MessageList";
 import FormSend from "../form/FormSend";
 import RoomBackButton from "../buttons/RoomBackButton";
 import { clearActiveChat } from "../../redux/actions/messageActions";
-import { deactivateRoom } from "../../redux/actions/viewsActions";
 import { handleLoadMore } from "../../redux/actions/messageActions";
-//need to refactor so it deals with new data
 
 const Room = ({
   user,
   activeChatRoom,
   socket,
   clearActiveChat,
-  deactivateRoom,
   currentList,
   handleLoadMore
 }) => {
@@ -59,9 +56,9 @@ const Room = ({
 
   useEffect(() => {
     return () => {
-      deactivateRoom();
+      clearActiveChat();
     };
-  }, [deactivateRoom]);
+  }, [clearActiveChat]);
 
   return (
     <React.Fragment>
@@ -115,7 +112,6 @@ Room.propTypes = {
   activeChatRoom: PropTypes.object.isRequired,
   clearActiveChat: PropTypes.func.isRequired,
   roomIsActive: PropTypes.bool.isRequired,
-  deactivateRoom: PropTypes.func.isRequired,
   currentList: PropTypes.array.isRequired,
   handleLoadMore: PropTypes.func.isRequired
 };
@@ -126,7 +122,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   clearActiveChat: clearActiveChat,
-  deactivateRoom: deactivateRoom,
   handleLoadMore: handleLoadMore
 };
 

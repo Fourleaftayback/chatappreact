@@ -9,8 +9,7 @@ import {
 const initialState = {
   currentChats: [],
   activeChatRoom: {},
-  currentList: [],
-  listLength: 20
+  currentList: []
 };
 
 export default function(state = initialState, action) {

@@ -33,6 +33,5 @@ export const GET_ALL_CHATS = "GET_ALL_CHATS";
 export const SET_ACTIVE_CHAT = "SET_ACTIVE_CHAT";
 export const SET_INITIAL_LIST = "SET_INITIAL_LIST";
 export const CLEAR_LIST = "CLEAR_LIST";
-export const RESET_LENGTH = "RESET_LENGTH";
 export const HANDLE_LOAD = "HANDLE_LOAD";
 export const LOAD_MORE = "LOAD_MORE";
