@@ -10,10 +10,10 @@ export const messageMiddleWare = store => next => action => {
     action.type = LOAD_MORE;
     const currentList = current.messages.currentList;
     const wholeList = current.messages.activeChatRoom.messages;
-    wholeList.length <= currentList.length + 20
+    wholeList.length <= currentList.length + 10
       ? (action.payload = wholeList)
       : (action.payload = wholeList.slice(
-          wholeList.length - (currentList.length + 20),
+          wholeList.length - (currentList.length + 10),
           wholeList.length
         ));
   }

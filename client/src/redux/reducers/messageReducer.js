@@ -1,7 +1,7 @@
 import {
   GET_ALL_CHATS,
   SET_ACTIVE_CHAT,
-  SET_INITIAL_LIST,
+  SET_LIST,
   CLEAR_LIST,
   LOAD_MORE
 } from "../actions/types";
@@ -18,7 +18,7 @@ export default function(state = initialState, action) {
       return { ...state, currentChats: [...action.payload] };
     case SET_ACTIVE_CHAT:
       return { ...state, activeChatRoom: action.payload };
-    case SET_INITIAL_LIST:
+    case SET_LIST:
       return { ...state, currentList: [...action.payload] };
     case CLEAR_LIST:
       return { ...state, currentList: [...action.payload] };

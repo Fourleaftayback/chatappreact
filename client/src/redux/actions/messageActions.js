@@ -4,7 +4,7 @@ import {
   GET_ERRORS,
   SET_ACTIVE_CHAT,
   ROOMISINACTIVE,
-  SET_INITIAL_LIST,
+  SET_LIST,
   CLEAR_LIST,
   HANDLE_LOAD
 } from "./types";
@@ -93,7 +93,7 @@ export const joinExistingRoom = (room, id) => dispatch => {
       ))
     : (messages = room.messages);
   dispatch({
-    type: SET_INITIAL_LIST,
+    type: SET_LIST,
     payload: messages
   });
   dispatch(toggle("room"));
@@ -103,6 +103,17 @@ export const setActiveChat = data => dispatch => {
   dispatch({
     type: SET_ACTIVE_CHAT,
     payload: data
+  });
+  let messages;
+  data.messages.length > 20
+    ? (messages = data.messages.slice(
+        data.messages.length - 20,
+        data.messages.length
+      ))
+    : (messages = data.messages);
+  dispatch({
+    type: SET_LIST,
+    payload: messages
   });
 };
 
