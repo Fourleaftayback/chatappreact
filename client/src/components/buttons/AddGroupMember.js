@@ -88,7 +88,8 @@ AddGroupMember.propTypes = {
   allUsers: PropTypes.array.isRequired,
   socket: PropTypes.object.isRequired,
   activeChatRoom: PropTypes.object.isRequired,
-  setActiveChat: PropTypes.func.isRequired
+  setActiveChat: PropTypes.func.isRequired,
+  getAllUsers: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({

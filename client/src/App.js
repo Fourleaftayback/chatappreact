@@ -15,6 +15,7 @@ import PrivateRoute from "./components/common/PrivateRoute";
 import Hub from "./components/layouts/Hub";
 
 import FallBack from "./components/common/FallBack";
+import NotFound from "./components/common/NotFound";
 
 import "./sass/App.scss";
 
@@ -73,6 +74,7 @@ const App = () => {
                 </Suspense>
               )}
             />
+            <Route component={NotFound} />
           </Switch>
         </Container>
       </Router>

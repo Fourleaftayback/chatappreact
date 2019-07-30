@@ -1,7 +1,7 @@
 import axios from "axios";
 import { MESSAGE, GET_ERRORS } from "./types";
 import history from "../../history/History";
-import toggle from "../actions/viewsActions";
+import { toggle } from "../actions/viewsActions";
 
 export const sendResetRequest = email => dispatch => {
   axios
