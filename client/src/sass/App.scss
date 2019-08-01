@@ -1,8 +1,22 @@
 @import "./global.scss";
 
+body {
+  box-sizing: boder-box;
+  background-color: $white;
+}
+
 .App {
   min-height: 100vh;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   padding: 0 !important;
+}
+
+nav,
+footer {
+  background-image: linear-gradient(to bottom right, $purple, $dark-purple);
+}
+
+footer {
+  color: $white;
 }

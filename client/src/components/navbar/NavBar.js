@@ -11,8 +11,8 @@ import SignOut from "../auth/SignOut";
 
 const NavBar = ({ navBarIsOpen, toggle, isLoggedIn, logOutUser }) => {
   return (
-    <Navbar color="dark" dark expand="md">
-      <NavbarBrand className="cus-text-light mx-2" href="/">
+    <Navbar dark expand="md">
+      <NavbarBrand className="mx-2" href="/">
         <i className="fas fa-comment fa-lg" />
         <span className="ml-2">Chat</span>
       </NavbarBrand>
