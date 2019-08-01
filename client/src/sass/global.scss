@@ -2,3 +2,30 @@ $purple: rgba(96, 63, 134, 1);
 $dark-purple: rgba(72, 38, 99, 1);
 $light-gray: rgba(249, 249, 249, 1);
 $white: rgba(255, 255, 252, 1);
+/*
+$light-background: #f2ece4;
+$light-text: #036;
+$dark-background: #6b717f;
+$dark-text: #d2e1dd;
+@mixin theme-colors($light-theme: true) {
+  @if $light-theme {
+    background-color: $light-background;
+    color: $light-text;
+  } @else {
+    background-color: $dark-background;
+    color: $dark-text;
+  }
+}
+.banner {
+  @include theme-colors($light-theme: true);
+  body.dark & {
+    @include theme-colors($light-theme: false);
+  }
+}
+*/
+@mixin theme-colors($purple-theme: true) {
+  @if $purple-theme {
+    background-image: linear-gradient(to bottom right, $purple, $dark-purple);
+    color: $white;
+  }
+}

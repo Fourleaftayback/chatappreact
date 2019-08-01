@@ -12,7 +12,7 @@ const Landing = ({ isLoggedIn }) => {
   }, [isLoggedIn]);
 
   return (
-    <Container className="landing text-center p-0">
+    <Container fluid={true} className="landing text-center p-0">
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Id porta nibh

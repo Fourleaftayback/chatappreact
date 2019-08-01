@@ -13,8 +13,8 @@ const NavBar = ({ navBarIsOpen, toggle, isLoggedIn, logOutUser }) => {
   return (
     <Navbar dark expand="md">
       <NavbarBrand className="mx-2" href="/">
-        <i className="fas fa-comment fa-lg" />
-        <span className="ml-2">Chat</span>
+        <i className="fas fa-comment fa-lg cus-text-white" />
+        <span className="ml-2 cus-text-white">Chat</span>
       </NavbarBrand>
       <NavbarToggler onClick={() => toggle("navbar")} />
 

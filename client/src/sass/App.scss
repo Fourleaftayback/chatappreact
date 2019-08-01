@@ -14,9 +14,24 @@ body {
 
 nav,
 footer {
-  background-image: linear-gradient(to bottom right, $purple, $dark-purple);
+  @include theme-colors($purple-theme: true);
 }
 
-footer {
-  color: $white;
+.cus-text-white {
+  color: $white !important;
+}
+
+//nav
+
+.fa-sign-in-alt {
+  padding-right: 0.5em;
+}
+.fa-user-plus {
+  padding-right: 0.3em;
+}
+.sign-out-button {
+  border: solid 1px $white;
+}
+.sign-out-button:hover {
+  background-color: (96, 63, 134, 0.5) !important;
 }

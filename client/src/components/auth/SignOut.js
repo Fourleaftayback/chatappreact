@@ -10,7 +10,7 @@ const SignOut = ({ onClick }) => {
           outline
           size="sm"
           onClick={onClick}
-          className="cus-text-light cus-btn-transparent nav-btn">
+          className="sign-out-button cus-text-white nav-btn">
           Sign Out
         </Button>
       </NavItem>
