@@ -1,19 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Button } from "reactstrap";
 
-const NewChatButton = ({ color, onClick, iconType }) => {
+const NewChatButton = ({ onClick, iconType }) => {
   return (
     <React.Fragment>
-      <Button outline color={color} onClick={onClick}>
-        <i className={iconType} />
-      </Button>
+      <div className="icon-button">
+        <i className={iconType} onClick={onClick} />
+      </div>
     </React.Fragment>
   );
 };
 
 NewChatButton.propTypes = {
-  color: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
   iconType: PropTypes.string
 };

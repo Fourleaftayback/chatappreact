@@ -48,7 +48,7 @@ const LoginModal = ({
         Login
       </NavLink>
       <Modal isOpen={loginModalIsOpen} toggle={toggleModal}>
-        <ModalHeader toggle={toggleModal}> Login</ModalHeader>
+        <ModalHeader toggle={toggleModal}>Login</ModalHeader>
         <ModalBody className="mt-3">
           <Form>
             <FormItem
@@ -67,17 +67,13 @@ const LoginModal = ({
               error={errors.password}
               onChange={e => setPassword(e.target.value)}
             />
-            <Button color="info" block={true} onClick={onSubmit}>
+            <Button className="cus-button-blue" block={true} onClick={onSubmit}>
               Login
             </Button>
           </Form>
-          <br />
-          <FaceBookLogin
-            facebookLogin={facebookLogin}
-            buttonText="FaceBook Login"
-          />
+          <FaceBookLogin facebookLogin={facebookLogin} buttonText="FaceBook" />
           <NavLink
-            className="text-primary text-center mt-3 p
+            className="text-primary text-center mt-2 p
             -0"
             href={"/forgot"}>
             Forgot Password

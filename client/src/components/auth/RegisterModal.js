@@ -86,17 +86,14 @@ const RegisterModal = ({
               error={errors.password2}
               onChange={e => setPassword2(e.target.value)}
             />
-            <Button color="info" block={true} onClick={onSubmit}>
+            <Button className="cus-button-blue" block={true} onClick={onSubmit}>
               Register
             </Button>
           </Form>
-          <br />
-          <FaceBookLogin
-            facebookLogin={facebookLogin}
-            buttonText="FaceBook Register"
-          />
+
+          <FaceBookLogin facebookLogin={facebookLogin} buttonText="FaceBook" />
           <NavLink
-            className="text-primary text-center mt-3 p
+            className="text-primary text-center mt-2 p
             -0"
             href={"/forgot"}>
             Forgot Password

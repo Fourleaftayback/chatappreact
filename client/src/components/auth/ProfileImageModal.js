@@ -68,7 +68,7 @@ const ProfileImageModal = ({
                 <div className="invalid-feedback">{errors.image}</div>
               )}
             </FormGroup>
-            <Button color="info" block={true} onClick={onSubmit}>
+            <Button className="cus-button-blue" block={true} onClick={onSubmit}>
               Upload
             </Button>
           </Form>

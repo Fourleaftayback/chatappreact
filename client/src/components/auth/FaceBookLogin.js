@@ -24,6 +24,7 @@ const FaceBookLogin = ({ facebookLogin, buttonText }) => {
         onClick={() => console.log("inital")}
         textButton={buttonText}
         callback={responseFacebook}
+        cssClass="cus-fb-button"
       />
     </React.Fragment>
   );

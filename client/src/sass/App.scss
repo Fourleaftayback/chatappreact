@@ -21,17 +21,83 @@ footer {
   color: $white !important;
 }
 
+//button
+.cus-fb-button {
+  color: $white;
+  display: block;
+  padding: 0.375em 0.2em;
+  border-radius: 5px;
+  width: 100%;
+  border: 1px solid rgb(108, 117, 125);
+  margin-top: 1rem;
+}
+.cus-button-blue,
+.cus-fb-button {
+  background-color: $blue;
+}
+
+.cus-button-blue:hover,
+.cus-fb-button:hover {
+  background-color: rgba(59, 101, 216, 1);
+}
+
+.cus-button-blue:active,
+.cus-fb-button:hover {
+  background-color: rgba(59, 101, 216, 1) !important;
+}
+
+.icon-button {
+  color: $purple;
+  position: fixed;
+  margin-top: 0.7em;
+  z-index: 1;
+}
+
 //nav
 
 .fa-sign-in-alt {
   padding-right: 0.5em;
 }
+
 .fa-user-plus {
   padding-right: 0.3em;
 }
+
 .sign-out-button {
   border: solid 1px $white;
 }
+
 .sign-out-button:hover {
-  background-color: (96, 63, 134, 0.5) !important;
+  background-color: rgba(96, 63, 134, 0.5);
+}
+
+//modals
+.modal-dialog {
+  margin-top: 3em;
+}
+
+.modal-content {
+  background-color: rgba(72, 38, 99, 0.9);
+  color: rgba(255, 255, 252, 1);
+
+  span {
+    color: rgba(255, 255, 252, 1);
+  }
+
+  .modal-header {
+    position: relative;
+    border: none;
+  }
+
+  .modal-title {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  h5 {
+    margin: auto;
+    text-align: center;
+  }
 }
