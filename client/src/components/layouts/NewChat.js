@@ -128,14 +128,14 @@ class NewChat extends Component {
               <NewChatButton
                 color="primary"
                 onClick={this.chat}
-                iconType="fas fa-user-friends fa-lg"
+                iconType="fas fa-user-friends fa-lg icon-button"
               />
             </Col>
             <Col xs="2">
               <NewChatButton
                 color="primary"
                 onClick={this.groupChat}
-                iconType="fas fa-users fa-lg"
+                iconType="fas fa-users fa-lg icon-button"
               />
             </Col>
           </Row>

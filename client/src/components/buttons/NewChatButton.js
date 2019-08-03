@@ -4,9 +4,7 @@ import PropTypes from "prop-types";
 const NewChatButton = ({ onClick, iconType }) => {
   return (
     <React.Fragment>
-      <div className="icon-button">
-        <i className={iconType} onClick={onClick} />
-      </div>
+      <i className={iconType} onClick={onClick} />
     </React.Fragment>
   );
 };

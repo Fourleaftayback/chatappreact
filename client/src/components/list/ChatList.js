@@ -13,7 +13,7 @@ const ChatList = ({ chatList, userId, onClick }) => {
       return (
         <ListGroupItem
           key={item._id}
-          classnames="mb-1"
+          className="mb-1"
           onClick={() => onClick(item, userId)}>
           <ProfileImage imageUrl={group} size="2.5rem" />
           {"   "}
@@ -27,7 +27,7 @@ const ChatList = ({ chatList, userId, onClick }) => {
       return (
         <ListGroupItem
           key={item._id}
-          classnames="mb-1"
+          className="mb-1"
           onClick={() => onClick(item, userId)}>
           <ProfileImage imageUrl={profile_image_url} size="2.5rem" />
           {"   "}
@@ -40,7 +40,7 @@ const ChatList = ({ chatList, userId, onClick }) => {
   });
   return (
     <React.Fragment>
-      <ListGroup>{chats}</ListGroup>
+      <ListGroup className="chatlist">{chats}</ListGroup>
     </React.Fragment>
   );
 };

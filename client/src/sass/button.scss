@@ -1,0 +1,42 @@
+//button
+button {
+  cursor: pointer;
+}
+.cus-fb-button {
+  color: $white;
+  display: block;
+  padding: 0.375em 0.2em;
+  border-radius: 5px;
+  width: 100%;
+  border: 1px solid rgb(108, 117, 125);
+  margin-top: 1rem;
+}
+.cus-button-blue,
+.cus-fb-button {
+  background-color: $blue;
+}
+
+.cus-button-blue:hover,
+.cus-fb-button:hover {
+  background-color: rgba(59, 101, 216, 1);
+}
+
+.cus-button-blue:active,
+.cus-fb-button:hover {
+  background-color: rgba(59, 101, 216, 1) !important;
+}
+
+.icon-button {
+  color: $purple;
+  cursor: pointer;
+}
+
+.icon-button:hover {
+  color: $dark-purple;
+}
+
+.fixed-button {
+  position: fixed;
+  margin-top: 1.05em;
+  z-index: 1;
+}

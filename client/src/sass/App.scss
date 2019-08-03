@@ -1,4 +1,5 @@
 @import "./global.scss";
+@import "./button.scss";
 
 body {
   box-sizing: boder-box;
@@ -12,45 +13,13 @@ body {
   padding: 0 !important;
 }
 
-nav,
-footer {
-  @include theme-colors($purple-theme: true);
-}
-
 .cus-text-white {
   color: $white !important;
 }
 
-//button
-.cus-fb-button {
-  color: $white;
-  display: block;
-  padding: 0.375em 0.2em;
-  border-radius: 5px;
-  width: 100%;
-  border: 1px solid rgb(108, 117, 125);
-  margin-top: 1rem;
-}
-.cus-button-blue,
-.cus-fb-button {
-  background-color: $blue;
-}
-
-.cus-button-blue:hover,
-.cus-fb-button:hover {
-  background-color: rgba(59, 101, 216, 1);
-}
-
-.cus-button-blue:active,
-.cus-fb-button:hover {
-  background-color: rgba(59, 101, 216, 1) !important;
-}
-
-.icon-button {
-  color: $purple;
-  position: fixed;
-  margin-top: 0.7em;
-  z-index: 1;
+nav,
+footer {
+  @include theme-colors($purple-theme: true);
 }
 
 //nav
@@ -100,4 +69,13 @@ footer {
     margin: auto;
     text-align: center;
   }
+}
+
+//
+
+.chatlist > li {
+  background-color: $light-gray;
+  color: $dark-purple;
+}
+.chatlist > li:nth-child(even) {
 }
