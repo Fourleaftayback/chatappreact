@@ -22,6 +22,15 @@ footer {
   @include theme-colors($purple-theme: true);
 }
 
+//common
+
+.list-group-item {
+  background-color: $light-gray;
+  color: $purple;
+}
+
+
+
 //nav
 
 .fa-sign-in-alt {
@@ -71,11 +80,14 @@ footer {
   }
 }
 
-//
+//hub
 
-.chatlist > li {
-  background-color: $light-gray;
-  color: $dark-purple;
+.unseen-count {
+  position: absolute;
+  margin-left: .2em;
 }
+
+/*
 .chatlist > li:nth-child(even) {
 }
+*/

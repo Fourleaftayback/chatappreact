@@ -11,7 +11,7 @@ const ProfileImage = ({ imageUrl, size, cusClass }) => {
     <React.Fragment>
       <img
         src={imageUrl}
-        className={`rounded-circle ${cusClass}`}
+        className="profile-image rounded-circle"
         alt="Profile"
         style={ImageSize}
       />
@@ -21,8 +21,7 @@ const ProfileImage = ({ imageUrl, size, cusClass }) => {
 
 ProfileImage.propTypes = {
   imageUrl: PropTypes.string.isRequired,
-  size: PropTypes.string.isRequired,
-  cusClass: PropTypes.string
+  size: PropTypes.string.isRequired
 };
 
 export default ProfileImage;

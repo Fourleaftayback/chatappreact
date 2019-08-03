@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { ListGroup, ListGroupItem } from "reactstrap";
+import { ListGroup, ListGroupItem, Badge, Col, Row } from "reactstrap";
 
 import ProfileImage from "../common/ProfileImage";
 import { getUserInfo, getUnseenCount } from "../../utils/dataFunctions";
@@ -15,11 +15,20 @@ const ChatList = ({ chatList, userId, onClick }) => {
           key={item._id}
           className="mb-1"
           onClick={() => onClick(item, userId)}>
-          <ProfileImage imageUrl={group} size="2.5rem" />
-          {"   "}
-          {item.chat_name}
-          {"   "}
-          {unseenCount}
+          <Row>
+            <Col xs="3">
+              <ProfileImage imageUrl={group} size="2.5rem" />
+              {unseenCount !== 0 ? (
+                <Badge color="danger" className="unseen-count">
+                  {unseenCount}
+                </Badge>
+              ) : null}
+            </Col>
+            <Col xs="6" className="text-center pt-2">
+              <b>{item.chat_name}</b>
+            </Col>
+            <Col xs="3" />
+          </Row>
         </ListGroupItem>
       );
     } else {
@@ -29,11 +38,20 @@ const ChatList = ({ chatList, userId, onClick }) => {
           key={item._id}
           className="mb-1"
           onClick={() => onClick(item, userId)}>
-          <ProfileImage imageUrl={profile_image_url} size="2.5rem" />
-          {"   "}
-          {user_name}
-          {"   "}
-          {unseenCount}
+          <Row>
+            <Col xs="3">
+              <ProfileImage imageUrl={profile_image_url} size="2.5rem" />
+              {unseenCount !== 0 ? (
+                <Badge color="danger" className="unseen-count">
+                  {unseenCount}
+                </Badge>
+              ) : null}
+            </Col>
+            <Col xs="6" className="text-center pt-2">
+              <b>{user_name}</b>
+            </Col>
+            <Col xs="3" />
+          </Row>
         </ListGroupItem>
       );
     }
