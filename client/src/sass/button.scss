@@ -2,6 +2,7 @@
 button {
   cursor: pointer;
 }
+
 .cus-fb-button {
   color: $white;
   display: block;
@@ -11,6 +12,7 @@ button {
   border: 1px solid rgb(108, 117, 125);
   margin-top: 1rem;
 }
+
 .cus-button-blue,
 .cus-fb-button {
   background-color: $blue;
@@ -39,4 +41,22 @@ button {
   position: fixed;
   margin-top: 1.05em;
   z-index: 1;
+}
+
+.fa-chevron-circle-left {
+  position: fixed;
+  z-index: 1;
+  margin-top: 0.3em;
+  margin-left: 1em;
+}
+
+.cus-send-button {
+  background-color: $purple;
+  color: $white;
+}
+
+.cus-send-button:active,
+.cus-send-button:hover {
+  background-color: $dark-purple;
+  color: $white;
 }

@@ -1,13 +1,13 @@
 import React from "react";
-import { Button } from "reactstrap";
 import PropTypes from "prop-types";
 
 const RoomBackButton = ({ onClick }) => {
   return (
     <React.Fragment>
-      <Button outline color="primary" size="sm" onClick={onClick}>
-        List of Chats
-      </Button>
+      <i
+        className="fas fa-chevron-circle-left fa-2x icon-button"
+        onClick={onClick}
+      />
     </React.Fragment>
   );
 };

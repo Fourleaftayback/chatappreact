@@ -4,6 +4,7 @@
 body {
   box-sizing: boder-box;
   background-color: $white;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .App {
@@ -17,6 +18,10 @@ body {
   color: $white !important;
 }
 
+.cus-text-purple {
+  color: $purple;
+}
+
 nav,
 footer {
   @include theme-colors($purple-theme: true);
@@ -28,8 +33,6 @@ footer {
   background-color: $light-gray;
   color: $purple;
 }
-
-
 
 //nav
 
@@ -84,10 +87,29 @@ footer {
 
 .unseen-count {
   position: absolute;
-  margin-left: .2em;
+  margin-left: 0.2em;
 }
 
-/*
-.chatlist > li:nth-child(even) {
+//room
+.message-container {
+  padding-bottom: 3.75rem;
 }
-*/
+.message-list {
+  background-color: unset;
+  border: unset;
+}
+
+.own-messages {
+  background-color: $light-gray;
+  border-radius: 7px;
+  height: 100%;
+  float: right;
+}
+
+.other-messages {
+  background-image: linear-gradient(to bottom right, $purple, $dark-purple);
+  color: $white;
+  border-radius: 7px;
+  height: 100%;
+  display: inline-block;
+}

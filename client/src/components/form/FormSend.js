@@ -9,7 +9,15 @@ import {
   Button
 } from "reactstrap";
 
-const FormSend = ({ name, type, placeholder, value, error, onChange , onClick}) => {
+const FormSend = ({
+  name,
+  type,
+  placeholder,
+  value,
+  error,
+  onChange,
+  onClick
+}) => {
   return (
     <React.Fragment>
       <FormGroup>
@@ -25,11 +33,8 @@ const FormSend = ({ name, type, placeholder, value, error, onChange , onClick}) 
             onChange={onChange}
           />
           <InputGroupAddon addonType="append">
-            <Button
-              color="info"
-              block={false}
-              onClick={onClick}>
-              Send
+            <Button className="cus-send-button" block={false} onClick={onClick}>
+              <i class="fas fa-paper-plane" />
             </Button>
           </InputGroupAddon>
         </InputGroup>

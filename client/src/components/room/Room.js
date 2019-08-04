@@ -62,40 +62,41 @@ const Room = ({
 
   return (
     <React.Fragment>
-      <Row>
-        <Col sm={{ size: 2, order: 1 }}>
+      <div className="message-container">
+        <Row>
           <RoomBackButton onClick={clearActiveChat} />
-        </Col>
-        <Col sm={{ size: 6, order: 2, offset: 3 }}>
-          <RoomHeader
-            isGroup={activeChatRoom.group_chat}
-            groupName={activeChatRoom.chat_name}
-            name={activeChatRoom.receiver_name}
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col sm={{ size: 6, order: 2, offset: 3 }}>
-          {activeChatRoom.group_chat ? (
-            <CollapsableUserList
-              userList={activeChatRoom.userList}
-              socket={socket}
+
+          <Col sm={{ size: 6, order: 2, offset: 3 }} className="mt-2">
+            <RoomHeader
+              isGroup={activeChatRoom.group_chat}
+              groupName={activeChatRoom.chat_name}
+              name={activeChatRoom.receiver_name}
             />
-          ) : null}
-        </Col>
-      </Row>
-      <Row>
-        <Col sm={{ size: 6, order: 2, offset: 3 }}>
-          <MessageList userId={user.id} messageList={currentList} />
-          <div ref={messageEnd} />
-        </Col>
-      </Row>
-      <Row className="fixed-bottom">
+          </Col>
+        </Row>
+        <Row>
+          <Col sm={{ size: 6, order: 2, offset: 3 }}>
+            {activeChatRoom.group_chat ? (
+              <CollapsableUserList
+                userList={activeChatRoom.userList}
+                socket={socket}
+              />
+            ) : null}
+          </Col>
+        </Row>
+        <Row>
+          <Col sm={{ size: 6, order: 2, offset: 3 }}>
+            <MessageList userId={user.id} messageList={currentList} />
+            <div ref={messageEnd} />
+          </Col>
+        </Row>
+      </div>
+      <Row className="fixed-bottom mx-1">
         <Col sm={{ size: 6, order: 2, offset: 3 }}>
           <FormSend
             type="text"
             name="message"
-            placeholder="message"
+            placeholder=""
             value={text}
             onChange={e => setText(e.target.value)}
             onClick={sendChat}
