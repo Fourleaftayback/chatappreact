@@ -74,16 +74,12 @@ const Room = ({
             />
           </Col>
         </Row>
-        <Row>
-          <Col sm={{ size: 6, order: 2, offset: 3 }}>
-            {activeChatRoom.group_chat ? (
-              <CollapsableUserList
-                userList={activeChatRoom.userList}
-                socket={socket}
-              />
-            ) : null}
-          </Col>
-        </Row>
+        {activeChatRoom.group_chat ? (
+          <CollapsableUserList
+            userList={activeChatRoom.userList}
+            socket={socket}
+          />
+        ) : null}
         <Row>
           <Col sm={{ size: 6, order: 2, offset: 3 }}>
             <MessageList userId={user.id} messageList={currentList} />

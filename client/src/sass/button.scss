@@ -47,16 +47,17 @@ button {
   position: fixed;
   z-index: 1;
   margin-top: 0.3em;
-  margin-left: 1em;
+  margin-left: 0.8em;
 }
 
-.cus-send-button {
+.cus-purple-button {
   background-color: $purple;
   color: $white;
+  border: 1px solid $dark-purple;
 }
 
-.cus-send-button:active,
-.cus-send-button:hover {
-  background-color: $dark-purple;
+.cus-purple-button:active,
+.cus-purple-button:hover {
+  background-color: $dark-purple !important;
   color: $white;
 }

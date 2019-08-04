@@ -1,6 +1,13 @@
 import React, { useState, Suspense } from "react";
 import PropTypes from "prop-types";
-import { ListGroup, ListGroupItem, Collapse, Button } from "reactstrap";
+import {
+  Row,
+  Col,
+  ListGroup,
+  ListGroupItem,
+  Collapse,
+  Button
+} from "reactstrap";
 
 import ProfileImage from "../common/ProfileImage";
 
@@ -18,34 +25,51 @@ const CollapsableUserList = ({ userList, socket }) => {
   };
 
   let users = userList.map(item => (
-    <ListGroupItem key={item._id} className="mb-1 bg-primary text-light">
-      <ProfileImage imageUrl={item.profile_image_url} size="2.5rem" />
-      {"  "}
-      {item.user_name}
+    <ListGroupItem key={item._id} className="mb-1">
+      <Row>
+        <Col xs="3">
+          <ProfileImage imageUrl={item.profile_image_url} size="2.5rem" />
+        </Col>
+        {"  "}
+        <Col xs="6" className="text-center pt-2">
+          <b> {item.user_name}</b>
+        </Col>
+        <Col xs="3" />
+      </Row>
     </ListGroupItem>
   ));
 
   return (
     <React.Fragment>
-      <div>
-        <Button color="primary" outline onClick={toggle}>
-          {userList.length} Group Members
-        </Button>
-        <Suspense
-          fallback={
-            <span className="text-center">Loading...something went wrong</span>
-          }>
-          <AddGroupMember
-            modalIsOpen={modalIsOpen}
-            toggleModal={toggleModal}
-            existingMember={userList}
-            socket={socket}
-          />
-        </Suspense>
-        <Collapse isOpen={isOpen}>
-          <ListGroup>{users}</ListGroup>
-        </Collapse>
-      </div>
+      <Row className="my-2">
+        <Col xs="6" className="text-right">
+          <Button className="cus-purple-button" onClick={toggle}>
+            {userList.length} Members
+          </Button>
+        </Col>
+        <Col xs="6">
+          <Suspense
+            fallback={
+              <span className="text-center">
+                Loading...something went wrong
+              </span>
+            }>
+            <AddGroupMember
+              modalIsOpen={modalIsOpen}
+              toggleModal={toggleModal}
+              existingMember={userList}
+              socket={socket}
+            />
+          </Suspense>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Collapse isOpen={isOpen}>
+            <ListGroup>{users}</ListGroup>
+          </Collapse>
+        </Col>
+      </Row>
     </React.Fragment>
   );
 };

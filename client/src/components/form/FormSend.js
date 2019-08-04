@@ -33,7 +33,10 @@ const FormSend = ({
             onChange={onChange}
           />
           <InputGroupAddon addonType="append">
-            <Button className="cus-send-button" block={false} onClick={onClick}>
+            <Button
+              className="cus-purple-button"
+              block={false}
+              onClick={onClick}>
               <i class="fas fa-paper-plane" />
             </Button>
           </InputGroupAddon>

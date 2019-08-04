@@ -66,8 +66,8 @@ const AddGroupMember = ({
 
   return (
     <React.Fragment>
-      <Button color="primary" outline onClick={toggleModal}>
-        Add New Member
+      <Button className="cus-purple-button" onClick={toggleModal}>
+        Add Member
       </Button>
       <Modal isOpen={modalIsOpen} toggle={toggleModal}>
         <ModalHeader toggle={toggleModal}>Add New Member</ModalHeader>
