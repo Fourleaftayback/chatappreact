@@ -124,18 +124,16 @@ class NewChat extends Component {
                 onChange={this.onChange}
               />
             </Col>
-            <Col xs="2">
+            <Col xs="2" className="text-center">
               <NewChatButton
-                color="primary"
                 onClick={this.chat}
-                iconType="fas fa-user-friends fa-lg icon-button"
+                iconType="fas fa-user-friends fa-lg icon-button pt-3 "
               />
             </Col>
-            <Col xs="2">
+            <Col xs="2" className="text-center">
               <NewChatButton
-                color="primary"
                 onClick={this.groupChat}
-                iconType="fas fa-users fa-lg icon-button"
+                iconType="fas fa-users fa-lg icon-button pt-3"
               />
             </Col>
           </Row>

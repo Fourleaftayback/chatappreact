@@ -14,6 +14,9 @@ const ExistingChats = ({ currentChats, user, joinExistingRoom }) => {
           <NewChatButton
             onClick={() => history.push("/createchat")}
             iconType="fab fa-rocketchat fa-2x icon-button fixed-button"
+            tooltipContainer="tooltip-right"
+            tooltipClass="tooltip-right-text"
+            toolTipText="New Chat"
           />
         </Col>
       </Row>

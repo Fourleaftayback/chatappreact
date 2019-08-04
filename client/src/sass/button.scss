@@ -37,6 +37,10 @@ button {
   color: $dark-purple;
 }
 
+.icon-button:active {
+  transform: translate(.2em, .2em);
+}
+
 .fixed-button {
   position: fixed;
   margin-top: 1.05em;
@@ -60,4 +64,27 @@ button {
 .cus-purple-button:hover {
   background-color: $dark-purple !important;
   color: $white;
+}
+
+//tooltip
+.tooltip-right {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-right-text {
+  visibility: hidden;
+  position: absolute;
+  z-index: 1;
+  top: 48px;
+  left: 50px;
+  width: 120px;
+  background-color: $purple;
+  color: $white;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.tooltip-right:hover .tooltip-right-text {
+  visibility: visible;
 }
