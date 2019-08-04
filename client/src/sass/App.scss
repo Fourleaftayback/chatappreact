@@ -113,3 +113,12 @@ footer {
   height: 100%;
   display: inline-block;
 }
+
+.user-list-modal {
+  background-color: rgba(245, 245, 245, 0.9);
+}
+
+.user-selected {
+  background-color: rgba(48, 94, 161, 0.9);
+  color: $white;
+}

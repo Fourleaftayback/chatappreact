@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
-import { ListGroup, ListGroupItem } from "reactstrap";
+import { ListGroup, ListGroupItem, Row, Col } from "reactstrap";
 
 import ProfileImage from "../common/ProfileImage";
 
@@ -12,13 +12,19 @@ const UserList = ({ userList, selectUser }) => {
   let users = userList.map(item => (
     <ListGroupItem
       key={item._id}
-      className={classnames("mb-1", {
-        "bg-primary text-light": item.isSelected
+      className={classnames("mb-1 user-list-modal", {
+        "user-selected": item.isSelected
       })}
       onClick={() => onClick(item._id)}>
-      <ProfileImage imageUrl={item.profile_image_url} size="2.5rem" />
-      {"  "}
-      {item.user_name}
+      <Row>
+        <Col xs="3">
+          <ProfileImage imageUrl={item.profile_image_url} size="2.5rem" />
+        </Col>
+        <Col xs="6" className="pt-2 text-center">
+          <b>{item.user_name}</b>
+        </Col>
+        <Col xs="3" />
+      </Row>
     </ListGroupItem>
   ));
   return (

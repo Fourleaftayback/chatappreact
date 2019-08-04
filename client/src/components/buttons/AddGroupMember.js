@@ -70,10 +70,10 @@ const AddGroupMember = ({
         Add Member
       </Button>
       <Modal isOpen={modalIsOpen} toggle={toggleModal}>
-        <ModalHeader toggle={toggleModal}>Add New Member</ModalHeader>
-        <ModalBody className="mt-3">
+        <ModalHeader toggle={toggleModal}>Add Member</ModalHeader>
+        <ModalBody>
           <UserList userList={otherUsers} selectUser={userSelect} />
-          <Button color="info" onClick={addUsers}>
+          <Button className="cus-button-blue mt-1" block onClick={addUsers}>
             Add
           </Button>
         </ModalBody>
