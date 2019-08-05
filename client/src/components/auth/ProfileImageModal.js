@@ -43,8 +43,11 @@ const ProfileImageModal = ({
 
   return (
     <React.Fragment>
-      <Modal isOpen={profileImageModalIsOpen} toggle={toggleModal}>
-        <ModalHeader toggle={toggleModal}>
+      <Modal
+        isOpen={profileImageModalIsOpen}
+        toggle={toggleModal}
+        className="profile-modal">
+        <ModalHeader toggle={toggleModal} className="mt-4">
           {user.profile_image_url === undefined ||
           user.profile_image_url === "" ? (
             <i className="fas fa-user-circle fa-3x" />

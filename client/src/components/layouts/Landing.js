@@ -13,32 +13,9 @@ const Landing = ({ isLoggedIn }) => {
 
   return (
     <Container fluid={true} className="landing text-center p-0">
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Id porta nibh
-        venenatis cras sed. Nisl suscipit adipiscing bibendum est. Blandit
-        libero volutpat sed cras. Volutpat consequat mauris nunc congue. Est
-        ullamcorper eget nulla facilisi etiam. Enim ut sem viverra aliquet eget
-        sit amet tellus cras. Nisi quis eleifend quam adipiscing vitae. Nunc
-        pulvinar sapien et ligula. Sit amet luctus venenatis lectus magna
-        fringilla urna porttitor rhoncus. Aliquam sem et tortor consequat id
-        porta nibh venenatis cras. Ornare lectus sit amet est placerat. Et
-        malesuada fames ac turpis. Enim praesent elementum facilisis leo vel
-        fringilla est ullamcorper.
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Id porta nibh
-        venenatis cras sed. Nisl suscipit adipiscing bibendum est. Blandit
-        libero volutpat sed cras. Volutpat consequat mauris nunc congue. Est
-        ullamcorper eget nulla facilisi etiam. Enim ut sem viverra aliquet eget
-        sit amet tellus cras. Nisi quis eleifend quam adipiscing vitae. Nunc
-        pulvinar sapien et ligula. Sit amet luctus venenatis lectus magna
-        fringilla urna porttitor rhoncus. Aliquam sem et tortor consequat id
-        porta nibh venenatis cras. Ornare lectus sit amet est placerat. Et
-        malesuada fames ac turpis. Enim praesent elementum facilisis leo vel
-        fringilla est ullamcorper.
-      </p>
+      {/*video or Gif showing the chat page will be shown here*/}
+      <p> add type animation for description???</p>
+      <p>video or Gif component will be shown here </p>
 
       <Footer />
     </Container>

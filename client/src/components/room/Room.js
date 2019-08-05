@@ -28,8 +28,10 @@ const Room = ({
       user: user,
       text: text
     };
-    socket.emit("sendMessage", message);
-    setText("");
+    if (text !== "") {
+      socket.emit("sendMessage", message);
+      setText("");
+    }
   };
 
   useEffect(() => {

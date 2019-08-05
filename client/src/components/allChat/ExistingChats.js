@@ -29,6 +29,7 @@ const ExistingChats = ({ currentChats, user, joinExistingRoom }) => {
           />
         </Col>
       </Row>
+
       <ProfileImageModal />
     </React.Fragment>
   );
