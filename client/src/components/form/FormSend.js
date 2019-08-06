@@ -37,7 +37,7 @@ const FormSend = ({
               className="cus-purple-button"
               block={false}
               onClick={onClick}>
-              <i class="fas fa-paper-plane" />
+              <i className="fas fa-paper-plane" />
             </Button>
           </InputGroupAddon>
         </InputGroup>
