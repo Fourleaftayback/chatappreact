@@ -1,9 +1,6 @@
 {
   "name": "react_chat_app",
   "version": "1.0.0",
-  "engines": {
-    "node": "10.15.1"
-  },
   "description": "React Chat App",
   "main": "server.js",
   "scripts": {
