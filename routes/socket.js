@@ -7,7 +7,7 @@ module.exports = io => {
     socket.on("join", data => {
       data.roomIds.forEach(item => {
         socket.join(item);
-        console.log("joined room: " + item);
+        // console.log("joined room: " + item);
       });
     });
 
@@ -73,7 +73,7 @@ module.exports = io => {
     });
 
     socket.on("disconnect", () => {
-      console.log("user disconnected");
+      // console.log("user disconnected");
     });
   });
   return router;
