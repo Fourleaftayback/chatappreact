@@ -7,10 +7,10 @@ import RegisterModal from "../auth/RegisterModal";
 const AuthLinks = () => {
   return (
     <React.Fragment>
-      <NavItem>
+      <NavItem className="auth-item">
         <LoginModal />
       </NavItem>
-      <NavItem>
+      <NavItem className="auth-item">
         <RegisterModal />
       </NavItem>
     </React.Fragment>

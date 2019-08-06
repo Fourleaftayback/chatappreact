@@ -19,8 +19,8 @@ class Hub extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    // this.socket = io("localhost:5000");
-    this.socket = io("reactchat-app.herokuapp.com");
+    this.socket = io("localhost:5000");
+    //this.socket = io("reactchat-app.herokuapp.com");
   }
   componentDidMount() {
     axios.get("/messages/all").then(res => {

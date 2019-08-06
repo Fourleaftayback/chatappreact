@@ -38,12 +38,12 @@ button {
 }
 
 .icon-button:active {
-  transform: translate(.2em, .2em);
+  transform: translate(0.2em, 0.2em);
 }
 
 .fixed-button {
   position: fixed;
-  margin-top: 1.05em;
+  margin-top: 1.2em;
   z-index: 1;
 }
 
