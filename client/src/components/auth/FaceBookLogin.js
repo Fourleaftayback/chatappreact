@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import FacebookLogin from "react-facebook-login";
-import config from "../../config/config";
+//import config from "../../config/config";
 
 const FaceBookLogin = ({ facebookLogin, buttonText }) => {
   const responseFacebook = response => {
@@ -18,7 +18,7 @@ const FaceBookLogin = ({ facebookLogin, buttonText }) => {
   return (
     <React.Fragment>
       <FacebookLogin
-        appId={config.fbAppId}
+        // appId={config.fbAppId}
         autoLoad={false}
         fields="name,email,picture"
         onClick={() => console.log("inital")}
