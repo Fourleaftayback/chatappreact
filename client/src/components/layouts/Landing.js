@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Container } from "reactstrap";
 import histroy from "../../history/History";
+import demoGif from "../../image/demo.gif";
 
 import Footer from "./Footer";
 
@@ -13,9 +14,13 @@ const Landing = ({ isLoggedIn }) => {
 
   return (
     <Container fluid={true} className="landing text-center p-0">
-      {/*video or Gif showing the chat page will be shown here*/}
-      <p> add type animation for description???</p>
-      <p>video or Gif component will be shown here </p>
+      <div className="landing-contianer">
+        <div className="m-auto">
+          <div className="phone-container">
+            <img src={demoGif} alt="Demo" id="demo-gif" />
+          </div>
+        </div>
+      </div>
 
       <Footer />
     </Container>

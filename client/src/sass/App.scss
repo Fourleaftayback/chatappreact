@@ -91,6 +91,51 @@ footer {
   max-width: 95vw;
 }
 
+//landing
+
+.landing-contianer {
+  min-height: 75vh;
+  margin: 2rem 0 1.5rem 0;
+}
+
+//phone
+.phone-container {
+  position: relative;
+  width: 278px;
+  height: 500px;
+  margin: auto;
+  border: 12px #eaebed solid;
+  border-top-width: 54px;
+  border-bottom-width: 54px;
+  border-radius: 32px;
+}
+
+.phone-container:before {
+  content: "";
+  display: block;
+  width: 54px;
+  height: 5px;
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: $purple;
+  border-radius: 10px;
+}
+
+.phone-container:after {
+  content: "";
+  display: block;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  left: 50%;
+  bottom: -58px;
+  transform: translate(-50%, -50%);
+  background: $purple;
+  border-radius: 50%;
+}
+
 //hub
 
 .unseen-count {
@@ -102,6 +147,7 @@ footer {
 .message-container {
   padding-bottom: 3.75rem;
 }
+
 .message-list {
   background-color: unset;
   border: unset;
