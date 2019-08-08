@@ -1,6 +1,10 @@
 @import "./global.scss";
 @import "./button.scss";
 
+#root {
+  min-height: 100vh;
+}
+
 body {
   box-sizing: boder-box;
   background-color: $white;
@@ -8,7 +12,6 @@ body {
 }
 
 .App {
-  min-height: 100vh;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   padding: 0 !important;
@@ -96,10 +99,11 @@ footer {
   background-color: rgba(245, 245, 245, 1);
 }
 //landing
-
-.landing-contianer {
-  min-height: 75vh;
-  margin: 2rem 0 1.5rem 0;
+.landing {
+  min-height: 84vh;
+}
+.landing-content {
+  margin: 2.8rem 0 3.3rem 0;
 }
 
 //phone

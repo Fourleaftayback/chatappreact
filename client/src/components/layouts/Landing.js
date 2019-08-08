@@ -14,14 +14,11 @@ const Landing = ({ isLoggedIn }) => {
 
   return (
     <Container fluid={true} className="landing text-center p-0">
-      <div className="landing-contianer">
-        <div className="m-auto">
-          <div className="phone-container">
-            <img src={demoGif} alt="Demo" id="demo-gif" />
-          </div>
+      <div className="landing-content">
+        <div className="phone-container text-center">
+          <img src={demoGif} alt="Demo" id="demo-gif" />
         </div>
       </div>
-
       <Footer />
     </Container>
   );

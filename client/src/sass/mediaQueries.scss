@@ -6,12 +6,40 @@
 //for ipadmini and up 
 
 */
+@media only screen and (min-height: 737px) {
+  .landing {
+    min-height: 84vh;
+  }
+  .landing-content {
+    margin: 3.5rem 0 7.1rem 0;
+  }
+}
+
+@media only screen and (min-height: 824px) {
+  .landing-content {
+    min-height: 68vh;
+  }
+}
+
+@media only screen and (min-height: 1025px) {
+  .landing-content {
+    min-height: 76vh;
+  }
+}
+
+@media only screen and (min-height: 1380px) {
+  .landing-content {
+    min-height: 80vh;
+  }
+}
+
 @media only screen and (min-width: 768px) {
   //navbar
   .auth-item {
     margin: 0;
     padding: 0 0.25em;
   }
+
   //modal
   .modal-dialog {
     padding: 0 1em;
