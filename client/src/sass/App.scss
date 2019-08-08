@@ -64,6 +64,7 @@ footer {
 .modal-content {
   background-color: rgba(72, 38, 99, 0.9);
   color: rgba(255, 255, 252, 1);
+  margin-top: 3.5rem;
 
   span {
     color: rgba(255, 255, 252, 1);
@@ -91,6 +92,9 @@ footer {
   max-width: 95vw;
 }
 
+.user-list-modal {
+  background-color: rgba(245, 245, 245, 1);
+}
 //landing
 
 .landing-contianer {
@@ -168,10 +172,6 @@ footer {
   display: inline-block;
 }
 
-.user-list-modal {
-  background-color: rgba(245, 245, 245, 0.9);
-}
-
 .user-selected {
   background-color: rgba(48, 94, 161, 0.9);
   color: $white;
@@ -179,7 +179,7 @@ footer {
 
 .reset-password {
   display: block;
-  margin: auto
+  margin: auto;
 }
 
 @import "./mediaQueries.scss";
