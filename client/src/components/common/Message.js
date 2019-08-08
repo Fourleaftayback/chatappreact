@@ -6,7 +6,7 @@ import { Col, Row } from "reactstrap";
 const Message = ({ error, message }) => {
   return (
     <React.Fragment>
-      <Row className="mt-2">
+      <Row className="mt-4">
         <Col>
           <p
             className={classnames("text-center", {

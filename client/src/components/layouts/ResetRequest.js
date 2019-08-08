@@ -23,8 +23,8 @@ const ResetRequest = ({ errors, message, sendResetRequest }) => {
     ? (content = <Message message={message.success} />)
     : (content = (
         <React.Fragment>
-          <h5 className="text-center cus-text-light mt-3 mb-2">
-            Reset Your Password
+          <h5 className="text-center cus-text-purple mt-3 mb-2">
+            Enter your email
           </h5>
           <Form>
             <FormItem
@@ -35,7 +35,10 @@ const ResetRequest = ({ errors, message, sendResetRequest }) => {
               error={errors.email}
               onChange={e => setEmail(e.target.value)}
             />
-            <Button color="info" block={true} onClick={onSubmit}>
+            <Button
+              className="cus-purple-button"
+              block={true}
+              onClick={onSubmit}>
               Login
             </Button>
           </Form>

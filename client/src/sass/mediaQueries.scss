@@ -8,3 +8,37 @@
   margin: 0;
 }
 */
+@media only screen and (min-width: 768px) {
+
+  //reset page
+  .reset-password {
+    padding: 2em 4.5em 0 4.5em;
+
+  }
+}
+
+/* iPads (portrait) */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1023px) and (orientation: portrait) {}
+
+/* ipad pro and up  */
+@media only screen and (min-width: 1024px) {
+  .reset-password {
+    padding: 3em 8em 0 8em;
+
+  }
+}
+
+/* Desktops and laptops ----------- */
+@media only screen and (min-width: 1224px) {
+  .reset-password {
+    padding: 3em 14em 0 14em;
+  }
+}
+
+/* Large screens ----------- */
+@media only screen and (min-width: 1824px) {
+  .reset-password {
+    padding: 3em 23em 0 23em;
+
+  }
+}

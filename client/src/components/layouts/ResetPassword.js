@@ -34,9 +34,9 @@ const ResetPassword = ({ errors, checkToken, resetPassword, message }) => {
     : (content = (
         <React.Fragment>
           <Row className="mt-5">
-            <Col md="5" className="m-auto">
-              <h5 className="text-center cus-text-light mt-3">
-                Enter your new password.
+            <Col xs="9" className="reset-password">
+              <h5 className="text-center cus-text-purple mt-3">
+                Enter your new password
               </h5>
               <Form className="mt-4">
                 <FormItem
@@ -55,7 +55,10 @@ const ResetPassword = ({ errors, checkToken, resetPassword, message }) => {
                   error={errors.password2}
                   onChange={e => setPassword2(e.target.value)}
                 />
-                <Button color="info" block={true} onClick={onSubmit}>
+                <Button
+                  className="cus-purple-button"
+                  block={true}
+                  onClick={onSubmit}>
                   Reset Password
                 </Button>
               </Form>
