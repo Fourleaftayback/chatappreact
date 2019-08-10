@@ -76,13 +76,14 @@ button {
   visibility: hidden;
   position: absolute;
   z-index: 1;
-  top: 48px;
-  left: 50px;
+  top: 58px;
+  left: 55px;
   width: 120px;
   background-color: $purple;
   color: $white;
   text-align: center;
   border-radius: 5px;
+  padding: 5px;
 }
 
 .tooltip-right:hover .tooltip-right-text {

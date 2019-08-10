@@ -198,4 +198,11 @@ a {
   }
 }
 
+//newchat
+.new-chat-header {
+  margin-top: 1em;
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+
 @import "./mediaQueries.scss";

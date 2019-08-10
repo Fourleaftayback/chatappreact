@@ -114,29 +114,29 @@ class NewChat extends Component {
     return (
       <React.Fragment>
         <Container>
-          <Row className="mt-2">
-            <Col xs="8">
+          <div className="new-chat-header">
+            <div className="search-bar">
               <FormItem
                 type="text"
                 name="search"
-                placeholder="minimum of 3 character"
+                placeholder="min 3 character"
                 value={this.state.search}
                 onChange={this.onChange}
               />
-            </Col>
-            <Col xs="2" className="text-center">
+            </div>
+            <div className="text-center single-chat">
               <NewChatButton
                 onClick={this.chat}
-                iconType="fas fa-user-friends fa-lg icon-button pt-3 "
+                iconType="fas fa-user-friends fa-lg icon-button pt-3"
               />
-            </Col>
-            <Col xs="2" className="text-center">
+            </div>
+            <div className="text-center group-chat">
               <NewChatButton
                 onClick={this.groupChat}
                 iconType="fas fa-users fa-lg icon-button pt-3"
               />
-            </Col>
-          </Row>
+            </div>
+          </div>
           <Row>
             <Col sm={{ size: 6, order: 2, offset: 3 }}>
               <AlertMessage
