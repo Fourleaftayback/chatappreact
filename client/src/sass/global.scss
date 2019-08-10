@@ -4,6 +4,8 @@ $blue: rgba(31, 79, 161, 1);
 $light-gray: rgba(249, 249, 249, 1);
 $white: rgba(255, 255, 252, 1);
 
+$font-stack: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
 @mixin theme-colors($purple-theme: true) {
   @if $purple-theme {
     background-image: linear-gradient(to bottom right, $purple, $dark-purple);

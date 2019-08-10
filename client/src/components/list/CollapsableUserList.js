@@ -66,7 +66,7 @@ const CollapsableUserList = ({ userList, socket }) => {
       <Row>
         <Col>
           <Collapse isOpen={isOpen}>
-            <ListGroup>{users}</ListGroup>
+            <ListGroup className="room-user-list">{users}</ListGroup>
           </Collapse>
         </Col>
       </Row>

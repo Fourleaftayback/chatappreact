@@ -5,7 +5,7 @@ import { Button, NavItem } from "reactstrap";
 const SignOut = ({ onClick }) => {
   return (
     <React.Fragment>
-      <NavItem>
+      <NavItem className="pb-1">
         <Button
           outline
           size="sm"

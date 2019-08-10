@@ -8,7 +8,7 @@
 body {
   box-sizing: boder-box;
   background-color: $white;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font: 100% $font-stack;
 }
 
 .App {
@@ -30,11 +30,15 @@ footer {
   @include theme-colors($purple-theme: true);
 }
 
+a {
+  cursor: pointer;
+}
+
 //common
 
 .list-group-item {
   background-color: $light-gray;
-  color: $purple;
+  color: $purple !important;
 }
 
 //nav
@@ -98,10 +102,12 @@ footer {
 .user-list-modal {
   background-color: rgba(245, 245, 245, 1);
 }
+
 //landing
 .landing {
   min-height: 84vh;
 }
+
 .landing-content {
   margin: 2.8rem 0 3.3rem 0;
 }
@@ -178,12 +184,18 @@ footer {
 
 .user-selected {
   background-color: rgba(48, 94, 161, 0.9);
-  color: $white;
+  color: $white !important;
 }
 
 .reset-password {
   display: block;
   margin: auto;
+}
+
+.chatlist {
+  li {
+    margin-bottom: 0.25em;
+  }
 }
 
 @import "./mediaQueries.scss";

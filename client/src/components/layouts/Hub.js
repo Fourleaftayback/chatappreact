@@ -15,12 +15,20 @@ import {
   setActiveChat
 } from "../../redux/actions/messageActions";
 
+let url;
+
+process.env.NODE_ENV === "production"
+  ? (url = "reactchat-app.herokuapp.com")
+  : (url = "localhost:5000");
+
 class Hub extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.socket = io(url);
+    /*
     this.socket = io("localhost:5000");
-    //this.socket = io("reactchat-app.herokuapp.com");
+    this.socket = io("reactchat-app.herokuapp.com"); */
   }
   componentDidMount() {
     axios.get("/messages/all").then(res => {

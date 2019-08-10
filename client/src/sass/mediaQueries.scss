@@ -25,6 +25,12 @@
   .landing-content {
     min-height: 76vh;
   }
+
+  //button
+  .fa-chevron-circle-left {
+    margin-top: 0.3em;
+    margin-left: 1.2em;
+  }
 }
 
 @media only screen and (min-height: 1380px) {
@@ -34,10 +40,28 @@
 }
 
 @media only screen and (min-width: 768px) {
+  body {
+    font: 110% $font-stack;
+  }
   //navbar
   .auth-item {
     margin: 0;
     padding: 0 0.25em;
+  }
+  //room
+  .room-header-row {
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+
+  .room-user-list {
+    margin: 0 2.5em;
+  }
+
+  .chatlist {
+    li {
+      margin-bottom: 0.5em;
+    }
   }
 
   //modal
@@ -62,10 +86,17 @@
   .reset-password {
     padding: 3em 8em 0 8em;
   }
+
+  .room-user-list {
+    margin: 0 6em;
+  }
 }
 
 /* Desktops and laptops ----------- */
 @media only screen and (min-width: 1224px) {
+  body {
+    font: 115% $font-stack;
+  }
   //modal
   .modal-dialog {
     padding: 0 1.5em;
@@ -76,10 +107,16 @@
   .reset-password {
     padding: 3em 14em 0 14em;
   }
+  .room-user-list {
+    margin: 0 10em;
+  }
 }
 
 /* Large screens ----------- */
 @media only screen and (min-width: 1824px) {
+  body {
+    font: 125% $font-stack;
+  }
   .reset-password {
     padding: 3em 23em 0 23em;
   }

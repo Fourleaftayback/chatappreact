@@ -65,7 +65,7 @@ const Room = ({
   return (
     <React.Fragment>
       <div className="message-container">
-        <Row>
+        <Row className="room-header-row">
           <RoomBackButton onClick={clearActiveChat} />
 
           <Col sm={{ size: 6, order: 2, offset: 3 }} className="mt-2">

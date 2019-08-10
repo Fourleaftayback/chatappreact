@@ -11,10 +11,7 @@ const ChatList = ({ chatList, userId, onClick }) => {
     let unseenCount = getUnseenCount(userId, item.messages);
     if (item.group_chat) {
       return (
-        <ListGroupItem
-          key={item._id}
-          className="mb-1"
-          onClick={() => onClick(item, userId)}>
+        <ListGroupItem key={item._id} onClick={() => onClick(item, userId)}>
           <Row>
             <Col xs="3">
               <ProfileImage imageUrl={group} size="2.5rem" />
@@ -34,10 +31,7 @@ const ChatList = ({ chatList, userId, onClick }) => {
     } else {
       let { user_name, profile_image_url } = getUserInfo(userId, item.userList);
       return (
-        <ListGroupItem
-          key={item._id}
-          className="mb-1"
-          onClick={() => onClick(item, userId)}>
+        <ListGroupItem key={item._id} onClick={() => onClick(item, userId)}>
           <Row>
             <Col xs="3">
               <ProfileImage imageUrl={profile_image_url} size="2.5rem" />
