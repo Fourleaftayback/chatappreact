@@ -10,14 +10,12 @@ const FaceBookLogin = ({ facebookLogin, buttonText }) => {
       email: response.email,
       profile_image_url: response.picture.data.url
     };
-    console.log(user);
     facebookLogin(user);
   };
 
   return (
     <React.Fragment>
       <FacebookLogin
-        appId="323616998587440"
         autoLoad={false}
         fields="name,email,picture"
         onClick={() => console.log("inital")}
