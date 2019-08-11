@@ -8,6 +8,14 @@ $font-stack: "Helvetica Neue", Helvetica, Arial, sans-serif;
 
 @mixin theme-colors($purple-theme: true) {
   @if $purple-theme {
+    background-image: -webkit-gradient(
+      linear,
+      left top,
+      right bottom,
+      from($purple),
+      to($dark-purple)
+    );
+    background-image: -o-linear-gradient(top left, $purple, $dark-purple);
     background-image: linear-gradient(to bottom right, $purple, $dark-purple);
     color: $white;
   }

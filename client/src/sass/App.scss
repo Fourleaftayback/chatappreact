@@ -6,7 +6,8 @@
 }
 
 body {
-  box-sizing: boder-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
   background-color: $white;
   font: 100% $font-stack;
 }
@@ -86,6 +87,8 @@ a {
     position: absolute;
     left: 50%;
     top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
   }
 
@@ -132,6 +135,8 @@ a {
   position: absolute;
   top: -25px;
   left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   background: $purple;
   border-radius: 10px;
@@ -145,6 +150,8 @@ a {
   position: absolute;
   left: 50%;
   bottom: -58px;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   background: $white;
   border-radius: 50%;
@@ -175,6 +182,14 @@ a {
 }
 
 .other-messages {
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    right bottom,
+    from($purple),
+    to($dark-purple)
+  );
+  background-image: -o-linear-gradient(top left, $purple, $dark-purple);
   background-image: linear-gradient(to bottom right, $purple, $dark-purple);
   color: $white;
   border-radius: 7px;
@@ -201,7 +216,9 @@ a {
 //newchat
 .new-chat-header {
   margin-top: 1em;
+  display: -ms-grid;
   display: grid;
+  -ms-grid-columns: auto auto auto;
   grid-template-columns: auto auto auto;
 }
 
