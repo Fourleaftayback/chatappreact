@@ -1,6 +1,11 @@
 @media only screen and (min-height: 737px) {
   .landing {
+    -webkit-min-height: 84vh;
+    -moz-min-height: 84vh;
+    -ms-min-height: 84vh;
+    -o-min-height: 84vh;
     min-height: 84vh;
+    height: 840px;
   }
   .landing-content {
     margin: 3.5rem 0 7.1rem 0;
@@ -9,13 +14,23 @@
 
 @media only screen and (min-height: 824px) {
   .landing-content {
+    -webkit-min-height: 68vh;
+    -moz-min-height: 68vh;
+    -ms-min-height: 68vh;
+    -o-min-height: 68vh;
     min-height: 68vh;
+    height: 770px;
   }
 }
 
 @media only screen and (min-height: 1025px) {
   .landing-content {
+    -webkit-min-height: 76vh;
+    -moz-min-height: 76vh;
+    -ms-min-height: 76vh;
+    -o-min-height: 76vh;
     min-height: 76vh;
+    height: 900px;
   }
 
   //button

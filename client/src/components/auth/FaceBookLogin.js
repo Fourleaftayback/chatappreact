@@ -16,9 +16,9 @@ const FaceBookLogin = ({ facebookLogin, buttonText }) => {
   return (
     <React.Fragment>
       <FacebookLogin
+        appId="323616998587440"
         autoLoad={false}
         fields="name,email,picture"
-        onClick={() => console.log("inital")}
         textButton={buttonText}
         callback={responseFacebook}
         cssClass="cus-fb-button"
