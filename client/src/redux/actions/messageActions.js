@@ -40,7 +40,7 @@ export const createNewRoom = receiverId => dispatch => {
     .post("/messages/newroom", receiverId)
     .then(res => {
       let otherUser = res.data.userList.filter(item => item._id !== receiverId);
-      res.data.receiver_name = otherUser[0].user_name;
+      res.data.receiver_name = otherUser[1].user_name;
       dispatch({
         type: SET_ACTIVE_CHAT,
         payload: res.data

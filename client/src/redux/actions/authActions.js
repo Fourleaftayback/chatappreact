@@ -23,7 +23,7 @@ export const registerUser = userData => dispatch => {
       });
     })
     .then(() => dispatch(toggle("register")))
-    .then(() => dispatch(toggle("navbar")))
+    //.then(() => dispatch(toggle("navbar")))
     .then(() =>
       setTimeout(() => {
         dispatch(toggle("login"));
