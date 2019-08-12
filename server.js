@@ -75,7 +75,9 @@ app.use(
         "platform-lookaside.fbsbx.com",
         "http://www.w3.org/2000/svg",
         "data:"
-      ]
+      ],
+      frameSrc: ["'self'", "staticxx.facebook.com", "facebook.com"],
+      connectSrc: ["'self'", "facebook.com"]
     }
   })
 );
