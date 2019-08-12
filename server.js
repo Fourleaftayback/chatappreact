@@ -48,7 +48,8 @@ app.use(
         "'unsafe-inline'",
         "maxcdn.bootstrapcdn.com",
         "use.fontawesome.com",
-        "stackpath.bootstrapcdn.com"
+        "stackpath.bootstrapcdn.com",
+        "kit-free.fontawesome.com"
       ],
       fontSrc: ["'self'", "use.fontawesome.com", "maxcdn.bootstrapcdn.com"],
       scriptSrc: [
@@ -60,7 +61,8 @@ app.use(
         "stackpath.bootstrapcdn.com",
         "storage.googleapis.com",
         "use.fontawesome.com",
-        "kit.fontawesome.com"
+        "kit.fontawesome.com",
+        "connect.facebook.net"
       ],
       imgSrc: [
         "'self'",
