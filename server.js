@@ -75,8 +75,13 @@ app.use(
         "http://www.w3.org/2000/svg",
         "data:"
       ],
-      frameSrc: ["'self'", "staticxx.facebook.com", "facebook.com"],
-      connectSrc: ["'self'", "facebook.com"]
+      frameSrc: [
+        "'self'",
+        "staticxx.facebook.com",
+        "facebook.com",
+        "https://www.facebook.com"
+      ],
+      connectSrc: ["'self'", "facebook.com", "https://www.facebook.com"]
     }
   })
 );
