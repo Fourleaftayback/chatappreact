@@ -32,6 +32,46 @@ mongoose.connect(db, {
 });
 
 //add helmet here
+app.use(helmet.dnsPrefetchControl());
+app.use(helmet.frameguard({ action: "deny" }));
+app.use(helmet.hidePoweredBy());
+app.use(helmet.ieNoOpen());
+app.use(helmet.xssFilter());
+app.use(helmet.referrerPolicy({ policy: "same-origin" }));
+
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      styleSrc: [
+        "'self'",
+        "'unsafe-inline'",
+        "maxcdn.bootstrapcdn.com",
+        "use.fontawesome.com",
+        "stackpath.bootstrapcdn.com"
+      ],
+      fontSrc: ["'self'", "use.fontawesome.com", "maxcdn.bootstrapcdn.com"],
+      scriptSrc: [
+        "'self'",
+        "'unsafe-inline'",
+        "'unsafe-eval'",
+        "code.jquery.com",
+        "cdnjs.cloudflare.com",
+        "stackpath.bootstrapcdn.com",
+        "storage.googleapis.com",
+        "use.fontawesome.com",
+        "kit.fontawesome.com"
+      ],
+      imgSrc: [
+        "'self'",
+        "chatappreact.s3.amazonaws.com",
+        "platform-lookaside.fbsbx.com",
+        "http://www.w3.org/2000/svg",
+        "data:"
+      ]
+    }
+  })
+);
 
 app.use(
   bodyParser.urlencoded({
