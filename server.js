@@ -51,7 +51,12 @@ app.use(
         "stackpath.bootstrapcdn.com",
         "kit-free.fontawesome.com"
       ],
-      fontSrc: ["'self'", "use.fontawesome.com", "maxcdn.bootstrapcdn.com"],
+      fontSrc: [
+        "'self'",
+        "use.fontawesome.com",
+        "maxcdn.bootstrapcdn.com",
+        "kit-free.fontawesome.com"
+      ],
       scriptSrc: [
         "'self'",
         "'unsafe-inline'",
