@@ -10,7 +10,7 @@ const MessageList = ({ userId, messageList }) => {
       <ListGroupItem key={item._id} className="message-list">
         <Row>
           <Col xs="10">
-            <div className="own-messages pt-2 px-2">{item.text}</div>
+            <div className="own-messages px-2">{item.text}</div>
           </Col>
           <Col xs="2" className="pr-1 pt-2 text-right">
             <ProfileImage imageUrl={item.profile_image_url} size="2.2rem" />
@@ -24,7 +24,7 @@ const MessageList = ({ userId, messageList }) => {
             <ProfileImage imageUrl={item.profile_image_url} size="2.2rem" />
           </Col>
           <Col xs="10">
-            <div className="other-messages pt-2 px-2">{item.text}</div>
+            <div className="other-messages px-2">{item.text}</div>
           </Col>
         </Row>
       </ListGroupItem>

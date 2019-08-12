@@ -43,7 +43,10 @@ const GroupChatModal = ({
               error={errors.chat_name}
               onChange={e => setChatName(e.target.value)}
             />
-            <Button color="info" block={true} onClick={createGroupChat}>
+            <Button
+              className="cus-button-blue mt-2 mb-1"
+              block={true}
+              onClick={createGroupChat}>
               Create Group
             </Button>
           </Form>

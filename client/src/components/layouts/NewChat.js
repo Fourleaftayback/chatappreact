@@ -95,7 +95,7 @@ class NewChat extends Component {
       };
       this.props.createNewRoom(data);
     } else {
-      this.props.joinExistingRoom(singleChat[indx]);
+      this.props.joinExistingRoom(singleChat[indx], this.props.user.id);
     }
   };
 

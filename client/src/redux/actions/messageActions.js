@@ -96,6 +96,7 @@ export const joinExistingRoom = (room, id) => dispatch => {
     type: SET_LIST,
     payload: messages
   });
+  history.push("/hub");
   dispatch(toggle("room"));
 };
 
