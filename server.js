@@ -33,12 +33,6 @@ mongoose.connect(db, {
 
 //add helmet here
 app.use(helmet.dnsPrefetchControl());
-app.use(
-  frameguard({
-    action: "allow-from",
-    domain: "facebook.com"
-  })
-);
 app.use(helmet.hidePoweredBy());
 app.use(helmet.ieNoOpen());
 app.use(helmet.xssFilter());
