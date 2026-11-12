@@ -29,7 +29,6 @@ const messageApi = require('./routes/messages');
 require('./config/passportUser')(passport);
 
 mongoose.connect(db, {
-  useNewUrlParser: true,
   dbName: process.env.MONGODB_DB_NAME || 'test',
 });
 
