@@ -21,44 +21,50 @@ router.post('/register', (req, res) => {
   User.findOne({
     $or: [
       {
-        email: req.body.email
+        email: req.body.email,
       },
       {
-        user_name: req.body.user_name
-      }
-    ]
-  }).exec((err, user) => {
-    if (user) {
-      if (user.user_name == req.body.user_name) {
-        errors.user_name =
-          'User Name already exists. Please choose another User Name';
+        user_name: req.body.user_name,
+      },
+    ],
+  })
+    .exec()
+    .then((user) => {
+      if (user) {
+        if (user.user_name == req.body.user_name) {
+          errors.user_name =
+            'User Name already exists. Please choose another User Name';
+          return res.status(400).json(errors);
+        }
+
+        errors.email =
+          'Email already exists. Please request to have your password reset.';
         return res.status(400).json(errors);
       }
-
-      errors.email =
-        'Email already exists. Please request to have your password reset.';
-      return res.status(400).json(errors);
-    }
-    let newUser = new User({
-      email: req.body.email,
-      user_name: req.body.user_name,
-      password: req.body.password
-    });
-
-    bcrypt.genSalt(10, (err, salt) => {
-      bcrypt.hash(newUser.password, salt, (err, hash) => {
-        if (err) throw err;
-        newUser.password = hash;
-        newUser
-          .save()
-          .then(user => res.status(200).json(user))
-          .catch(err => {
-            errors.email = 'something went wrong';
-            res.status(400).json(errors);
-          });
+      let newUser = new User({
+        email: req.body.email,
+        user_name: req.body.user_name,
+        password: req.body.password,
       });
+
+      bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(newUser.password, salt, (err, hash) => {
+          if (err) throw err;
+          newUser.password = hash;
+          newUser
+            .save()
+            .then((user) => res.status(200).json(user))
+            .catch((err) => {
+              errors.email = 'something went wrong';
+              res.status(400).json(errors);
+            });
+        });
+      });
+    })
+    .catch((err) => {
+      errors.email = 'something went wrong';
+      return res.status(400).json(errors);
     });
-  });
 });
 
 // @route   POST /user/login
@@ -72,31 +78,31 @@ router.post('/login', (req, res) => {
   let { email, password } = req.body;
 
   User.findOne({
-    email
-  }).then(user => {
+    email,
+  }).then((user) => {
     if (!user) {
       errors.email = 'This Email does not Exist';
       return res.status(400).json(errors);
     }
-    bcrypt.compare(password, user.password).then(isMatch => {
+    bcrypt.compare(password, user.password).then((isMatch) => {
       if (isMatch) {
         const payload = {
           id: user.id,
           user_name: user.user_name,
-          profile_image_url: user.profile_image_url
+          profile_image_url: user.profile_image_url,
         };
         jwt.sign(
           payload,
           keys,
           {
-            expiresIn: 7200
+            expiresIn: 7200,
           },
           (err, token) => {
             res.json({
               success: true,
-              token: 'Bearer ' + token
+              token: 'Bearer ' + token,
             });
-          }
+          },
         );
       } else {
         errors.password = 'Password incorrect';
@@ -112,76 +118,76 @@ router.post('/login', (req, res) => {
 router.put(
   '/profileimage',
   passport.authenticate('userPass', {
-    session: false
+    session: false,
   }),
   (req, res) => {
     const mimes = ['image/png', 'image/jpeg', 'image/jpg'];
     const busboy = new Busboy({
-      headers: req.headers
+      headers: req.headers,
     });
 
     if (req.files.image === undefined)
       return res.status(413).json({
-        image: 'Image is required'
+        image: 'Image is required',
       });
 
     busboy.on('finish', () => {
       const image = req.files.image;
       if (image.size > 3000000)
         return res.status(413).json({
-          image: 'Image can not be larger than 3mbs'
+          image: 'Image can not be larger than 3mbs',
         });
 
       if (!mimes.includes(image.mimetype))
         return res.status(422).json({
-          image: 'This image format is not supported'
+          image: 'This image format is not supported',
         });
 
       let aws = uploadToS3(image);
-      aws.then(data => {
+      aws.then((data) => {
         let imageUrl = data.Location;
         User.findOneAndUpdate(
           {
-            _id: req.user.id
+            _id: req.user.id,
           },
           {
-            profile_image_url: imageUrl
+            profile_image_url: imageUrl,
           },
           {
-            new: true
-          }
+            new: true,
+          },
         )
-          .then(user => {
+          .then((user) => {
             if (!user)
               return res.status(400).json({
-                image: 'Sorry something went wrong'
+                image: 'Sorry something went wrong',
               });
             const payload = {
               id: user.id,
               user_name: user.user_name,
-              profile_image_url: user.profile_image_url
+              profile_image_url: user.profile_image_url,
             };
             jwt.sign(
               payload,
               keys,
               {
-                expiresIn: 7200
+                expiresIn: 7200,
               },
               (err, token) => {
                 res.json({
                   success: true,
-                  token: 'Bearer ' + token
+                  token: 'Bearer ' + token,
                 });
-              }
+              },
             );
           })
-          .catch(err => {
+          .catch((err) => {
             console.log(err);
           });
       });
     });
     req.pipe(busboy);
-  }
+  },
 );
 
 // @route   POST /user/fbauth
@@ -191,26 +197,26 @@ router.post('/fbauth', (req, res) => {
   let { facebook_id, user_name, email, profile_image_url } = req.body;
 
   User.findOne({
-    facebook_id
-  }).then(user => {
+    facebook_id,
+  }).then((user) => {
     if (user) {
       const payload = {
         id: user.id,
         user_name: user.user_name,
-        profile_image_url: user.profile_image_url
+        profile_image_url: user.profile_image_url,
       };
       jwt.sign(
         payload,
         keys,
         {
-          expiresIn: 72000
+          expiresIn: 72000,
         },
         (err, token) => {
           res.json({
             success: true,
-            token: 'Bearer ' + token
+            token: 'Bearer ' + token,
           });
-        }
+        },
       );
     } else {
       let newUser = new User({
@@ -218,26 +224,26 @@ router.post('/fbauth', (req, res) => {
         email: email,
         user_name: user_name,
         profile_image_url: profile_image_url,
-        auth_type: 'facebook'
+        auth_type: 'facebook',
       });
-      newUser.save().then(user => {
+      newUser.save().then((user) => {
         const payload = {
           id: user.id,
           user_name: user.user_name,
-          profile_image_url: user.profile_image_url
+          profile_image_url: user.profile_image_url,
         };
         jwt.sign(
           payload,
           keys,
           {
-            expiresIn: 72000
+            expiresIn: 72000,
           },
           (err, token) => {
             res.json({
               success: true,
-              token: 'Bearer ' + token
+              token: 'Bearer ' + token,
             });
-          }
+          },
         );
       });
     }
