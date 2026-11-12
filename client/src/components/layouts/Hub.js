@@ -1,48 +1,44 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { Container } from "reactstrap";
-import io from "socket.io-client";
-import axios from "axios";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { Container } from 'reactstrap';
+import io from 'socket.io-client';
+import axios from 'axios';
 
-import ExistingChats from "../allChat/ExistingChats";
-import Room from "../room/Room";
+import ExistingChats from '../allChat/ExistingChats';
+import Room from '../room/Room';
 
 import {
   joinExistingRoom,
   setAllChats,
   getAllChats,
-  setActiveChat
-} from "../../redux/actions/messageActions";
+  setActiveChat,
+} from '../../redux/actions/messageActions';
 
-let url;
-
-process.env.NODE_ENV === "production"
-  ? (url = "reactchat-app.herokuapp.com")
-  : (url = "localhost:5000");
+const socketUrl =
+  process.env.NODE_ENV === 'production'
+    ? window.location.origin
+    : 'http://localhost:5000';
 
 class Hub extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.socket = io(url);
-    /*
-    this.socket = io("localhost:5000");
-    this.socket = io("reactchat-app.herokuapp.com"); */
+    this.socket = io(socketUrl);
   }
   componentDidMount() {
-    axios.get("/messages/all").then(res => {
+    axios.get('/messages/all').then((res) => {
       const roomData = {
         userId: this.props.user.id,
-        roomIds: res.data.map(item => item._id)
+        roomIds: res.data.map((item) => item._id),
       };
-      this.socket.emit("join", roomData);
+      this.socket.emit('join', roomData);
       this.props.setAllChats(res.data);
     });
-    this.socket.on("updateAllRooms", data => {
+    this.socket.on('updateAllRooms', (data) => {
       this.props.setAllChats(data);
     });
-    this.socket.on("updateRoom", payload => {
+    this.socket.on('updateRoom', (payload) => {
       this.props.roomIsActive
         ? this.props.setActiveChat(payload)
         : this.props.getAllChats();
@@ -79,23 +75,20 @@ Hub.propTypes = {
   setAllChats: PropTypes.func.isRequired,
   roomIsActive: PropTypes.bool.isRequired,
   getAllChats: PropTypes.func.isRequired,
-  setActiveChat: PropTypes.func.isRequired
+  setActiveChat: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   currentChats: state.messages.currentChats,
   user: state.auth.user,
-  roomIsActive: state.views.roomIsActive
+  roomIsActive: state.views.roomIsActive,
 });
 
 const mapDispatchToProps = {
   joinExistingRoom: joinExistingRoom,
   setAllChats: setAllChats,
   getAllChats: getAllChats,
-  setActiveChat: setActiveChat
+  setActiveChat: setActiveChat,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Hub);
+export default connect(mapStateToProps, mapDispatchToProps)(Hub);

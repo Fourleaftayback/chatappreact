@@ -1,21 +1,21 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const passport = require("passport");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const User = require("../models/User");
-const Busboy = require("busboy");
+const passport = require('passport');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const User = require('../models/User');
+const Busboy = require('busboy');
 const keys = process.env.secret;
 
-const validateRegisterInput = require("../validation/userRegisterValidation");
-const validateLoginInput = require("../validation/loginValidation");
+const validateRegisterInput = require('../validation/userRegisterValidation');
+const validateLoginInput = require('../validation/loginValidation');
 
-const uploadToS3 = require("../aws/s3bucket");
+const uploadToS3 = require('../aws/s3bucket');
 
 // @route   POST /user/register
 // @desc    user registration
 // @access  Public
-router.post("/register", (req, res) => {
+router.post('/register', (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
   if (!isValid) return res.status(400).json(errors);
   User.findOne({
@@ -31,12 +31,12 @@ router.post("/register", (req, res) => {
     if (user) {
       if (user.user_name == req.body.user_name) {
         errors.user_name =
-          "User Name already exists. Please choose another User Name";
+          'User Name already exists. Please choose another User Name';
         return res.status(400).json(errors);
       }
 
       errors.email =
-        "Email already exists. Please request to have your password reset.";
+        'Email already exists. Please request to have your password reset.';
       return res.status(400).json(errors);
     }
     let newUser = new User({
@@ -53,7 +53,7 @@ router.post("/register", (req, res) => {
           .save()
           .then(user => res.status(200).json(user))
           .catch(err => {
-            errors.email = "something went wrong";
+            errors.email = 'something went wrong';
             res.status(400).json(errors);
           });
       });
@@ -64,7 +64,7 @@ router.post("/register", (req, res) => {
 // @route   POST /user/login
 // @desc    Login User / Returning JWT Token
 // @access  Public
-router.post("/login", (req, res) => {
+router.post('/login', (req, res) => {
   const { errors, isValid } = validateLoginInput(req.body);
 
   if (!isValid) return res.status(400).json(errors);
@@ -75,7 +75,7 @@ router.post("/login", (req, res) => {
     email
   }).then(user => {
     if (!user) {
-      errors.email = "This Email does not Exist";
+      errors.email = 'This Email does not Exist';
       return res.status(400).json(errors);
     }
     bcrypt.compare(password, user.password).then(isMatch => {
@@ -94,12 +94,12 @@ router.post("/login", (req, res) => {
           (err, token) => {
             res.json({
               success: true,
-              token: "Bearer " + token
+              token: 'Bearer ' + token
             });
           }
         );
       } else {
-        errors.password = "Password incorrect";
+        errors.password = 'Password incorrect';
         return res.status(400).json(errors);
       }
     });
@@ -110,31 +110,31 @@ router.post("/login", (req, res) => {
 // @desc    upload profile photo
 // @access  Private
 router.put(
-  "/profileimage",
-  passport.authenticate("userPass", {
+  '/profileimage',
+  passport.authenticate('userPass', {
     session: false
   }),
   (req, res) => {
-    const mimes = ["image/png", "image/jpeg", "image/jpg"];
+    const mimes = ['image/png', 'image/jpeg', 'image/jpg'];
     const busboy = new Busboy({
       headers: req.headers
     });
 
     if (req.files.image === undefined)
       return res.status(413).json({
-        image: "Image is required"
+        image: 'Image is required'
       });
 
-    busboy.on("finish", () => {
+    busboy.on('finish', () => {
       const image = req.files.image;
       if (image.size > 3000000)
         return res.status(413).json({
-          image: "Image can not be larger than 3mbs"
+          image: 'Image can not be larger than 3mbs'
         });
 
       if (!mimes.includes(image.mimetype))
         return res.status(422).json({
-          image: "This image format is not supported"
+          image: 'This image format is not supported'
         });
 
       let aws = uploadToS3(image);
@@ -154,7 +154,7 @@ router.put(
           .then(user => {
             if (!user)
               return res.status(400).json({
-                image: "Sorry something went wrong"
+                image: 'Sorry something went wrong'
               });
             const payload = {
               id: user.id,
@@ -170,7 +170,7 @@ router.put(
               (err, token) => {
                 res.json({
                   success: true,
-                  token: "Bearer " + token
+                  token: 'Bearer ' + token
                 });
               }
             );
@@ -187,7 +187,7 @@ router.put(
 // @route   POST /user/fbauth
 // @desc    fbAuth
 // @access  Public
-router.post("/fbauth", (req, res) => {
+router.post('/fbauth', (req, res) => {
   let { facebook_id, user_name, email, profile_image_url } = req.body;
 
   User.findOne({
@@ -208,7 +208,7 @@ router.post("/fbauth", (req, res) => {
         (err, token) => {
           res.json({
             success: true,
-            token: "Bearer " + token
+            token: 'Bearer ' + token
           });
         }
       );
@@ -218,7 +218,7 @@ router.post("/fbauth", (req, res) => {
         email: email,
         user_name: user_name,
         profile_image_url: profile_image_url,
-        auth_type: "facebook"
+        auth_type: 'facebook'
       });
       newUser.save().then(user => {
         const payload = {
@@ -235,7 +235,7 @@ router.post("/fbauth", (req, res) => {
           (err, token) => {
             res.json({
               success: true,
-              token: "Bearer " + token
+              token: 'Bearer ' + token
             });
           }
         );
